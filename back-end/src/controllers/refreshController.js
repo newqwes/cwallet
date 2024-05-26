@@ -3,6 +3,7 @@ import { getInitData } from "../middleware/authMiddleware";
 
 export const refresh = async (req, res, next) => {
   try {
+    console.log('refresh: ' + res)
     const initData = getInitData(res);
     if (!initData) {
       return next(ApiError.BadRequest('Cant display init data as long as it was not found'));
