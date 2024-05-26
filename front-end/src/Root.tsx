@@ -1,8 +1,10 @@
 import { retrieveLaunchParams } from '@tma.js/sdk-react';
 import axios from 'axios';
-import { type FC } from 'react';
+import { type FC, useState } from 'react';
 
 const Root: FC = () => {
+  const [serverResponse, setServerResponse] = useState<string | null>(null);
+
   const tg = window?.Telegram?.WebApp;
   console.log('tg', tg);
 
@@ -20,9 +22,15 @@ const Root: FC = () => {
   };
 
   const handleClickBtn = async () => {
-    console.log('button clicked...')
-    const response = await getNewData();
-    console.log('server responded with: ', response);
+    console.log('button clicked...');
+    try {
+      const response = await getNewData();
+      console.log('server responded with: ', response.data);
+      setServerResponse(JSON.stringify(response.data, null, 2));
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setServerResponse('Error fetching data');
+    }
   };
 
   return (
@@ -30,8 +38,11 @@ const Root: FC = () => {
       <button onClick={handleClickBtn}>
         POST request sender
       </button>
+      {serverResponse && (
+        <pre>{serverResponse}</pre>
+      )}
     </>
-  )
+  );
 };
 
 export default Root;
