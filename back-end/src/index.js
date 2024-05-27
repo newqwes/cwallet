@@ -11,6 +11,7 @@ import limiter from './middleware/limiter';
 import errorMiddleware from './middleware/errorMiddleware';
 import runTelegramBotService from './services/telegramBotService';
 import refreshRoute from './routes/refreshRoute';
+import userRoute from './routes/userRoute';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use(limiter);
 
 app.use('/api/refresh', refreshRoute);
+app.use('/api/user', userRoute);
 
 app.use(errorMiddleware);
 
