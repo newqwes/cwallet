@@ -1,4 +1,4 @@
-export const RUN_APP = 'Run';
+export const RUN_APP = 'Run 🪿';
 
 export const MESSAGE_OPTIONS = {
   parse_mode: 'markdown',
@@ -7,6 +7,9 @@ export const MESSAGE_OPTIONS = {
     keyboard: [
       [RUN_APP],
     ],
+    inline_keyboard: [
+        [{text: RUN_APP, web_app: { url: process.env.CLIENT_URL }}]
+    ]
   },
 };
 

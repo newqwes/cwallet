@@ -2,10 +2,14 @@ import { retrieveLaunchParams } from '@tma.js/sdk-react';
 import axios from 'axios';
 import { type FC, useState } from 'react';
 
+const apiUrl = import.meta.env.VITE_REACT_APP_API_URL || '';
+
+const baseURL = `${apiUrl}api/`;
+
 // @ts-ignore
 axios.interceptors.request.use((config) => ({
   ...config,
-  baseURL: `api/`,
+  baseURL,
   withCredentials: true,
   headers: { Authorization: `tma ${retrieveLaunchParams().initDataRaw}`}
 }));
@@ -35,6 +39,7 @@ const Root: FC = () => {
       setServerResponse(JSON.stringify(response.data, null, 2));
       setError(null);
     } catch (error) {
+
       console.error('Error fetching data:', error);
       setServerResponse(null);
       setError('Error fetching data');
@@ -49,6 +54,7 @@ const Root: FC = () => {
       {serverResponse && (
         <pre>{serverResponse}</pre>
       )}
+      {baseURL}
       {error && (
         <pre>{error}</pre>
       )}
