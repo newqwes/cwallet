@@ -13,11 +13,7 @@ const runTelegramBotService = async () => {
     }) => {
       try {
         if (text === '/start') {
-          return MyBot.sendMessage(
-            id,
-            `${firstName}, Welcome to start Cwallet!`,
-            MESSAGE_OPTIONS
-          );
+          return MyBot.sendMessage(id,`${firstName}, welcome to Cwallet app 👛`, MESSAGE_OPTIONS);
         }
       } catch (error) {
         return MyBot.sendMessage(

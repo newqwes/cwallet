@@ -1,14 +1,13 @@
-export const RUN_APP = 'Run 🪿';
+import { WEB_APP_URL } from "./index";
+
+export const RUN_APP = 'Run 🪿💨';
 
 export const MESSAGE_OPTIONS = {
   parse_mode: 'markdown',
   reply_markup: {
     resize_keyboard: true,
-    keyboard: [
-      [RUN_APP],
-    ],
     inline_keyboard: [
-        [{text: RUN_APP, web_app: { url: process.env.CLIENT_URL }}]
+        [{text: RUN_APP, web_app: { url: WEB_APP_URL }}]
     ]
   },
 };
