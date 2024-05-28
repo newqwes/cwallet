@@ -1,0 +1,22 @@
+body {
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 5px;
+  font-family: 'Roboto';
+}
+
+button {
+  padding: 8px 32px;
+  font-size: 32px;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 5px;
+  color: #ff1c1c;
+  border: 1px solid #ff1c1c;
+  border-radius: 5px;
+}
