@@ -4,12 +4,14 @@ interface UserState {
   data: any;
   error: any;
   loading: boolean;
+  coins: number | null;
 }
 
 const initialState: UserState = {
   data: null,
   error: null,
   loading: false,
+  coins: null,
 };
 
 const userReducer = createSlice({
@@ -22,6 +24,7 @@ const userReducer = createSlice({
     fetchDataSuccess: (state, action: PayloadAction<any>) => {
       state.loading = false;
       state.data = action.payload;
+      state.coins = action.payload?.user?.coins || null;
     },
     fetchDataFailure: (state, action: PayloadAction<any>) => {
       state.loading = false;

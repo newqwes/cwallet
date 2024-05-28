@@ -1,20 +1,21 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { fetchDataRequest, fetchDataSuccess, fetchDataFailure } from '../store/userReducer.ts';
+import { makeRefreshRequest, makeRefreshFailure, makeRefreshSuccess } from '../store/refreshReducer.ts';
 import { refreshAPI } from '../api';
 
-function* fetchDataSaga() {
+function* makeRefreshSaga() {
   try {
+    console.log('makeRefreshSaga');
     const response: string = yield call(refreshAPI.refresh);
-    yield put(fetchDataSuccess(response));
+    yield put(makeRefreshSuccess(response));
   } catch (error) {
-    yield put(fetchDataFailure(error || 'An error occurred'));
+    yield put(makeRefreshFailure(error || 'An error occurred'));
   }
 }
 
-function* watchFetchData() {
-  yield takeLatest(fetchDataRequest.type, fetchDataSaga);
+function* watchMakeRefresh() {
+  yield takeLatest(makeRefreshRequest.type, makeRefreshSaga);
 }
 
 export default function* refresh() {
-  yield all([watchFetchData()]);
+  yield all([watchMakeRefresh()]);
 }

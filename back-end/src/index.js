@@ -12,6 +12,7 @@ import errorMiddleware from './middleware/errorMiddleware';
 import runTelegramBotService from './services/telegramBotService';
 import refreshRoute from './routes/refreshRoute';
 import userRoute from './routes/userRoute';
+import { swaggerDocs } from "./swagger";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use('/api/user', userRoute);
 
 app.use(errorMiddleware);
 
+swaggerDocs(app, process.env.SERVER_PORT);
 const start = async () => {
   try {
     server.listen(process.env.SERVER_PORT, async () => {

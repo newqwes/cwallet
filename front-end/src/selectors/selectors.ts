@@ -5,15 +5,15 @@ const selectUser = (state: RootState) => state.user;
 
 export const selectUserCoinCount = createSelector(
   [selectUser],
-  (example) => example.data
+  (user) => user.coins
 );
 
 export const selectLoading = createSelector(
   [selectUser],
-  (example) => example.loading
+  (user) => user.loading
 );
 
 export const selectError = createSelector(
   [selectUser],
-  (example) => example.error
+  (user) => user.error
 );

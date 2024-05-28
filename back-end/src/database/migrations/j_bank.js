@@ -23,13 +23,13 @@ module.exports = {
       RETURNS TRIGGER AS $$
       BEGIN
         IF TG_OP = 'UPDATE' THEN
-          IF NEW.score > OLD.score THEN
+          IF NEW.coins > OLD.coins THEN
             UPDATE bank
-            SET value = value - (NEW.score - OLD.score)
+            SET value = value - (NEW.coins - OLD.coins)
             WHERE id = 1;
           ELSE
             UPDATE bank
-            SET value = value + (OLD.score - NEW.score)
+            SET value = value + (OLD.coins - NEW.coins)
             WHERE id = 1;
           END IF;
         END IF;
@@ -64,8 +64,8 @@ module.exports = {
       // Обновление существующих записей в таблице user
       await queryInterface.sequelize.query(`
         UPDATE "user"
-        SET score = 1000 - (SELECT COALESCE(SUM(value), 0) FROM bank WHERE id = 1)
-        WHERE score <> 1000;
+        SET coins = 1000000000 - (SELECT COALESCE(SUM(value), 0) FROM bank WHERE id = 1)
+        WHERE coins <> 1000000000 ;
       `, { transaction });
 
       await transaction.commit();

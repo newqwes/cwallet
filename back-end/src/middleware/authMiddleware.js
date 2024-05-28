@@ -33,7 +33,7 @@ const authMiddleware = (req, res, next) => {
   const [authType, authData = ''] = (req.header('authorization') || '').split(' ');
 
   switch (authType) {
-    case 'tma':
+    case 'Bearer':
       try {
         // Validate init data.
         validate(authData, process.env.BOT_TOKEN, {
@@ -45,7 +45,7 @@ const authMiddleware = (req, res, next) => {
         setInitData(res, parse(authData));
         return next();
       } catch (e) {
-        return next(e);
+        return next(ApiError.UnauthorizedError(e.message))
       }
     default:
       return next(ApiError.UnauthorizedError());

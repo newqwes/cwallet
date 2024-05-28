@@ -8,7 +8,7 @@ axios.interceptors.request.use((config) => ({
   ...config,
   baseURL,
   withCredentials: true,
-  headers: { Authorization: `tma ${retrieveLaunchParams().initDataRaw}`}
+  headers: { Authorization: `Bearer ${retrieveLaunchParams().initDataRaw}`}
 }));
 
 export const refreshAPI = {
@@ -19,7 +19,7 @@ export const refreshAPI = {
 };
 
 export const userAPI = {
-  getUserData: async () => {
+  getUserData: async (): Promise<{ user: any, created: boolean }> => {
     const { data } = await axios.get('user');
     return data;
   },

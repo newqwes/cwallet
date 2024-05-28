@@ -10,80 +10,43 @@ module.exports = {
         unique: true,
         defaultValue: uuidv4(),
       },
-      login: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      telegramUserId: {
+      telegramId: {
         type: DataTypes.DOUBLE,
+        allowNull: false,
+        unique: true
+      },
+      firstName: {
+        type: DataTypes.STRING(50),
         allowNull: true,
       },
-      password: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-      email: {
+      lastName: {
         type: DataTypes.STRING(50),
-        allowNull: false,
-        unique: true,
+        allowNull: true,
       },
-      lastDateUpdate: {
+      languageCode: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+      },
+      nextDateUpdate: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
-        allowNull: false,
       },
-      score: {
+      coins: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
-        allowNull: false,
+        allowNull: true,
         validate: {
           min: 0,
         },
-      },
-      dataRefreshLimitPerMinute: {
-        type: DataTypes.DOUBLE,
-        defaultValue: 1,
-        allowNull: false,
-      },
-      userType: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      isActivated: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      list: {
-        type: DataTypes.JSON,
-      },
-      prevData: {
-        type: DataTypes.JSON,
-      },
-      activationHash: {
-        type: DataTypes.STRING(100),
       },
       avatar: {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
-      gender: {
-        type: DataTypes.STRING(10),
-        allowNull: true,
-        defaultValue: null,
-        validate: {
-          isIn: {
-            args: [[null, 'male', 'female']],
-            msg: 'Valid values for "gender" field: male, female, or null',
-          },
-        },
-      },
       level: {
         type: DataTypes.INTEGER,
         defaultValue: 1,
-        allowNull: false,
-      },
-      placeList: {
-        type: DataTypes.JSON,
+        allowNull: true,
       }
     });
   },

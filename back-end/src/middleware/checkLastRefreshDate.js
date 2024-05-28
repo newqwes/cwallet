@@ -4,12 +4,12 @@ import { isTimeLimitOver } from '../utils/toMinute';
 
 const checkLastRefreshDate = (req, res, next) => {
   try {
-    const { dataRefreshLimitPerMinute, lastDateUpdate } = pick(
-      ['dataRefreshLimitPerMinute', 'lastDateUpdate'],
+    const { nextDateUpdate } = pick(
+      ['nextDateUpdate'],
       req.user,
     );
 
-    const timeLimitOver = isTimeLimitOver(dataRefreshLimitPerMinute, lastDateUpdate);
+    const timeLimitOver = isTimeLimitOver(nextDateUpdate);
 
     if (!timeLimitOver) {
       return res.status(405).json({ message: 'Еще время не настало!' });
