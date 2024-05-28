@@ -1,19 +1,19 @@
 import express from 'express';
 import { Server } from 'http';
-import useSocket from 'socket.io';
+import { Server as SocketServer } from 'socket.io';
 import { Client } from 'pg';
 import Bank from './database/models/bank';
 
 export const app = express();
-export const server = Server(app);
-export const io = useSocket(server, { cors: { origin: '*' } });
+export const server = new Server(app);
+export const io = new SocketServer(server, { cors: { origin: '*' } });
 
 const client = new Client({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
+  port: Number(process.env.PGPORT),
 });
 
 export const connectNotificationToDatabase = async () => {
@@ -23,7 +23,7 @@ export const connectNotificationToDatabase = async () => {
 
     client.on('notification', async (msg) => {
       if (msg.channel === 'bank_update') {
-        const updatedValue = parseInt(msg.payload, 10);
+        const updatedValue = parseInt(msg.payload as string, 10);
         io.emit('bank', updatedValue);
       }
     });
@@ -33,7 +33,7 @@ export const connectNotificationToDatabase = async () => {
   }
 };
 
-const handleClientConnection = async (socket) => {
+const handleClientConnection = async (socket: any) => {
   try {
     const bank = await Bank.findByPk(1);
 

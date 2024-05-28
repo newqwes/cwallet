@@ -1,10 +1,3 @@
-/**
- * @typedef {Object} OrderRequestBody
- * @property {string} count
- * @property {string} coinId
- * @property {string} price
- * @property {string} date
- */
 export const ORDER_REQUEST_BODY = {
   count: 'count',
   coinId: 'coinId',

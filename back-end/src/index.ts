@@ -12,7 +12,7 @@ import errorMiddleware from './middleware/errorMiddleware';
 import runTelegramBotService from './services/telegramBotService';
 import refreshRoute from './routes/refreshRoute';
 import userRoute from './routes/userRoute';
-import { swaggerDocs } from "./swagger";
+import { swaggerDocs } from './swagger';
 
 dotenv.config();
 

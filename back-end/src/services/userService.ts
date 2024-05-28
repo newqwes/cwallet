@@ -2,7 +2,7 @@ import User from '../database/models/user';
 import createResponse from '../utils/createResponse';
 
 class UserService {
-    async findOrCreateById(defaults) {
+    async findOrCreateById(defaults: any) {
         try {
             const { id, firstName, lastName, languageCode } = defaults;
             const telegramId = Number(id);
@@ -20,7 +20,7 @@ class UserService {
         }
     }
 
-    async findByTelegramUserId(telegramId) {
+    async findByTelegramUserId(telegramId: any) {
         try {
             return User.findOne({ where: { telegramId } });
         } catch (error) {
