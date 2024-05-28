@@ -1,5 +1,6 @@
 import { FC, useEffect, useMemo } from 'react';
 import {
+  BrowserNavigator,
   bindMiniAppCSSVars,
   bindThemeParamsCSSVars,
   bindViewportCSSVars,
@@ -37,7 +38,7 @@ export const App: FC = () => {
 
   // Create new application navigator and attach it to the browser history, so it could modify
   // it and listen to its changes.
-  const navigator = useMemo(() => initNavigator('app-navigation-state'), []);
+  const navigator: BrowserNavigator<any> = useMemo(() => initNavigator('app-navigation-state'), []);
   const [location, reactNavigator] = useIntegration(navigator);
 
   // Don't forget to attach the navigator to allow it to control the BackButton state as well
