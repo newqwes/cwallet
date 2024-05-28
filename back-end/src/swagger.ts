@@ -94,14 +94,14 @@ const options = {
 
 const swaggerSpec = swaggerJsdoc(options);
 
-export const swaggerDocs = (app, port) => {
+export const swaggerDocs = (app: any, port: any) => {
     // Swagger UI setup
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
         customCss: '.swagger-ui .topbar { display: none }',
         customSiteTitle: "API Cwallet"
     }));
 
-    app.get('/api-docs.json', (req, res) => {
+    app.get('/api-docs.json', (req: any, res: any) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
     });

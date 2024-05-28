@@ -2,7 +2,10 @@ import { DataTypes, Model } from 'sequelize';
 
 import sequelize from '..';
 
-class Bank extends Model {}
+class Bank extends Model {
+  id?: number;
+  value?: number;
+}
 
 Bank.init(
   {

@@ -1,19 +1,18 @@
 import { pick } from 'lodash/fp';
 import ApiError from '../exceptions/apiError';
-import { isTimeLimitOver } from '../utils/toMinute';
 
-const checkLastRefreshDate = (req, res, next) => {
+const checkLastRefreshDate = (req: any, res: any, next: any) => {
   try {
     const { nextDateUpdate } = pick(
       ['nextDateUpdate'],
       req.user,
     );
 
-    const timeLimitOver = isTimeLimitOver(nextDateUpdate);
+    // const timeLimitOver = isTimeLimitOver(nextDateUpdate);
 
-    if (!timeLimitOver) {
-      return res.status(405).json({ message: 'Еще время не настало!' });
-    }
+    // if (!timeLimitOver) {
+    //   return res.status(405).json({ message: 'Еще время не настало!' });
+    // }
 
     next();
   } catch (e) {
