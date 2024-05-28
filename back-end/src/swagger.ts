@@ -88,7 +88,7 @@ const options = {
             ],
         },
     },
-    apis: ['./src/routes/*.js'], // путь до файлов с аннотациями
+    apis: ['./src/routes/*.ts'],
 };
 
 
