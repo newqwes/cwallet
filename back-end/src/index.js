@@ -16,6 +16,7 @@ import { swaggerDocs } from "./swagger";
 
 dotenv.config();
 
+app.set('trust proxy', 1);
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(morgan('dev'));
