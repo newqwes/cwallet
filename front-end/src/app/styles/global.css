@@ -7,11 +7,6 @@ body {
   font-family: 'Roboto';
 }
 
-button {
-  padding: 8px 32px;
-  font-size: 32px;
-}
-
 pre {
   white-space: pre-wrap;
   word-wrap: break-word;

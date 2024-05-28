@@ -775,6 +775,11 @@
     "@twa-dev/types" "^7.0.0"
     "@xelene/vaul-with-scroll-fix" "0.1.4"
 
+"@tma.js/react-router-integration@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@tma.js/react-router-integration/-/react-router-integration-4.0.0.tgz#79f1a811c790667008522f85c8514d3417fb2d3d"
+  integrity sha512-MlnASeRNK+wk4DRVrOQNm+KDc0/eLwEarNjRGq4T+fYG0/eZb/rzWhU6TkHYr2dGKLUidN9KINkRlMMYs85i6g==
+
 "@tma.js/sdk-react@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@tma.js/sdk-react/-/sdk-react-2.2.0.tgz#69c489f60dc6e3c42aa0df4df29315ed24c0c728"
