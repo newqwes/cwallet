@@ -1,6 +1,5 @@
 import { FC, useEffect, useMemo } from 'react';
 import {
-  BrowserNavigator,
   bindMiniAppCSSVars,
   bindThemeParamsCSSVars,
   bindViewportCSSVars,
