@@ -39,7 +39,7 @@ const options = {
                         nextDateUpdate: {
                             type: 'string',
                             format: 'date-time',
-                            description: 'Next date of update. When user can push the refresh button'
+                            description: 'Next date of update. When user can push the claim button'
                         },
                         coins: {
                             type: 'integer',

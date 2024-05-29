@@ -1,7 +1,9 @@
-import ApiError from '../exceptions/apiError';
+import dotenv from 'dotenv';
 import { get } from 'lodash';
 import { validate, parse } from '@tma.js/init-data-node';
-import dotenv from 'dotenv';
+import ApiError from '../exceptions/apiError';
+import { TelegramInitDataModel } from '../models';
+
 dotenv.config();
 
 /**
@@ -19,9 +21,8 @@ const setInitData = (res: any, initData: any) => {
  * @returns Init data stored in the Response object. Can return undefined in case,
  * the client is not authorized.
  */
-export const getInitData = (res: any) => {
-  const initData = get(res, ['locals', 'initData']);
-  console.log('--QWES-- initData: ', initData);
+export const getInitData = (res: any): TelegramInitDataModel  => {
+  const initData: TelegramInitDataModel = get(res, ['locals', 'initData']);
   if (!initData?.user?.id) {
     throw ApiError.BadRequest('Not valid user data');
   }

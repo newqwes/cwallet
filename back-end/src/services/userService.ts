@@ -1,8 +1,9 @@
 import User from '../database/models/user';
 import createResponse from '../utils/createResponse';
+import { UserTelegramInitDataModel } from '../models';
 
 class UserService {
-    async findOrCreateById(defaults: any) {
+    async findOrCreateById(defaults: UserTelegramInitDataModel) {
         try {
             const { id, firstName, lastName, languageCode } = defaults;
             const telegramId = Number(id);
@@ -13,18 +14,17 @@ class UserService {
                     telegramId, firstName, lastName, languageCode
                 },
             });
-
             return { user, created };
         } catch (error) {
-            createResponse(500, 'Server Error findOrCreateById', error);
+            createResponse(404, 'Server Error findOrCreateById', error);
         }
     }
 
-    async findByTelegramUserId(telegramId: any) {
+    async findByTelegramUserId(telegramId: number) {
         try {
             return User.findOne({ where: { telegramId } });
         } catch (error) {
-            return false;
+            return null;
         }
     }
 }

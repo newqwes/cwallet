@@ -3,7 +3,29 @@ import { v4 as uuidv4 } from 'uuid';
 
 import sequelize from '..';
 
-class User extends Model {}
+class User extends Model {
+  id: string;
+  telegramId: number;
+  firstName: string | null;
+  lastName: string | null;
+  languageCode: string | null;
+
+  /**
+   * Example: "2024-05-29T08:26:42.000Z"
+   */
+  nextDateUpdate: Date;
+  coins: number | null;
+  avatar: string | null;
+  level: number;
+
+  // The bias towards higher or lower values (0 to 1, where 0 is lower values and 1 is higher values)
+  timeBias: number;
+  claimBias: number;
+
+  // The influence of the bias on the result (0 to 1, where 0 is no influence and 1 is full influence)
+  timeInfluence: number;
+  claimInfluence: number;
+}
 
 User.init(
   {
@@ -50,6 +72,26 @@ User.init(
     level: {
       type: DataTypes.INTEGER,
       defaultValue: 1,
+      allowNull: false,
+    },
+    timeBias: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.5,
+      allowNull: false,
+    },
+    claimBias: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.5,
+      allowNull: false,
+    },
+    timeInfluence: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0,
+      allowNull: false,
+    },
+    claimInfluence: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0,
       allowNull: false,
     }
   },

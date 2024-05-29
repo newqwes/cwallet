@@ -11,9 +11,9 @@ axios.interceptors.request.use((config) => ({
   headers: { Authorization: `Bearer ${retrieveLaunchParams().initDataRaw}`}
 }));
 
-export const refreshAPI = {
-  refresh: async (): Promise<string> => {
-      const { data } = await axios.post('refresh');
+export const claimAPI = {
+  claim: async (): Promise<{ claimedCoins: number, nextDate: string }> => {
+      const { data } = await axios.post('claim');
       return data;
   },
 };

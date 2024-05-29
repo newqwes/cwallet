@@ -1,22 +1,22 @@
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware';
-import { refresh } from '../controllers/refreshController';
+import { claim } from '../controllers/claimController';
 
-const refreshRoute = express.Router();
+const claimRoute = express.Router();
 
 /**
  * @swagger
  * tags:
- *   name: Refresh
- *   description: Main refresh button
+ *   name: Claim
+ *   description: Main claim button
  */
 
 /**
  * @swagger
- * /api/refresh:
+ * /api/claim:
  *   post:
  *     summary: User pushed this button for claim coins
- *     tags: [Refresh]
+ *     tags: [Claim]
  *     security:
  *       - BearerAuth: []
  *     responses:
@@ -32,7 +32,7 @@ const refreshRoute = express.Router();
  *                 nextDate:
  *                   type: string
  *                   format: date-time
- *                   description: Next date of update. When user can push the refresh button
+ *                   description: Next date of update. When user can push the claim button
  *       401:
  *         description: Not authorized
  *         content:
@@ -46,6 +46,6 @@ const refreshRoute = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-refreshRoute.post('/', authMiddleware, refresh);
+claimRoute.post('/', authMiddleware, claim);
 
-export default refreshRoute;
+export default claimRoute;
