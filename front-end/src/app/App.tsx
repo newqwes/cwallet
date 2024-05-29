@@ -35,6 +35,10 @@ export const App: FC = () => {
     return viewport && bindViewportCSSVars(viewport);
   }, [viewport]);
 
+  useEffect(() => {
+    window.Telegram.WebApp.expand();
+  }, [window.Telegram.WebApp]);
+
   // Create new application navigator and attach it to the browser history, so it could modify
   // it and listen to its changes.
   const navigator: any = useMemo(() => initNavigator('app-navigation-state'), []);
