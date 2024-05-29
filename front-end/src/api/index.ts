@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { retrieveLaunchParams } from '@tma.js/sdk-react';
 
-const baseURL = `${import.meta.env.VITE_REACT_APP_API_URL || ''}api/`;
+const baseURL = `${import.meta.env.VITE_REACT_APP_API_URL || ''}/api/`;
 
 // @ts-ignore
 axios.interceptors.request.use((config) => ({

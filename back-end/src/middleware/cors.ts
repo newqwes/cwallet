@@ -5,5 +5,5 @@ dotenv.config();
 
 export default cors({
   credentials: true,
-  origin: process.env.CLIENT_URL,
+  origin: [process.env.CLIENT_URL, process.env.LOCAL_CLIENT_URL],
 });
