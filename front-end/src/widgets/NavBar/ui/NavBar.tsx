@@ -43,6 +43,7 @@ export const NavBar: FC = () => {
       {routes.map(route =>
         <ButtonLink
           path={route.path}
+          key={route.path}
           title={route.title}
           isActive={location.pathname === route.path}
         />

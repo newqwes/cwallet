@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+const {DataTypes} = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {
@@ -47,6 +48,26 @@ module.exports = {
         type: DataTypes.INTEGER,
         defaultValue: 1,
         allowNull: true,
+      },
+      timeBias: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0.5,
+        allowNull: false,
+      },
+      claimBias: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0.5,
+        allowNull: false,
+      },
+      timeInfluence: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      claimInfluence: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+        allowNull: false,
       }
     });
   },

@@ -1,7 +1,7 @@
 import { pick } from 'lodash/fp';
 import ApiError from '../exceptions/apiError';
 
-const checkLastRefreshDate = (req: any, res: any, next: any) => {
+const checkLastClaimDate = (req: any, res: any, next: any) => {
   try {
     const { nextDateUpdate } = pick(
       ['nextDateUpdate'],
@@ -20,4 +20,4 @@ const checkLastRefreshDate = (req: any, res: any, next: any) => {
   }
 };
 
-export default checkLastRefreshDate;
+export default checkLastClaimDate;

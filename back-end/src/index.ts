@@ -10,7 +10,7 @@ import cors from './middleware/cors';
 import limiter from './middleware/limiter';
 import errorMiddleware from './middleware/errorMiddleware';
 import runTelegramBotService from './services/telegramBotService';
-import refreshRoute from './routes/refreshRoute';
+import claimRoute from './routes/claimRoute';
 import userRoute from './routes/userRoute';
 import { swaggerDocs } from './swagger';
 
@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(limiter);
 
-app.use('/api/refresh', refreshRoute);
+app.use('/api/claim', claimRoute);
 app.use('/api/user', userRoute);
 
 app.use(errorMiddleware);

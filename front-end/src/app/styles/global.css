@@ -4,7 +4,7 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 5px;
-  font-family: 'Roboto';
+  font-family: 'Roboto', serif;
 }
 
 pre {
@@ -14,4 +14,9 @@ pre {
   color: #ff1c1c;
   border: 1px solid #ff1c1c;
   border-radius: 5px;
+}
+
+/*TEMP*/
+p, h1, h2, h3, h4, h5, h6 {
+  color: #ff1c1c;
 }
