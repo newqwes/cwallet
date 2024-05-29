@@ -5,7 +5,6 @@ import { claimAPI } from '../api';
 function* claimSaga() {
   try {
     const response: string = yield call(claimAPI.claim);
-    console.log('--QWES-- response: ', response);
     yield put(claimSuccess(response));
   } catch (error) {
     yield put(claimFailure(error || 'An error occurred'));

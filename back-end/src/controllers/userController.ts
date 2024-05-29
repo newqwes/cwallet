@@ -6,8 +6,6 @@ import UserDto from '../dto/userDto';
 export const getUserData = async (req: any, res: any, next: any) => {
     try {
         const initData = getInitData(res);
-
-        console.log(initData);
         const { user, created }: any = await userService.findOrCreateById(initData.user);
 
         if (!user) {
