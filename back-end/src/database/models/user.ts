@@ -13,7 +13,7 @@ class User extends Model {
   /**
    * Example: "2024-05-29T08:26:42.000Z"
    */
-  nextDateUpdate: Date;
+  nextClaimDate: Date;
   coins: number | null;
   avatar: string | null;
   level: number;
@@ -53,7 +53,7 @@ User.init(
       type: DataTypes.STRING(50),
       allowNull: true,
     },
-    nextDateUpdate: {
+    nextClaimDate: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },

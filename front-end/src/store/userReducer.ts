@@ -7,7 +7,7 @@ interface IUserState {
     firstName: string;
     lastName: string;
     languageCode: string;
-    nextDateUpdate: Date;
+    nextClaimDate: Date;
     coins: number;
     avatar: string;
     level: number;
@@ -23,7 +23,7 @@ const initialState: IUserState = {
     firstName: 'firstName',
     lastName: 'lastName',
     languageCode: 'en',
-    nextDateUpdate: new Date(),
+    nextClaimDate: new Date(),
     coins: 0,
     avatar: 'avatar',
     level: 0,
@@ -52,8 +52,8 @@ const userReducer = createSlice({
     },
     claimCoinsSuccess: (state, action: PayloadAction<any>) => {
       state.loading = false;
-      state.data.coins = action.payload.claimedCoins;
-      state.data.nextDateUpdate = action.payload.nextDate;
+      state.data.coins = action.payload.coins;
+      state.data.nextClaimDate = action.payload.nextClaimDate;
     },
     claimCoinsError: (state, action: PayloadAction<any>) => {
       state.loading = false;

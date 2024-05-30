@@ -6,7 +6,7 @@ class UserDto {
   firstName: string;
   lastName: string;
   languageCode: string;
-  nextDateUpdate: Date;
+  nextClaimDate: Date;
   coins: number | null;
   avatar: string | null;
   level: number;
@@ -17,7 +17,7 @@ class UserDto {
     this.firstName = model.firstName;
     this.lastName = model.lastName;
     this.languageCode = model.languageCode;
-    this.nextDateUpdate = model.nextDateUpdate;
+    this.nextClaimDate = model.nextClaimDate;
     this.coins = Number(model.coins);
     this.avatar = model.avatar;
     this.level = Number(model.level);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { retrieveLaunchParams } from '@tma.js/sdk-react';
 
-const baseURL = `${import.meta.env.VITE_REACT_APP_API_URL || ''}api/`;
+const baseURL = `${import.meta.env.VITE_REACT_APP_API_URL || ''}/api/`;
 
 // @ts-ignore
 axios.interceptors.request.use((config) => ({
@@ -12,7 +12,7 @@ axios.interceptors.request.use((config) => ({
 }));
 
 export const claimAPI = {
-  claimCoins: async (): Promise<{ claimedCoins: number, nextDate: string }> => {
+  claimCoins: async (): Promise<{ coins: number, nextDate: string }> => {
     const { data } = await axios.post('claim');
     return data;
   },

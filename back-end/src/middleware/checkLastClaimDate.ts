@@ -3,12 +3,12 @@ import ApiError from '../exceptions/apiError';
 
 const checkLastClaimDate = (req: any, res: any, next: any) => {
   try {
-    const { nextDateUpdate } = pick(
-      ['nextDateUpdate'],
+    const { nextClaimDate } = pick(
+      ['nextClaimDate'],
       req.user,
     );
 
-    // const timeLimitOver = isTimeLimitOver(nextDateUpdate);
+    // const timeLimitOver = isTimeLimitOver(nextClaimDate);
 
     // if (!timeLimitOver) {
     //   return res.status(405).json({ message: 'Еще время не настало!' });

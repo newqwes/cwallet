@@ -27,7 +27,7 @@ const claimRoute = express.Router();
  *             schema:
  *               type: object
  *               properties:
- *                 claimedCoins:
+ *                 coins:
  *                   type: number
  *                 nextDate:
  *                   type: string

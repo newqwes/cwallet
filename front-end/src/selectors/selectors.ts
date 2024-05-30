@@ -10,7 +10,7 @@ export const selectUserCoinCount = createSelector(
 
 export const selectUserNextClaimDate = createSelector(
   [selectUser],
-  (user) => user.data.nextDateUpdate
+  (user) => user.data.nextClaimDate
 );
 
 export const selectLoading = createSelector(

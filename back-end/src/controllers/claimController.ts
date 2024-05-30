@@ -13,23 +13,23 @@ export const claim = async (req: any, res: any, next: any) => {
       return next(ApiError.NotFound('User not found by telegramId'));
     }
 
-    const validDateForClaim = new Date() > new Date(user.nextDateUpdate);
+    const validDateForClaim = new Date() > new Date(user.nextClaimDate);
 
     if (!validDateForClaim) {
       return next(ApiError.AlreadyExists('Its not time yet'));
     }
 
     // TODO: move min and max to .env or write to DB like 'settings' table
-    const claimedCoins = getRandomInt(50, 150, user.claimBias, user.claimInfluence);
-    const extraTimeInMinutes = getRandomInt(15, 120, user.timeBias, user.timeInfluence);
+    const coins = getRandomInt(50, 150, user.claimBias, user.claimInfluence) + user.coins;
+    const extraTimeInMinutes = getRandomInt(1, 2, user.timeBias, user.timeInfluence);
     const now = moment();
     now.add(extraTimeInMinutes, 'minutes');
-    const nextDate = now.toDate();
-    user.coins += claimedCoins;
-    user.nextDateUpdate = nextDate;
+    const nextClaimDate = now.toDate();
+    user.coins = coins;
+    user.nextClaimDate = nextClaimDate;
     await user.save();
 
-    return res.status('201').json({ claimedCoins, nextDate });
+    return res.status('201').json({ coins, nextClaimDate });
   } catch (e) {
     next(e);
   }

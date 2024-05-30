@@ -36,10 +36,10 @@ const options = {
                             type: 'string',
                             description: 'Language code'
                         },
-                        nextDateUpdate: {
+                        nextClaimDate: {
                             type: 'string',
                             format: 'date-time',
-                            description: 'Next date of update. When user can push the claim button'
+                            description: 'Next date of claim. When user can push the claim button'
                         },
                         coins: {
                             type: 'integer',

@@ -28,7 +28,7 @@ module.exports = {
         type: DataTypes.STRING(50),
         allowNull: true,
       },
-      nextDateUpdate: {
+      nextClaimDate: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },

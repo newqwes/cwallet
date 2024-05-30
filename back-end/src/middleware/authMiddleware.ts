@@ -40,14 +40,14 @@ const authMiddleware = (req: any, res: any, next: any) => {
   // <auth-type> <auth-data>
   // <auth-type> must be "tma", and <auth-data> is Telegram Mini Apps init data.
   const [authType, authData = ''] = (req.header('authorization') || '').split(' ');
-
   switch (authType) {
     case 'Bearer':
       try {
         // Validate init data.
         validate(authData, process.env.BOT_TOKEN || '', {
           // We consider init data sign valid for 1 hour from their creation moment.
-          expiresIn: 3600,
+          // TODO: need to add if necessary
+          expiresIn: 0,
         });
 
         // Parse init data. We will surely need it in the future.
