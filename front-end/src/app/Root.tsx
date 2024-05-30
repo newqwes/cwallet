@@ -3,7 +3,7 @@ import { ErrorBoundary } from './ErrorBoundary';
 import { App } from './App';
 import { SDKProvider } from '@tma.js/sdk-react';
 import { Provider } from 'react-redux';
-import store from '../store/store';
+import store from './store';
 
 const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
   <div>

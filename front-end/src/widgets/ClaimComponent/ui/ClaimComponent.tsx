@@ -1,14 +1,15 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button, Title } from '@telegram-apps/telegram-ui';
+import { differenceInMilliseconds } from 'date-fns';
 import {
+  claimCoins,
+  fetchUser,
   selectError,
   selectLoading,
   selectUserCoinCount,
-  selectUserNextClaimDate
-} from '../../../selectors/selectors';
-import { Button, Title } from '@telegram-apps/telegram-ui';
-import { differenceInMilliseconds } from 'date-fns';
-import { claimCoins, fetchUser } from '../../../store/userReducer';
+  selectUserNextClaimDate,
+} from '../../../entities/User';
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
