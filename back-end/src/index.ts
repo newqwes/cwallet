@@ -35,7 +35,6 @@ swaggerDocs(app, process.env.SERVER_PORT);
 const start = async () => {
   try {
     server.listen(process.env.SERVER_PORT, async () => {
-      console.log(`API_URL ${process.env.API_URL}`);
       console.log(`HOST_NAME ${process.env.HOST_NAME}`);
       console.log(`CLIENT_URL ${process.env.CLIENT_URL}`);
       console.log(`CLIENT_URL_VISUAL ${process.env.CLIENT_URL_VISUAL}`);
