@@ -33,7 +33,8 @@ jobs:
           script: |
             pushd /home/repositories/CWA/back-end/
             yarn
-            pm2 restart strapi
+            yarn build
+            pm2 restart cwallet_b
             popd
 
   deploy-frontend:
