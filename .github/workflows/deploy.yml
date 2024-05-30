@@ -35,7 +35,7 @@ jobs:
           username: root
           key: ${{ secrets.KEY }}
           script: |
-            export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
+            export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/root/.nvm/versions/node/v20.13.1/bin
             pushd /home/repositories/CWA/back-end/
             yarn install
             yarn build
