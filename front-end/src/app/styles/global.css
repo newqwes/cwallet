@@ -1,6 +1,6 @@
 body {
   box-sizing: border-box;
-  max-width: 100%;
+  min-width: 100vh;
   overflow-x: hidden;
   margin: 0;
   padding: 5px;
@@ -17,6 +17,6 @@ pre {
 }
 
 /*TEMP*/
-p, h1, h2, h3, h4, h5, h6 {
+/* p, h1, h2, h3, h4, h5, h6 {
   color: #ff1c1c;
-}
+} */

@@ -1,14 +1,7 @@
-import { FC, useEffect } from 'react';
-import { fetchDataRequest } from '../../../store/userReducer.ts';
-import { useDispatch } from 'react-redux';
-import ClaimComponent from '../../../shared/ui/ClaimComponent/ClaimComponent.tsx';
+import { FC } from 'react';
+import { ClaimComponent } from '../../../widgets/ClaimComponent/index.ts';
 
 export const MainPage: FC = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchDataRequest());
-  }, []);
   return (
     <>
       <ClaimComponent />

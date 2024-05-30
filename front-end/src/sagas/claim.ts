@@ -1,20 +1,20 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { claimRequest, claimFailure, claimSuccess } from '../store/claimReducer.ts';
 import { claimAPI } from '../api';
+import { claimCoins, claimCoinsError, claimCoinsSuccess } from '../store/userReducer.ts';
 
-function* claimSaga() {
+function* claimCoinsSaga() {
   try {
-    const response: string = yield call(claimAPI.claim);
-    yield put(claimSuccess(response));
+    const response: string = yield call(claimAPI.claimCoins);
+    yield put(claimCoinsSuccess(response));
   } catch (error) {
-    yield put(claimFailure(error || 'An error occurred'));
+    yield put(claimCoinsError(error || 'An error occurred while claiming coins'));
   }
 }
 
-function* watchClaim() {
-  yield takeLatest(claimRequest.type, claimSaga);
+function* watchClaimCoins() {
+  yield takeLatest(claimCoins.type, claimCoinsSaga);
 }
 
 export default function* claim() {
-  yield all([watchClaim()]);
+  yield all([watchClaimCoins()]);
 }

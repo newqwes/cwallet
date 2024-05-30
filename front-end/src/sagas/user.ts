@@ -1,20 +1,20 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { fetchDataRequest, fetchDataSuccess, fetchDataFailure } from '../store/userReducer.ts';
+import { fetchUser, fetchUserSuccess, fetchUserError } from '../store/userReducer.ts';
 import { userAPI } from '../api';
 
-function* fetchDataSaga() {
+function* fetchUserSaga() {
   try {
-    const response: string = yield call(userAPI.getUserData);
-    yield put(fetchDataSuccess(response));
+    const response: string = yield call(userAPI.getUser);
+    yield put(fetchUserSuccess(response));
   } catch (error) {
-    yield put(fetchDataFailure(error || 'An error occurred'));
+    yield put(fetchUserError(error || 'An error occurred'));
   }
 }
 
-function* watchFetchData() {
-  yield takeLatest(fetchDataRequest.type, fetchDataSaga);
+function* watchFetchUser() {
+  yield takeLatest(fetchUser.type, fetchUserSaga);
 }
 
 export default function* user() {
-  yield all([watchFetchData()]);
+  yield all([watchFetchUser()]);
 }

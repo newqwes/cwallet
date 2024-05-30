@@ -5,7 +5,12 @@ const selectUser = (state: RootState) => state.user;
 
 export const selectUserCoinCount = createSelector(
   [selectUser],
-  (user) => user.coins
+  (user) => user.data.coins
+);
+
+export const selectUserNextClaimDate = createSelector(
+  [selectUser],
+  (user) => user.data.nextDateUpdate
 );
 
 export const selectLoading = createSelector(
