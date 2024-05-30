@@ -16,23 +16,28 @@ jobs:
         working-directory: ./back-end
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup key
         run: |
           set -eu
-          mkdir "$HOME/.ssh"
+          mkdir -p "$HOME/.ssh"
           echo "${{ secrets.KEY }}" > "$HOME/.ssh/key"
           chmod 600 "$HOME/.ssh/key"
-      - name: Deploy
-        run: rsync -a --progress --human-readable -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --delete --exclude-from 'exclude-list.txt' . root@${{ env.SERVER_IP }}:/home/repositories/CWA/back-end/
-      - name: Restart strapi pm2
+
+      - name: Deploy backend files
+        run: |
+          rsync -a --progress --human-readable -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --delete --exclude-from 'exclude-list.txt' . root@${{ env.SERVER_IP }}:/home/repositories/CWA/back-end/
+
+      - name: Restart backend services
         uses: appleboy/ssh-action@master
         with:
-          host: '${{ env.SERVER_IP }}'
+          host: ${{ env.SERVER_IP }}
           username: root
           key: ${{ secrets.KEY }}
           script: |
+            export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
             pushd /home/repositories/CWA/back-end/
-            yarn
+            yarn install
             yarn build
             pm2 restart cwallet_b
             popd
@@ -46,18 +51,24 @@ jobs:
       SERVER_URL: ${{ secrets.SERVER_URL }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
       - name: Install dependencies
         run: npm install
+
       - name: Run build
         run: CI=false npm run build
+
       - name: Setup key
         run: |
           set -eu
-          mkdir "$HOME/.ssh"
+          mkdir -p "$HOME/.ssh"
           echo "${{ secrets.KEY }}" > "$HOME/.ssh/key"
           chmod 600 "$HOME/.ssh/key"
-      - name: Deploy
-        run: rsync -a --progress --human-readable -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete dist/ root@${{ env.SERVER_IP }}:/home/repositories/CWA/front-end/build/
+
+      - name: Deploy frontend files
+        run: |
+          rsync -a --progress --human-readable -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete dist/ root@${{ env.SERVER_IP }}:/home/repositories/CWA/front-end/build/
