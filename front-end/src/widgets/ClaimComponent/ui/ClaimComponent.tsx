@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Title } from '@telegram-apps/telegram-ui';
 import { differenceInMilliseconds } from 'date-fns';
 import {
   claimCoins,
@@ -10,6 +9,8 @@ import {
   selectUserCoinCount,
   selectUserNextClaimDate,
 } from '../../../entities/User';
+import { useMagicNumber } from '../../../shared/libs/useMagicNumber';
+import { ClaimButton, Coins, Wrapper } from './styled';
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export const ClaimComponent: FC = () => {
   const nextClaimDateMs = new Date(nextClaimDate);
   const initialTimeLeft = differenceInMilliseconds(nextClaimDateMs, currendDateMs);
 
+  const [magicNumber, setMagicNumber] = useMagicNumber(1, 100);
   const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
   const isTimerActive = timeLeft >= 0;
 
@@ -45,6 +47,18 @@ export const ClaimComponent: FC = () => {
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
+  useEffect(() => {
+    if (isTimerActive) {
+      return;
+    }
+
+    const magicNumberId = setInterval(() => {
+      setMagicNumber();
+    }, 100);
+
+    return () => clearInterval(magicNumberId);
+  }, [magicNumber, isTimerActive]);
+
   const handleClickClaimBtn = () => {
     dispatch(claimCoins());
   }
@@ -60,13 +74,13 @@ export const ClaimComponent: FC = () => {
   };
 
   return (
-    <div>
-      {coins && <Title level='1' weight='1' >{coins} 🪙</Title>}
-      <Button style={{ width: '100px' }} disabled={isTimerActive} onClick={handleClickClaimBtn}>
-        {isTimerActive ? formatTime(timeLeft) : 'Claim'}
-      </Button>
+    <Wrapper>
+      {coins && <Coins >{coins}</Coins>}
+      <ClaimButton disabled={isTimerActive} onClick={handleClickClaimBtn}>
+        {isTimerActive ? formatTime(timeLeft) : magicNumber}
+      </ClaimButton>
       {error && <pre>Error: {JSON.stringify(error)}</pre>}
       {loading && <p>Loading...</p>}
-    </div>
+    </Wrapper>
   );
 };
