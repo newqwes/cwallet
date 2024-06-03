@@ -1,6 +1,8 @@
 import type { ComponentType, JSX } from 'react';
 import { MainPage } from '../../pages/main';
 import { ShortPredictGame } from '../../pages/short-prediction-game';
+import { TgStyles } from '../../pages/TgStyles';
+import { ROUTING_PATHS } from '../../shared/consts';
 
 
 interface Route {
@@ -11,6 +13,7 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  { path: '/', Component: MainPage, title: 'Main page' },
-  { path: '/short-predict-game', Component: ShortPredictGame, title: 'Predict game' },
+  { path: ROUTING_PATHS.HOME, Component: MainPage, title: 'Main page' },
+  { path: ROUTING_PATHS.SHORT_PREDICTION_GAME, Component: ShortPredictGame, title: 'TgStyles' },
+  { path: ROUTING_PATHS.TG_STYLES, Component: TgStyles, title: 'Predict game' },
 ];
