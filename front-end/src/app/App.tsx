@@ -51,14 +51,12 @@ export const App: FC = () => {
     return () => navigator.detach();
   }, [navigator]);
 
+  document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false })
 
   return (
     <AppRoot
       appearance={miniApp.isDark ? 'dark' : 'light'}
       platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
-      style={{
-        paddingBottom: '55px',
-      }}
     >
       <Router location={location} navigator={reactNavigator}>
         <Routes>

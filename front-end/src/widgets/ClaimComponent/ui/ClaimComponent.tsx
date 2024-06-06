@@ -79,11 +79,10 @@ export const ClaimComponent: FC = () => {
     <Wrapper>
       <RefCode>My referral code: {refCode}</RefCode>
       {coins && <Coins>{coins}</Coins>}
-      <ClaimButton disabled={isTimerActive} onClick={handleClickClaimBtn}>
+      <ClaimButton loading={loading} disabled={isTimerActive} onClick={handleClickClaimBtn}>
         {isTimerActive ? formatTime(timeLeft) : magicNumber}
       </ClaimButton>
       {error && <pre>Error: {JSON.stringify(error)}</pre>}
-      {loading && <p>Loading...</p>}
     </Wrapper>
   );
 };

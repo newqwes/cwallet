@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 interface IClaimButton {
   disabled: boolean;
+  loading: boolean;
 }
 
 const GradientTextAnimation = keyframes`
@@ -39,7 +40,8 @@ box-shadow: inset 0 0 5vw 5vw rgba(255,255,255,0.2);
 border: 2vw solid #40a7e3;
 border-radius: 50%;
 font-size: ${({ disabled }) => (disabled ? '1.5em' : '2.5em')};
-opacity: ${({ disabled }) => (disabled ? '0.66' : '1')};
+opacity: ${({ disabled, loading}) => (disabled || loading ? '0.66' : '1')};
+transition: opacity 0.3s ease-in-out;
 `;
 
 export const Wrapper = styled.div`
@@ -50,7 +52,7 @@ justify-content: center;
 max-width: 90vw;
 `;
 
-export const RefCode = styled.h3`
+export const RefCode = styled.h2`
 margin: 10px;
-color: #000000;
+color: #880000;
 `;

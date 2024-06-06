@@ -6,7 +6,8 @@ import {
   StyledUserOutlined as UserOutlined,
   StyledBarChartOutlined as BarChartOutlined,
   StyledFormatPainterOutlined as FormatPainterOutlined,
-} from "./styled";
+  StyledUsersOutlined as UsersOutlined,
+} from './styled';
 import { NavButton } from "./NavButton";
 
 export const NavBar: FC = () => {
@@ -17,7 +18,7 @@ export const NavBar: FC = () => {
       <NavButton
         key={ROUTING_PATHS.HOME}
         path={ROUTING_PATHS.HOME}
-        title="User"
+        title="Main"
         icon={<UserOutlined />}
         isActive={location.pathname === ROUTING_PATHS.HOME}
       />
@@ -34,6 +35,13 @@ export const NavBar: FC = () => {
         title="tgStyles"
         icon={<FormatPainterOutlined />}
         isActive={location.pathname === ROUTING_PATHS.TG_STYLES}
+      />
+      <NavButton
+        key={ROUTING_PATHS.USERS}
+        path={ROUTING_PATHS.USERS}
+        title="Users"
+        icon={<UsersOutlined />}
+        isActive={location.pathname === ROUTING_PATHS.USERS}
       />
     </NavBarWrapper>
   );

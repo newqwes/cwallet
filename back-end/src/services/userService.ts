@@ -42,9 +42,9 @@ class UserService {
         }
     }
 
-    async findAll(arg: any) {
+    async findAll(arg?: any) {
         try {
-            return User.findAll({ where: arg });
+            return User.findAll(arg ? { where: arg } : {});
         } catch (error) {
             return null;
         }

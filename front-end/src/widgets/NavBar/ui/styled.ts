@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
-import { BarChartOutlined, FormatPainterOutlined, UserOutlined } from '@ant-design/icons';
+import { BarChartOutlined, FormatPainterOutlined, UserOutlined, TrophyOutlined } from '@ant-design/icons';
 
 import { IButtonLink } from "./types";
 
 export const NavBarWrapper = styled.div`
 position: fixed;
 left: 50%;
-bottom: 0;
+bottom: 10px;
 transform: translateX(-50%);
 display: flex;
 justify-content: center;
@@ -49,5 +49,8 @@ export const StyledBarChartOutlined = styled(BarChartOutlined)`
 ${IconBase}
 `;
 export const StyledFormatPainterOutlined = styled(FormatPainterOutlined)`
+${IconBase}
+`;
+export const StyledUsersOutlined = styled(TrophyOutlined)`
 ${IconBase}
 `;

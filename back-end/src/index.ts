@@ -13,6 +13,7 @@ import errorMiddleware from './middleware/errorMiddleware';
 import runTelegramBotService from './services/telegramBotService';
 import claimRoute from './routes/claimRoute';
 import userRoute from './routes/userRoute';
+import usersRoute from './routes/usersRoute';
 import referralRoute from './routes/referralRoute';
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use(limiter);
 
 app.use('/api/claim', claimRoute);
 app.use('/api/user', userRoute);
+app.use('/api/users', usersRoute);
 app.use('/api/referral', referralRoute);
 
 app.use(errorMiddleware);
