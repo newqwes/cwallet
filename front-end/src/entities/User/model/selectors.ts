@@ -7,6 +7,11 @@ export const selectUserCoinCount = createSelector(
   (user) => user.data.coins
 );
 
+export const selectUserRefCode = createSelector(
+  [selectUser],
+  (user) => user.data.referralCode
+);
+
 export const selectUserNextClaimDate = createSelector(
   [selectUser],
   (user) => user.data.nextClaimDate

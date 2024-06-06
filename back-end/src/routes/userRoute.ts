@@ -19,6 +19,12 @@ const userRoute = express.Router();
  *     tags: [User]
  *     security:
  *       - BearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: refParent
+ *         schema:
+ *           type: string
+ *         description: Referral parent identifier
  *     responses:
  *       200:
  *         description: Successful response

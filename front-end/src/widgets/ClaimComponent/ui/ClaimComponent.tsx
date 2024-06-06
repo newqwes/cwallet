@@ -8,13 +8,15 @@ import {
   selectLoading,
   selectUserCoinCount,
   selectUserNextClaimDate,
+  selectUserRefCode,
 } from '../../../entities/User';
 import { useMagicNumber } from '../../../shared/libs/useMagicNumber';
-import { ClaimButton, Coins, Wrapper } from './styled';
+import { ClaimButton, Coins, Wrapper, RefCode } from './styled';
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
   const coins = useSelector(selectUserCoinCount);
+  const refCode = useSelector(selectUserRefCode);
   const nextClaimDate = useSelector(selectUserNextClaimDate);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
@@ -75,7 +77,8 @@ export const ClaimComponent: FC = () => {
 
   return (
     <Wrapper>
-      {coins && <Coins >{coins}</Coins>}
+      <RefCode>My referral code: {refCode}</RefCode>
+      {coins && <Coins>{coins}</Coins>}
       <ClaimButton disabled={isTimerActive} onClick={handleClickClaimBtn}>
         {isTimerActive ? formatTime(timeLeft) : magicNumber}
       </ClaimButton>

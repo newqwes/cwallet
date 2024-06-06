@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+
 interface IUserState {
+  /**
+   * @see {@link ./back-end/src/dto/userDto.ts} Types for user
+   */
   data: {
     id: string;
     telegramId: number;
@@ -11,6 +15,9 @@ interface IUserState {
     coins: number;
     avatar: string;
     level: number;
+    referralCode: string | null;
+    refParent: number | null;
+    refParentChangedTimes: number;
   };
   error: string;
   loading: boolean;
@@ -27,6 +34,9 @@ const initialState: IUserState = {
     coins: 0,
     avatar: 'avatar',
     level: 0,
+    referralCode: null,
+    refParent: null,
+    refParentChangedTimes: 0
   },
   error: '',
   loading: false,

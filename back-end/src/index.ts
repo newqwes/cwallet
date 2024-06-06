@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import { swaggerDocs } from './swagger';
 import { app, connectNotificationToDatabase, server } from './config';
 import sequelize from './database';
 import cors from './middleware/cors';
@@ -12,7 +13,7 @@ import errorMiddleware from './middleware/errorMiddleware';
 import runTelegramBotService from './services/telegramBotService';
 import claimRoute from './routes/claimRoute';
 import userRoute from './routes/userRoute';
-import { swaggerDocs } from './swagger';
+import referralRoute from './routes/referralRoute';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use(limiter);
 
 app.use('/api/claim', claimRoute);
 app.use('/api/user', userRoute);
+app.use('/api/referral', referralRoute);
 
 app.use(errorMiddleware);
 

@@ -10,6 +10,9 @@ class UserDto {
   coins: number | null;
   avatar: string | null;
   level: number;
+  referralCode: string;
+  refParent: number;
+  refParentChangedTimes: number;
 
   constructor(model: User) {
     this.id = model.id;
@@ -21,6 +24,9 @@ class UserDto {
     this.coins = Number(model.coins);
     this.avatar = model.avatar;
     this.level = Number(model.level);
+    this.referralCode = model.referralCode;
+    this.refParent = Number(model.refParent);
+    this.refParentChangedTimes = Number(model.refParentChangedTimes);
   }
 }
 

@@ -1,5 +1,4 @@
 const { v4: uuidv4 } = require('uuid');
-const {DataTypes} = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {
@@ -18,15 +17,12 @@ module.exports = {
       },
       firstName: {
         type: DataTypes.STRING(50),
-        allowNull: true,
       },
       lastName: {
         type: DataTypes.STRING(50),
-        allowNull: true,
       },
       languageCode: {
         type: DataTypes.STRING(50),
-        allowNull: true,
       },
       nextClaimDate: {
         type: DataTypes.DATE,
@@ -35,19 +31,16 @@ module.exports = {
       coins: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
-        allowNull: true,
         validate: {
           min: 0,
         },
       },
       avatar: {
         type: DataTypes.STRING(100),
-        allowNull: true,
       },
       level: {
         type: DataTypes.INTEGER,
         defaultValue: 1,
-        allowNull: true,
       },
       timeBias: {
         type: DataTypes.FLOAT,
@@ -68,11 +61,40 @@ module.exports = {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false,
-      }
+      },
+      referralCode: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+        unique: true,
+      },
+      refParent: {
+        type: DataTypes.DOUBLE
+      },
+      refParentChangedTimes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: true,
+        validate: {
+          min: 0,
+        },
+      },
+    });
+
+    await queryInterface.addConstraint('user', {
+      fields: ['telegramId'],
+      type: 'unique',
+      name: 'unique_telegramId'
+    });
+    await queryInterface.addConstraint('user', {
+      fields: ['referralCode'],
+      type: 'unique',
+      name: 'unique_referralCode'
     });
   },
 
   down: async queryInterface => {
+    await queryInterface.removeConstraint('user', 'unique_telegramId');
+    await queryInterface.removeConstraint('user', 'unique_referralCode');
     await queryInterface.dropTable('user');
   },
 };

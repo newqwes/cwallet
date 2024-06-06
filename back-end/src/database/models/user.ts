@@ -25,6 +25,10 @@ class User extends Model {
   // The influence of the bias on the result (0 to 1, where 0 is no influence and 1 is full influence)
   timeInfluence: number;
   claimInfluence: number;
+
+  referralCode: string;
+  refParent: number;
+  refParentChangedTimes: number;
 }
 
 User.init(
@@ -93,7 +97,23 @@ User.init(
       type: DataTypes.FLOAT,
       defaultValue: 0,
       allowNull: false,
-    }
+    },
+    referralCode: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique: true,
+    },
+    refParent: {
+      type: DataTypes.DOUBLE,
+    },
+    refParentChangedTimes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: true,
+      validate: {
+        min: 0,
+      },
+    },
   },
   {
     sequelize,

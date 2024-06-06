@@ -49,3 +49,8 @@ align-items: center;
 justify-content: center;
 max-width: 90vw;
 `;
+
+export const RefCode = styled.h3`
+margin: 10px;
+color: #000000;
+`;
