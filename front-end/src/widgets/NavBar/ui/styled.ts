@@ -1,6 +1,12 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
-import { BarChartOutlined, FormatPainterOutlined, UserOutlined, TrophyOutlined } from '@ant-design/icons';
+import {
+  BarChartOutlined,
+  FormatPainterOutlined,
+  UserOutlined,
+  TrophyOutlined,
+  UsergroupAddOutlined,
+} from '@ant-design/icons';
 
 import { IButtonLink } from "./types";
 
@@ -52,5 +58,8 @@ export const StyledFormatPainterOutlined = styled(FormatPainterOutlined)`
 ${IconBase}
 `;
 export const StyledUsersOutlined = styled(TrophyOutlined)`
+${IconBase}
+`;
+export const StyledUsergroupAddOutlined = styled(UsergroupAddOutlined)`
 ${IconBase}
 `;

@@ -14,3 +14,5 @@ export {
   selectLoading,
   selectError,
 } from './model/selectors';
+export { claim } from './api/claimSaga';
+export { user } from './api/userSaga';

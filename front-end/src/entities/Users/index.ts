@@ -8,3 +8,4 @@ export {
   selectLoading,
   selectError,
 } from './model/selectors';
+export { users } from './api/usersSaga';

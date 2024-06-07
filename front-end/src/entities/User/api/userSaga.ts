@@ -16,6 +16,6 @@ function* watchFetchUser() {
   yield takeLatest(fetchUser.type, fetchUserSaga);
 }
 
-export default function* user() {
+export function* user() {
   yield all([watchFetchUser()]);
 }

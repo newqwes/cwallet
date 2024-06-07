@@ -15,6 +15,6 @@ function* watchClaimCoins() {
   yield takeLatest(claimCoins.type, claimCoinsSaga);
 }
 
-export default function* claim() {
+export function* claim() {
   yield all([watchClaimCoins()]);
 }

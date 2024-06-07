@@ -1,10 +1,15 @@
 import { all } from 'redux-saga/effects';
-import claim from '../entities/User/api/claimSaga';
-import user from '../entities/User/api/userSaga';
-import users from '../entities/Users/api/usersSaga';
+import { claim, user } from '../entities/User';
+import { users } from '../entities/Users';
+import { referrals } from '../entities/Referrals';
 
 function* rootSaga() {
-  yield all([claim(), user(), users()]);
+  yield all([
+    claim(),
+    user(),
+    users(),
+    referrals(),
+  ]);
 }
 
 export default rootSaga;

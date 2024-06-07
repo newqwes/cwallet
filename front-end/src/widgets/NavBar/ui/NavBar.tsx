@@ -7,6 +7,7 @@ import {
   StyledBarChartOutlined as BarChartOutlined,
   StyledFormatPainterOutlined as FormatPainterOutlined,
   StyledUsersOutlined as UsersOutlined,
+  StyledUsergroupAddOutlined as UsergroupAddOutlined,
 } from './styled';
 import { NavButton } from "./NavButton";
 
@@ -42,6 +43,13 @@ export const NavBar: FC = () => {
         title="Users"
         icon={<UsersOutlined />}
         isActive={location.pathname === ROUTING_PATHS.USERS}
+      />
+      <NavButton
+        key={ROUTING_PATHS.REFERRALS}
+        path={ROUTING_PATHS.REFERRALS}
+        title="Friends"
+        icon={<UsergroupAddOutlined />}
+        isActive={location.pathname === ROUTING_PATHS.REFERRALS}
       />
     </NavBarWrapper>
   );
