@@ -3,63 +3,72 @@ import { Link } from "react-router-dom";
 import {
   BarChartOutlined,
   FormatPainterOutlined,
-  UserOutlined,
   TrophyOutlined,
   UsergroupAddOutlined,
 } from '@ant-design/icons';
 
+import logoImg from '../../../shared/assets/logo.png';
 import { IButtonLink } from "./types";
 
 export const NavBarWrapper = styled.div`
-position: fixed;
-left: 50%;
-bottom: 10px;
-transform: translateX(-50%);
-display: flex;
-justify-content: center;
-padding: 0.33rem;
-border-radius: 0.33rem;
-background-color: #e9e9e9;
+  position: fixed;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
 `;
 
 export const StyledLink = styled(Link)`
-text-decoration: none;
+  text-decoration: none;
 `;
 
 export const ButtonLink = styled.button<IButtonLink>`
-width: 4rem;
-height: 3rem;
-border: none;
-border-radius: 0.33rem;
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-align-items: center;
-color: ${({ isActive }) => isActive ? '#000000' : '#888888'};
-background-color: ${({ isActive }) => isActive ? '#ffffff' : 'inherit'};
+  width: 15vw;
+  height: 15vw;
+  border: none;
+  border-radius: 0.33rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #FFFFFF;
+  background: #D9D9D940;
 `;
 
 export const LinkTitle = styled.span`
-font-size: 0.75rem;
-font-weight: bold;
+  font-size: 0.75rem;
+  font-weight: bold;
 `;
 
 const IconBase = css`
-font-size: 1.25rem;
+  font-size: 1.25rem;
 `;
 
-export const StyledUserOutlined = styled(UserOutlined)`
-${IconBase}
+export const StyledTapIcon = styled.div<IButtonLink>`
+  content: '';
+  height: 17vw;
+  width: 17vw;
+  margin: 0 15px;
+  background-image: url(${logoImg});
+
+  transition: filter 0.5s ease;
+  filter: ${({isActive}) => (isActive ? 'grayscale(0%)' : 'grayscale(100%)')};
+  background-size: cover;
+  background-position: center;
+
 `;
 export const StyledBarChartOutlined = styled(BarChartOutlined)`
-${IconBase}
+  ${IconBase}
 `;
 export const StyledFormatPainterOutlined = styled(FormatPainterOutlined)`
-${IconBase}
+  ${IconBase}
 `;
 export const StyledUsersOutlined = styled(TrophyOutlined)`
-${IconBase}
+  ${IconBase}
 `;
 export const StyledUsergroupAddOutlined = styled(UsergroupAddOutlined)`
-${IconBase}
+  ${IconBase}
 `;

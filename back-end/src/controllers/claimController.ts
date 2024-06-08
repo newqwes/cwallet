@@ -21,15 +21,15 @@ export const claim = async (req: any, res: any, next: any) => {
 
     // TODO: move min and max to .env or write to DB like 'settings' table
     const coins = getRandomInt(50, 150, user.claimBias, user.claimInfluence) + user.coins;
-    const extraTimeInMinutes = getRandomInt(1, 2, user.timeBias, user.timeInfluence);
+    // const extraTimeInMinutes = getRandomInt(0.5, 1, user.timeBias, user.timeInfluence);
     const now = moment();
-    now.add(extraTimeInMinutes, 'minutes');
+    now.add(0.05, 'minutes');
     const nextClaimDate = now.toDate();
     user.coins = coins;
     user.nextClaimDate = nextClaimDate;
     await user.save();
 
-    return res.status('201').json({ coins, nextClaimDate });
+    return res.status('201').json({coins, nextClaimDate});
   } catch (e) {
     next(e);
   }

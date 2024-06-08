@@ -16,12 +16,19 @@ import { routes } from './config/router';
 
 import '@telegram-apps/telegram-ui/dist/styles.css';
 import { NavBar } from '../widgets/NavBar';
+import { fetchUser } from "../entities/User";
+import { useDispatch } from "react-redux";
 
 export const App: FC = () => {
+  const dispatch = useDispatch();
   const lp = useLaunchParams();
   const miniApp = useMiniApp();
   const themeParams = useThemeParams();
   const viewport = useViewport();
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
 
   useEffect(() => {
     return bindMiniAppCSSVars(miniApp, themeParams);
@@ -51,7 +58,7 @@ export const App: FC = () => {
     return () => navigator.detach();
   }, [navigator]);
 
-  document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false })
+  document.body.addEventListener('touchmove', (e) => e.preventDefault(), {passive: false})
 
   return (
     <AppRoot
@@ -61,9 +68,9 @@ export const App: FC = () => {
       <Router location={location} navigator={reactNavigator}>
         <Routes>
           {routes.map((route) => <Route key={route.path} {...route} />)}
-          <Route path='*' element={<Navigate to='/' />} />
+          <Route path='*' element={<Navigate to='/'/>}/>
         </Routes>
-        <NavBar />
+        <NavBar/>
       </Router>
     </AppRoot>
   );

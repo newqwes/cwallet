@@ -4,7 +4,7 @@ export interface IUser {
   firstName: string;
   lastName: string;
   languageCode: string;
-  nextClaimDate: Date;
+  nextClaimDate: string;
   coins: number;
   avatar: string;
   level: number;
