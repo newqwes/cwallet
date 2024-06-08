@@ -5,9 +5,9 @@ export interface INavButton {
   title: string;
   icon: ReactNode;
   isActive: boolean;
-};
+}
 
 export interface IButtonLink {
   isActive: boolean;
-  disabled: boolean;
-};
+  disabled?: boolean;
+}

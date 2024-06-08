@@ -7,8 +7,9 @@ interface IUserState {
    * @see {@link ./back-end/src/dto/userDto.ts} Types for user
    */
   data: IUser;
-  error: string;
+  error: string | null;
   loading: boolean;
+  claimedCoins: number | null;
 }
 
 const initialState: IUserState = {
@@ -18,7 +19,7 @@ const initialState: IUserState = {
     firstName: 'firstName',
     lastName: 'lastName',
     languageCode: 'en',
-    nextClaimDate: new Date(),
+    nextClaimDate: '',
     coins: 0,
     avatar: 'avatar',
     level: 0,
@@ -26,7 +27,8 @@ const initialState: IUserState = {
     refParent: null,
     refParentChangedTimes: 0
   },
-  error: '',
+  claimedCoins: null,
+  error: null,
   loading: false,
 };
 
@@ -39,7 +41,9 @@ export const userSlice = createSlice({
     },
     fetchUserSuccess: (state, action: PayloadAction<any>) => {
       state.loading = false;
-      state.data = action.payload.user;
+      state.data = {...action.payload.user, nextClaimDate: new Date(action.payload?.user?.nextClaimDate).toISOString()};
+      state.claimedCoins = null;
+      state.error = null;
     },
     fetchUserError: (state, action: PayloadAction<any>) => {
       state.loading = false;
@@ -50,12 +54,17 @@ export const userSlice = createSlice({
     },
     claimCoinsSuccess: (state, action: PayloadAction<any>) => {
       state.loading = false;
+      state.claimedCoins = action.payload.coins - state.data.coins;
       state.data.coins = action.payload.coins;
-      state.data.nextClaimDate = action.payload.nextClaimDate;
+      state.data.nextClaimDate = new Date(action.payload.nextClaimDate).toISOString();
+      state.error = null;
     },
     claimCoinsError: (state, action: PayloadAction<any>) => {
       state.loading = false;
       state.error = action.payload;
+    },
+    emptyOutClaimCoins: (state) => {
+      state.claimedCoins = null;
     },
   },
 });
@@ -67,4 +76,5 @@ export const {
   claimCoins,
   claimCoinsSuccess,
   claimCoinsError,
+  emptyOutClaimCoins
 } = userSlice.actions;

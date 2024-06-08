@@ -5,7 +5,6 @@ import UserDto from '../dto/userDto';
 export const getUsersData = async (req: any, res: any, next: any) => {
     try {
         const users = await userService.findAll();
-
         if (!users) {
             return next(ApiError.BadRequest('User not created'));
         }

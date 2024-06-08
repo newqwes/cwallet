@@ -1,37 +1,39 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { differenceInMilliseconds } from 'date-fns';
+import { postEvent } from '@tma.js/sdk';
 import {
   claimCoins,
-  fetchUser,
-  selectError,
-  selectLoading,
   selectUserCoinCount,
   selectUserNextClaimDate,
-  selectUserRefCode,
 } from '../../../entities/User';
-import { useMagicNumber } from '../../../shared/libs/useMagicNumber';
-import { ClaimButton, Coins, Wrapper, RefCode } from './styled';
+import {
+  Timer,
+  Coins,
+  Wrapper,
+  Logo,
+  CoinWrapper,
+  MainImg,
+  InvisibleButton,
+  CoinChangeText,
+  LevelBox
+} from './styled';
+import { useAnimatedNumber } from './useAnimatedNumber';
+import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.ts"; // Импортируем наш хук
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
   const coins = useSelector(selectUserCoinCount);
-  const refCode = useSelector(selectUserRefCode);
+  const claimedCoins = useSelector(selectUserClaimedCoins);
   const nextClaimDate = useSelector(selectUserNextClaimDate);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
 
-  const currendDateMs = new Date();
+  const currentDateMs = new Date();
   const nextClaimDateMs = new Date(nextClaimDate);
-  const initialTimeLeft = differenceInMilliseconds(nextClaimDateMs, currendDateMs);
+  const initialTimeLeft = differenceInMilliseconds(nextClaimDateMs, currentDateMs);
 
-  const [magicNumber, setMagicNumber] = useMagicNumber(1, 100);
   const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
   const isTimerActive = timeLeft >= 0;
 
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, []);
 
   useEffect(() => {
     setTimeLeft(initialTimeLeft);
@@ -49,20 +51,19 @@ export const ClaimComponent: FC = () => {
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
-  useEffect(() => {
-    if (isTimerActive) {
-      return;
-    }
-
-    const magicNumberId = setInterval(() => {
-      setMagicNumber();
-    }, 100);
-
-    return () => clearInterval(magicNumberId);
-  }, [magicNumber, isTimerActive]);
-
   const handleClickClaimBtn = () => {
     dispatch(claimCoins());
+  }
+
+  const handleClickNotYet = () => {
+    if (isTimerActive) {
+      // @ts-expect-error: This error is expected because web_app_trigger_haptic_feedback obj params is empty
+      postEvent('web_app_trigger_haptic_feedback', {
+        type: 'notification',
+        impact_style: 'heavy',
+        notification_type: 'error'
+      });
+    }
   }
 
   const formatTime = (time: number) => {
@@ -75,14 +76,25 @@ export const ClaimComponent: FC = () => {
       .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const animatedCoins = useAnimatedNumber(coins, 1000);
   return (
-    <Wrapper>
-      <RefCode>My referral code: {refCode}</RefCode>
-      {coins && <Coins>{coins}</Coins>}
-      <ClaimButton loading={loading} disabled={isTimerActive} onClick={handleClickClaimBtn}>
-        {isTimerActive ? formatTime(timeLeft) : magicNumber}
-      </ClaimButton>
-      {error && <pre>Error: {JSON.stringify(error)}</pre>}
+    <Wrapper onClick={handleClickNotYet}>
+      <CoinWrapper>
+        <Logo/>
+        <Coins>{animatedCoins}$</Coins>
+      </CoinWrapper>
+      {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
+
+      <LevelBox>
+        <h5>Level 1</h5>
+        <p>Coins: 50-150</p>
+        <p>Wait time: 1s-2s</p>
+      </LevelBox>
+      <div>
+        <MainImg isActive={!isTimerActive}/>
+        <InvisibleButton onClick={handleClickClaimBtn} isActive={!isTimerActive}/>
+        <Timer>{isTimerActive && formatTime(timeLeft)}</Timer>
+      </div>
     </Wrapper>
   );
 };

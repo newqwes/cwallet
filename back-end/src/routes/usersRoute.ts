@@ -10,7 +10,6 @@ const usersRoute = express.Router();
  *   name: Users
  *   description: Users
  */
-
 /**
  * @swagger
  * /api/users:
@@ -26,10 +25,8 @@ const usersRoute = express.Router();
  *           application/json:
  *             schema:
  *               type: array
- *                $ref: '#/components/schemas/User'
- *                 created:
- *                   type: boolean
- *                   description: Indicates if the user was created now
+ *               items:
+ *                 $ref: '#/components/schemas/User'
  *       400:
  *         description: Bad request
  *         content:
