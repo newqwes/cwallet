@@ -13,10 +13,20 @@ CoinList.init(
       allowNull: false,
       defaultValue: () => uuidv4(),
     },
+    coin_id: { type: DataTypes.STRING, allowNull: false },
+    symbol: { type: DataTypes.STRING, allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
-    list: {
-      type: DataTypes.JSON,
+    image_link: { type: DataTypes.STRING, allowNull: false },
+    current_price: { type: DataTypes.FLOAT, allowNull: false },
+    last_updated: { type: DataTypes.STRING, allowNull: false },
+    historical_chart_active: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
+    },
+    historical_chart_prices: {
+      type: DataTypes.JSONB,
+      allowNull: true,
     },
   },
   {
@@ -24,7 +34,7 @@ CoinList.init(
     tableName: 'coin_list',
     timestamps: false,
     underscored: true,
-  },
+  }
 );
 
 export default CoinList;
