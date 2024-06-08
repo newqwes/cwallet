@@ -1,18 +1,16 @@
-const fs = require("fs");
-const path = require("path");
-const ip = require("ip");
+const fs = require('fs');
+const path = require('path');
+const ip = require('ip');
 
 const currentIp = ip.address();
 
-const envPath = path.join(__dirname, ".env");
+const envPath = path.join(__dirname, '.env');
 
 if (!fs.existsSync(envPath)) {
-  fs.writeFileSync(envPath, "");
+  fs.writeFileSync(envPath, '');
 }
 
-console.log("max check commit");
-
-let envContent = fs.readFileSync(envPath, "utf8");
+let envContent = fs.readFileSync(envPath, 'utf8');
 const apiUrlPattern = /^LOCAL_CLIENT_URL=.*$/m;
 const apiUrl = `LOCAL_CLIENT_URL=http://${currentIp}:3010`;
 

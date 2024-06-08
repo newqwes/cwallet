@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { swaggerDocs } from './swagger';
 import { app, connectNotificationToDatabase, server } from './config';
+import { getCoinsInfo, getHistoricalChart } from './get_coin_info';
 import sequelize from './database';
 import cors from './middleware/cors';
 import limiter from './middleware/limiter';
@@ -15,6 +16,7 @@ import claimRoute from './routes/claimRoute';
 import userRoute from './routes/userRoute';
 import usersRoute from './routes/usersRoute';
 import referralRoute from './routes/referralRoute';
+import cron from 'node-cron';
 
 dotenv.config();
 
@@ -46,6 +48,10 @@ const start = async () => {
       await sequelize.authenticate();
       await connectNotificationToDatabase();
       console.log('Database Connected!');
+      //Обновляем инфу по монетам, раз в час
+      cron.schedule('0 * * * *', getCoinsInfo);
+      //Обновляем инфу по графикам, раз в день
+      cron.schedule('0 0 * * *', getHistoricalChart);
     });
 
     await runTelegramBotService();
