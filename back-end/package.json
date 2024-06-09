@@ -7,11 +7,12 @@
   "scripts": {
     "build": "npx tsc",
     "set-ip": "node set-ip.js",
-    "startB": "node dist/index.js",
-    "start": "yarn set-ip && nodemon src/index.ts",
-    "lint": "eslint .",
-    "resetDb": "yarn sequelize-cli db:migrate && yarn sequelize-cli db:migrate:undo:all && yarn sequelize-cli db:migrate",
-    "resetAndStart": "yarn resetDb && yarn start"
+    "start:build": "node dist/index.js",
+    "start": "yarn sequelize-cli db:migrate && yarn set-ip && nodemon src/index.ts",
+    "migration:reset": "yarn sequelize-cli db:migrate && yarn sequelize-cli db:migrate:undo:all && yarn sequelize-cli db:migrate",
+    "migration:run": "yarn sequelize-cli db:migrate",
+    "migration:down-all": "yarn sequelize-cli db:migrate:undo:all",
+    "migration:down-last": "yarn sequelize-cli db:migrate:undo"
   },
   "author": "Nazar Ashyrov <newnewqwes@gmail.com>",
   "dependencies": {
@@ -74,6 +75,7 @@
     "prettier": "^3.2.5",
     "ts-node-dev": "^2.0.0",
     "types": "^0.1.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.12.0"
   }
 }

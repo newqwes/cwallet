@@ -1,3 +1,5 @@
+const MAX_VALUE_BANK = 1000000000000; // 000 x 4
+
 module.exports = {
   up: async (queryInterface, DataTypes) => {
     await queryInterface.createTable('bank', {
@@ -8,8 +10,7 @@ module.exports = {
         allowNull: false,
       },
       value: {
-        type: DataTypes.INTEGER,
-        defaultValue: 1000,
+        type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
         validate: {
           min: 0,
@@ -17,7 +18,8 @@ module.exports = {
       },
     });
 
-    // Создание триггера для обновления bank.value
+    await queryInterface.bulkInsert('bank', [{ value: MAX_VALUE_BANK }]);
+
     await queryInterface.sequelize.query(`
       CREATE OR REPLACE FUNCTION update_bank_value()
       RETURNS TRIGGER AS $$
@@ -56,16 +58,17 @@ module.exports = {
       AFTER UPDATE ON bank
       FOR EACH ROW
       EXECUTE FUNCTION notify_bank_update();
+      
+      ALTER TABLE bank
+      ADD CONSTRAINT check_positive_value CHECK (value >= 0);
     `);
 
-    // Запуск транзакции
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      // Обновление существующих записей в таблице user
       await queryInterface.sequelize.query(`
         UPDATE "user"
-        SET coins = 1000000000 - (SELECT COALESCE(SUM(value), 0) FROM bank WHERE id = 1)
-        WHERE coins <> 1000000000 ;
+        SET coins = ${MAX_VALUE_BANK} - (SELECT COALESCE(SUM(value), 0) FROM bank WHERE id = 1)
+        WHERE coins <> ${MAX_VALUE_BANK} ;
       `, { transaction });
 
       await transaction.commit();
@@ -76,7 +79,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    // Удаление триггера
     await queryInterface.sequelize.query(`
       DROP TRIGGER IF EXISTS trigger_update_bank_value ON "user";
       DROP FUNCTION IF EXISTS update_bank_value();
