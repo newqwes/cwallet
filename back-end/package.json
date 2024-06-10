@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npx tsc",
     "set-ip": "node set-ip.js",
-    "start:build": "node dist/index.js",
+    "start:build": "yarn sequelize-cli db:migrate && node dist/index.js",
     "start": "yarn sequelize-cli db:migrate && yarn set-ip && nodemon src/index.ts",
     "migration:reset": "yarn sequelize-cli db:migrate && yarn sequelize-cli db:migrate:undo:all && yarn sequelize-cli db:migrate",
     "migration:run": "yarn sequelize-cli db:migrate",
