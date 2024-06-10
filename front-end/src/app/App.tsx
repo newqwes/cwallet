@@ -60,6 +60,13 @@ export const App: FC = () => {
 
   document.body.addEventListener('touchmove', (e) => e.preventDefault(), {passive: false})
 
+  console.log('--QWES-- location: ', location);
+  const logLongString = (str: string, chunkSize = 100) => {
+    for (let i = 0; i < str.length; i += chunkSize) {
+      console.log(str.substring(i, i + chunkSize));
+    }
+  };
+  logLongString(location.search);
   return (
     <AppRoot
       appearance={miniApp.isDark ? 'dark' : 'light'}
