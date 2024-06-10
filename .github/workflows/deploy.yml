@@ -39,7 +39,7 @@ jobs:
             pushd /home/repositories/CWA/back-end/
             yarn install
             yarn build
-            pm2 restart cwallet_b
+            pm2 restart cwallet
             popd
 
   deploy-frontend:
