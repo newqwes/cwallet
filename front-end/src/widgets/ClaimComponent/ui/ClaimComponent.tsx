@@ -86,9 +86,10 @@ export const ClaimComponent: FC = () => {
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
 
       <LevelBox>
+        <h5>App Version: 0.1.0</h5>
         <h5>Level 1</h5>
-        <p>Coins: 50-150</p>
-        <p>Wait time: 1s-2s</p>
+        <p>Coins: 15-45</p>
+        <p>Wait time: 40s-120s</p>
       </LevelBox>
       <div>
         <MainImg isActive={!isTimerActive}/>

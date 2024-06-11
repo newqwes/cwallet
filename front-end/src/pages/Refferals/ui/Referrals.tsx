@@ -47,7 +47,8 @@ export const Referrals: FC = () => {
   };
 
   const handleLinkCopyClick = () => {
-    const link = '';
+    // TODO: Вынеси эту линку в env или получай с бэка сразу!
+    const link = `https://t.me/cwallet_one_bot?start=ref_${userRefCode}`;
     makeCopyToClipboard(link);
   };
 

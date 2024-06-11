@@ -15,8 +15,12 @@ class User extends Model {
    */
   nextClaimDate: Date;
   coins: number | null;
+  referralRewards: number;
   avatar: string | null;
-  level: number;
+  luckLevel: number;
+  timeLevel: number;
+  miningLevel: number;
+  secretLevel: number;
 
   // The bias towards higher or lower values (0 to 1, where 0 is lower values and 1 is higher values)
   timeBias: number;
@@ -28,6 +32,7 @@ class User extends Model {
 
   referralCode: string;
   refParent: number;
+  refGrandParent: number;
   refParentChangedTimes: number;
 }
 
@@ -69,11 +74,34 @@ User.init(
         min: 0,
       },
     },
+    referralRewards: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: true,
+      validate: {
+        min: 0,
+      },
+    },
     avatar: {
       type: DataTypes.STRING(100),
       allowNull: true,
     },
-    level: {
+    luckLevel: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+      allowNull: false,
+    },
+    timeLevel: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+      allowNull: false,
+    },
+    miningLevel: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+      allowNull: false,
+    },
+    secretLevel: {
       type: DataTypes.INTEGER,
       defaultValue: 1,
       allowNull: false,
@@ -106,6 +134,9 @@ User.init(
     refParent: {
       type: DataTypes.DOUBLE,
     },
+    refGrandParent: {
+      type: DataTypes.DOUBLE,
+    },
     refParentChangedTimes: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
@@ -113,6 +144,16 @@ User.init(
       validate: {
         min: 0,
       },
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {

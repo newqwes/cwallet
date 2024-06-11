@@ -9,10 +9,16 @@ class UserDto {
   nextClaimDate: Date;
   coins: number | null;
   avatar: string | null;
-  level: number;
   referralCode: string;
   refParent: number;
   refParentChangedTimes: number;
+
+  referralRewards: number;
+  luckLevel: number;
+  timeLevel: number;
+  miningLevel: number;
+  secretLevel: number;
+  refGrandParent: number;
 
   constructor(model: User) {
     this.id = model.id;
@@ -23,10 +29,16 @@ class UserDto {
     this.nextClaimDate = model.nextClaimDate;
     this.coins = Number(model.coins);
     this.avatar = model.avatar;
-    this.level = Number(model.level);
     this.referralCode = model.referralCode;
     this.refParent = Number(model.refParent);
     this.refParentChangedTimes = Number(model.refParentChangedTimes);
+
+    this.referralRewards = Number(model.referralRewards);
+    this.luckLevel = Number(model.luckLevel);
+    this.timeLevel = Number(model.timeLevel);
+    this.miningLevel = Number(model.miningLevel);
+    this.secretLevel = Number(model.secretLevel);
+    this.refGrandParent = Number(model.refGrandParent);
   }
 }
 
