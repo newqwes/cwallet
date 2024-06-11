@@ -135,11 +135,19 @@ export const LevelBox = styled.div`
   border: 1px solid rgba(170, 170, 170, 0.82);
   color: rgba(170, 170, 170, 0.82);
   border-radius: 7px;
-  font-size: 12px;
+  font-size: 8px;
   text-align: center;
 
   h5, p {
     padding: 0;
     margin: 0;
   }
+`;
+
+export const VersionBox = styled.div`
+  position: absolute;
+  bottom: 65px;
+  left: 30px;
+  color: rgba(170, 170, 170, 0.82);
+  font-size: 12px;
 `;

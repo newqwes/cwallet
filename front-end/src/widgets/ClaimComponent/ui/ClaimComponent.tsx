@@ -16,7 +16,8 @@ import {
   MainImg,
   InvisibleButton,
   CoinChangeText,
-  LevelBox
+  LevelBox,
+  VersionBox
 } from './styled';
 import { useAnimatedNumber } from './useAnimatedNumber';
 import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.ts"; // Импортируем наш хук
@@ -79,14 +80,15 @@ export const ClaimComponent: FC = () => {
   const animatedCoins = useAnimatedNumber(coins, 1000);
   return (
     <Wrapper onClick={handleClickNotYet}>
+      <VersionBox>
+        <h6>App Version: 0.1.0</h6>
+      </VersionBox>
       <CoinWrapper>
         <Logo/>
         <Coins>{animatedCoins}$</Coins>
       </CoinWrapper>
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
-
       <LevelBox>
-        <h5>App Version: 0.1.0</h5>
         <h5>Level 1</h5>
         <p>Coins: 15-45</p>
         <p>Wait time: 40s-120s</p>
