@@ -1,6 +1,5 @@
 import TelegramAPI from 'node-telegram-bot-api';
-import { getMessageOptions } from '../constants/telegram';
-import userService from "./userService";
+import { getMessageOptions, RUN_APP } from '../constants/telegram';
 import UserService from "./userService";
 import { isValidReferralCode } from "../utils/referral";
 
@@ -12,6 +11,10 @@ const runTelegramBotService = async () => {
     try {
       if (from.is_bot) {
         return;
+      }
+
+      if (text === RUN_APP) {
+        return MyBot.sendMessage(id, `Cwallet app 👛`, getMessageOptions() as any);
       }
 
       if (text && text.startsWith('/start')) {
@@ -28,12 +31,12 @@ const runTelegramBotService = async () => {
             return MyBot.sendMessage(id, `${firstName}, welcome to Cwallet app 👛`, getMessageOptions() as any);
           }
 
-          const alreadyExistUser = await userService.findByTelegramUserId(id);
+          const alreadyExistUser = await UserService.findByTelegramUserId(id);
           if (alreadyExistUser) {
             return MyBot.sendMessage(id, `It's good to see ${firstName} again! Cwallet app 🪿`, getMessageOptions() as any);
           }
 
-          await userService.create({
+          await UserService.create({
             telegramId: id,
             refParent: parent.telegramId,
             firstName,
