@@ -35,7 +35,8 @@ export const ButtonLink = styled.button<IButtonLink>`
   justify-content: space-evenly;
   align-items: center;
   color: #FFFFFF;
-  background: #D9D9D940;
+
+  background: ${({isActive}) => (isActive ? '#D9D9D96F' : '#D9D9D940')};
 `;
 
 export const LinkTitle = styled.span`

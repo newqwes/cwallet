@@ -4,6 +4,8 @@ import mainImg from '../../../shared/assets/main.png';
 
 
 export const Wrapper = styled.div`
+  padding: 10px;
+
   hr {
     margin: 1.5rem 0;
   }
@@ -11,14 +13,15 @@ export const Wrapper = styled.div`
 export const MainImg = styled.div`
   background-image: url(${mainImg});
   position: fixed;
+  opacity: 0.3;
   content: '';
-  width: 70vw;
-  height: 70vh;
+  width: 60vw;
+  height: 60vh;
   z-index: -1;
   background-size: cover;
   background-position: center;
 
-  transform: translateX(65%) translateY(-8%) rotate(-50deg);
+  transform: translateX(85%) rotate(-60deg);
 `;
 
 export const RefHeader = styled.div`
