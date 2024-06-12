@@ -11,13 +11,14 @@ import {
   Timer,
   Coins,
   Wrapper,
-  Logo,
   CoinWrapper,
   MainImg,
   InvisibleButton,
   CoinChangeText,
-  LevelBox,
-  VersionBox
+  VersionBox,
+  UpgradeButton,
+  MainWrapper,
+  UpgradeButtonWrapper
 } from './styled';
 import { useAnimatedNumber } from './useAnimatedNumber';
 import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.ts"; // Импортируем наш хук
@@ -78,26 +79,30 @@ export const ClaimComponent: FC = () => {
   };
 
   const animatedCoins = useAnimatedNumber(coins, 1000);
+  const handleUpgradeClick = () => {
+    console.log("Upgrade button clicked");
+  }
+  
   return (
-    <Wrapper onClick={handleClickNotYet}>
-      <VersionBox>
-        <h6>App Version: 0.1.0</h6>
-      </VersionBox>
+    <Wrapper>
       <CoinWrapper>
-        <Logo/>
+        <h1>Level 1</h1>
         <Coins>{animatedCoins}$</Coins>
       </CoinWrapper>
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
-      <LevelBox>
-        <h5>Level 1</h5>
-        <p>Coins: 15-45</p>
-        <p>Wait time: 40s-120s</p>
-      </LevelBox>
-      <div>
+      <VersionBox>
+        <h6>App Version: 0.1.1</h6>
+      </VersionBox>
+      <MainWrapper onClick={handleClickNotYet}>
         <MainImg isActive={!isTimerActive}/>
         <InvisibleButton onClick={handleClickClaimBtn} isActive={!isTimerActive}/>
         <Timer>{isTimerActive && formatTime(timeLeft)}</Timer>
-      </div>
+      </MainWrapper>
+      <UpgradeButtonWrapper>
+        <UpgradeButton onClick={handleUpgradeClick}>
+          Upgrade
+        </UpgradeButton>
+      </UpgradeButtonWrapper>
     </Wrapper>
   );
 };

@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import logoImg from '../../../shared/assets/logo.png';
 import mainImg from '../../../shared/assets/main.png';
 import { coinFont } from "../../../shared/ui/font.ts";
 
@@ -11,12 +10,19 @@ export const CoinWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 20vh;
-  margin-top: 2vh;
+  height: 10vh;
+  margin-top: 1vh;
+
+  h1 {
+    color: rgb(200, 200, 200);
+    font-size: 5vw;
+    padding: 0;
+    margin: 0.4vh 0;
+  }
 `;
 
 export const Coins = styled.div`
-  font-size: 36px;
+  font-size: 6vw;
   ${coinFont};
 `;
 
@@ -25,16 +31,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 90vw;
-`;
-
-export const Logo = styled.div`
-  content: '';
-  height: 70px;
-  width: 70px;
-  background-image: url(${logoImg});
-  background-size: cover;
-  background-position: center;
 `;
 
 const pressButton = keyframes`
@@ -79,25 +75,25 @@ export const MainImg = styled.div<IStyledProp>`
 `;
 
 export const Timer = styled.div`
-  font-size: 36px;
-  margin-top: -5vh;
+  font-size: 7vw;
+  margin-top: -6vh;
   font-weight: 700;
-  line-height: 44px;
   text-align: center;
+  height: 20px;
   color: #FCD97E;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавление тени к тексту */
 `;
 
 export const InvisibleButton = styled.div<IStyledProp>`
   content: '';
-  height: 44vh;
-  width: 40vw;
+  height: 40vh;
+  width: 35vw;
   left: 30%;
   background-size: cover;
   background-position: center;
 
   position: fixed;
-  top: 28vh;
+  top: 17vh;
 
   pointer-events: ${({isActive}) => isActive ? 'auto' : 'none'};
 `;
@@ -120,28 +116,11 @@ const fadeInCoins = keyframes`
 export const CoinChangeText = styled.div<IStyledProp>`
   ${coinFont};
   position: absolute;
-  top: 110px;
+  top: 8vh;
   z-index: 10;
   opacity: 0;
-  font-size: 26px;
+  font-size: 5vw;
   animation: ${fadeInCoins} 1.5s ease;
-`;
-
-export const LevelBox = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 6px;
-  border: 1px solid rgba(170, 170, 170, 0.82);
-  color: rgba(170, 170, 170, 0.82);
-  border-radius: 7px;
-  font-size: 8px;
-  text-align: center;
-
-  h5, p {
-    padding: 0;
-    margin: 0;
-  }
 `;
 
 export const VersionBox = styled.div`
@@ -150,4 +129,52 @@ export const VersionBox = styled.div`
   left: 30px;
   color: rgba(170, 170, 170, 0.82);
   font-size: 12px;
+`;
+
+const buttonPress = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
+export const UpgradeButton = styled.button`
+  background-color: rgba(240, 193, 75, 0.94);
+  border: none;
+  border-radius: 50px;
+  padding: 5px;
+  width: 53%;
+  font-size: 4.5vw;
+  ${coinFont};
+  line-height: 9vw;
+  color: rgba(28, 28, 28, 0.88);
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+
+  &:hover {
+    background-color: #e2a827;
+  }
+
+  &:active {
+    background-color: #c69300;
+    animation: ${buttonPress} 0.3s ease;
+  }
+`;
+export const MainWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const UpgradeButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 20vh;
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 `;

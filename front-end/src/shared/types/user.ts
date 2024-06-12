@@ -7,8 +7,13 @@ export interface IUser {
   nextClaimDate: string;
   coins: number;
   avatar: string;
-  level: number;
   referralCode: string | null;
   refParent: number | null;
   refParentChangedTimes: number;
-};
+  referralRewards: number;
+  luckLevel: number;
+  timeLevel: number;
+  miningLevel: number;
+  secretLevel: number;
+  refGrandParent: number;
+}
