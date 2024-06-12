@@ -22,10 +22,15 @@ const initialState: IUserState = {
     nextClaimDate: '',
     coins: 0,
     avatar: 'avatar',
-    level: 0,
     referralCode: null,
     refParent: null,
-    refParentChangedTimes: 0
+    refParentChangedTimes: 0,
+    referralRewards: 0,
+    luckLevel: 1,
+    timeLevel: 1,
+    miningLevel: 1,
+    secretLevel: 1,
+    refGrandParent: 0
   },
   claimedCoins: null,
   error: null,
