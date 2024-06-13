@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import mainImg from '../../../shared/assets/main.png';
-import { coinFont } from "../../../shared/ui/font.ts";
+import { coinFont } from "../../../shared/ui";
 
 interface IStyledProp {
   isActive: boolean;
@@ -130,31 +130,6 @@ export const VersionBox = styled.div`
   color: rgba(170, 170, 170, 0.82);
   font-size: 12px;
 `;
-
-export const UpgradeButton = styled.button`
-  background-color: hsl(39, 100%, 50%); /* оранжевый */
-  color: hsl(40, 33%, 15%);
-  border: 0;
-  border-radius: 0.5em;
-  padding: 1em;
-  font-size: 4vw;
-  font-weight: 700;
-  text-transform: uppercase;
-  line-height: 1;
-  cursor: pointer;
-  box-shadow: 0 0.35em 0 0 hsl(39, 100%, 50%, 0.5);
-
-  &:active {
-    transform: translateY(0.35em);
-    box-shadow: none;
-  }
-
-  &:focus-visible {
-    transform: translateY(0.35em);
-    box-shadow: none;
-  }
-`;
-
 
 export const MainWrapper = styled.div`
   display: flex;

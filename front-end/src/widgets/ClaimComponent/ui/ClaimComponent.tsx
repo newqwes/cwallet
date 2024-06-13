@@ -16,12 +16,12 @@ import {
   InvisibleButton,
   CoinChangeText,
   VersionBox,
-  UpgradeButton,
   MainWrapper,
   UpgradeButtonWrapper
 } from './styled';
 import { useAnimatedNumber } from './useAnimatedNumber';
-import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.ts"; // Импортируем наш хук
+import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.ts";
+import { Button } from "../../../shared/ui";
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
@@ -82,7 +82,7 @@ export const ClaimComponent: FC = () => {
   const handleUpgradeClick = () => {
     console.log("Upgrade button clicked");
   }
-  
+
   return (
     <Wrapper>
       <CoinWrapper>
@@ -99,9 +99,9 @@ export const ClaimComponent: FC = () => {
         <Timer>{isTimerActive && formatTime(timeLeft)}</Timer>
       </MainWrapper>
       <UpgradeButtonWrapper>
-        <UpgradeButton onClick={handleUpgradeClick}>
+        <Button btnStyle={'primary'} onClick={handleUpgradeClick}>
           Upgrade
-        </UpgradeButton>
+        </Button>
       </UpgradeButtonWrapper>
     </Wrapper>
   );

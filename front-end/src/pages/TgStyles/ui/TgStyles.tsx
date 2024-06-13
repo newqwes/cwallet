@@ -1,5 +1,6 @@
 import { FC, useState, useEffect } from 'react';
-import { GameBoard, Card, NewGameButton, VictoryMessage, CardInner, CardFront, CardBack, Wrapper } from './styled';
+import { GameBoard, Card, VictoryMessage, CardInner, CardFront, CardBack, Wrapper } from './styled';
+import { Button } from "../../../shared/ui";
 
 const CARD_ELEMENTS = ["💵", "💶", "💷", "💴", "🧧", "🪙"];
 const CARDS_AMOUNT = 12;
@@ -82,7 +83,7 @@ export const TgStyles: FC = () => {
         ))}
       </GameBoard>
       {isVictory && <VictoryMessage>Поздравляю, вы победили!</VictoryMessage>}
-      <NewGameButton onClick={startGame}>Новая игра</NewGameButton>
+      <Button size='sm' btnStyle={'secondary'} onClick={startGame}>Новая игра</Button>
     </Wrapper>
   );
 };

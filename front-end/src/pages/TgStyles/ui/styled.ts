@@ -25,7 +25,7 @@ export const GameBoard = styled.div`
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   gap: 1em;
-  
+  margin-bottom: 3vh;
 `;
 
 export const CardInner = styled.div<any>`
@@ -51,25 +51,6 @@ export const Card = styled.div<any>`
   height: 5em;
   perspective: 50em;
   cursor: pointer;
-`;
-
-export const NewGameButton = styled.button`
-  border: none;
-  border-radius: 5px;
-  padding: 0.5em 1.5em;
-  background: #b5651d;
-  cursor: pointer;
-  color: white;
-  text-transform: uppercase;
-  transition: opacity 0.2s ease-in-out;
-  font-size: 1em;
-  font-family: inherit;
-  letter-spacing: inherit;
-  margin-top: 30px;
-
-  &:hover {
-    opacity: 0.8;
-  }
 `;
 
 export const VictoryMessage = styled.h2`

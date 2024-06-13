@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { coinFont } from '../../../shared/ui/font.ts';
+import { coinFont } from '../../../shared/ui';
 
 const glowing = keyframes`
   0% {

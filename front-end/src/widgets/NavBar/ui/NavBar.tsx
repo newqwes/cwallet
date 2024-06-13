@@ -27,7 +27,7 @@ export const NavBar: FC = () => {
       <NavButton
         key={ROUTING_PATHS.TG_STYLES}
         path={ROUTING_PATHS.TG_STYLES}
-        title="tgStyles"
+        title="Game"
         icon={<FormatPainterOutlined/>}
         isActive={location.pathname === ROUTING_PATHS.TG_STYLES}
       />

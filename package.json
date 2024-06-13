@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "concurrently --kill-others \"cd back-end && yarn start\" \"cd front-end && yarn start\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

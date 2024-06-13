@@ -1,7 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import mainImg from '../../../shared/assets/main.png';
 
-
 const buzz = keyframes`
   70% {
     opacity: 0.8;
@@ -40,24 +39,33 @@ const caret = keyframes`
 
 export const Wrapper = styled.div`
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 86vh;
+`;
 
-  hr {
-    margin: 1.5rem 0;
-  }
+export const ReferralsContainer = styled.div`
+  margin-top: 25px;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const MainImg = styled.div`
   background-image: url(${mainImg});
-  position: fixed;
-  opacity: 0.8;
+  position: absolute;
+  opacity: 0.7;
   content: '';
   width: 60vw;
   height: 60vh;
+  top: 0;
+  right: 0;
   z-index: -1;
   background-size: cover;
   background-position: center;
-
-  transform: translateX(85%) rotate(-60deg);
+  transform: translateX(20%) translateY(10%) rotate(-50deg);
 `;
 
 export const RefHeader = styled.div`
@@ -65,11 +73,6 @@ export const RefHeader = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 2vw 0 6vw;
-  justify-content: end;
-  font-family: "Modern Neon", sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  white-space: nowrap;
 
   div {
     backface-visibility: hidden;
@@ -108,19 +111,31 @@ export const RefCode = styled.div`
 `;
 
 export const Description = styled.div`
-  font-family: 'Inter', sans-serif;
-  width: 41ch;
-  font-size: 4vw;
-  border-right: 0.08em solid;
+  width: 40ch;
+  font-size: 4.4vw;
+  font-weight: 500;
+  border-right: 0.4em solid;
   overflow: hidden;
   white-space: nowrap;
-  animation: ${typing} 1s steps(11, end),
+  animation: ${typing} 2.5s steps(6, end) 3,
   ${caret} 0.5s step-end infinite;
 `;
 
 export const RefChild = styled.div`
-  padding: 5px;
-  margin: 5px;
+  padding: 15px;
+  margin: 5px 0;
+  width: 100%;
+  border: 1px solid #ffffff;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const RefCoins = styled.div`
+
+`;
+
+export const RefName = styled.div`
+
 `;
 
 export const RefLinkWrapper = styled.div`
@@ -131,9 +146,8 @@ export const RefLinkWrapper = styled.div`
   margin-top: 20px;
   padding: 5px 20px;
   background: #D9D9D94D;
-  font-family: Inter, serif;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 20px;
   text-align: center;
   border-radius: 10px;
@@ -147,4 +161,25 @@ export const RefLink = styled.div`
   cursor: pointer;
   border: 1px solid #aaa;
   border-radius: 5px;
+`;
+
+export const TabWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background-color: hsl(217, 78%, 51%);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+`;
+
+export const Tab = styled.div<{ isActive: boolean }>`
+  padding: 15px 45px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 3.5vw;
+  color: hsl(210, 29%, 97%);
+  background-color: ${props => props.isActive ? 'hsl(39, 100%, 50%)' : 'hsl(217,78%,51%)'};
+  transition: background-color 0.3s;
+  border-radius: 30px 30px 0 0;
 `;

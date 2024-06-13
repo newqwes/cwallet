@@ -1,17 +1,35 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchReferrals,
   selectReferralChilds,
 } from "../../../entities/Referrals";
-import { MainImg, RefChild, RefHeader, Title, RefLinkWrapper, RefCode, RefLink, Wrapper, Description } from "./styled";
+import {
+  MainImg,
+  RefChild,
+  RefHeader,
+  Title,
+  RefLinkWrapper,
+  RefCode,
+  RefLink,
+  Wrapper,
+  Description,
+  TabWrapper, Tab,
+  ReferralsContainer,
+  RefName,
+  RefCoins
+} from "./styled";
 import { selectUserRefCode } from "../../../entities/User";
 import { postEvent } from "@tma.js/sdk";
+import { REFERRAL_URL } from "../../../shared/consts";
+import { initUtils } from "@tma.js/sdk-react";
 
 export const Referrals: FC = () => {
   const dispatch = useDispatch();
   const referralChildren = useSelector(selectReferralChilds);
   const userRefCode = useSelector(selectUserRefCode) as string;
+  const link = REFERRAL_URL + userRefCode;
+  const [activeTab, setActiveTab] = useState('myReferrals');
 
   useEffect(() => {
     dispatch(fetchReferrals());
@@ -47,29 +65,48 @@ export const Referrals: FC = () => {
   };
 
   const handleLinkCopyClick = () => {
-    // TODO: Вынеси эту линку в env или получай с бэка сразу!
-    const link = `https://t.me/cwallet_one_bot?start=ref_${userRefCode}`;
-    makeCopyToClipboard(link);
+    const utils = initUtils();
+    utils.openTelegramLink(
+      `https://t.me/share/url?url=${link}`
+    );
   };
 
   return (
     <Wrapper>
       <RefHeader>
-        <Title>Referral code:</Title>
+        <Title>Your Referral code</Title>
         <RefCode onClick={handleCodeCopyClick}>{userRefCode}</RefCode>
       </RefHeader>
       <Description>You and your friends will receive bonuses</Description>
       <RefLinkWrapper>
-        <p>My referral link: </p>
-        <RefLink onClick={handleLinkCopyClick}>Copy</RefLink>
+        <p>My referral link</p>
+        <RefLink onClick={handleLinkCopyClick}>Share</RefLink>
       </RefLinkWrapper>
-      <MainImg/>
-      <hr/>
-      {referralChildren?.map((refChild, index) =>
-        <RefChild key={refChild.id}>
-          {index + 1}) {refChild.firstName} {refChild.lastName} {refChild.coins}
-        </RefChild>
-      )}
+      <ReferralsContainer>
+        <TabWrapper>
+          <Tab isActive={activeTab === 'myReferrals'} onClick={() => setActiveTab('myReferrals')}>My
+            Referrals</Tab>
+          <Tab isActive={activeTab === 'referralTree'} onClick={() => setActiveTab('referralTree')}>Referral
+            Tree</Tab>
+        </TabWrapper>
+        {activeTab === 'myReferrals' && (
+          <div>
+            {referralChildren?.map((refChild) =>
+              <RefChild
+                key={refChild.id}>
+                <RefName>{refChild.firstName}</RefName>
+                <RefCoins>{refChild.coins}$</RefCoins>
+              </RefChild>
+            )}
+          </div>
+        )}
+        {activeTab === 'referralTree' && (
+          <div>
+            {/* Сюда добавь логику для отображения рефералов второго уровня */}
+          </div>
+        )}
+        <MainImg/>
+      </ReferralsContainer>
     </Wrapper>
   );
 };
