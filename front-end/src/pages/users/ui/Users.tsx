@@ -3,6 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../../../entities/Users';
 import { selectUsersData } from '../../../entities/Users/model/selectors.ts';
 import { UserTableComponent } from "../../../shared/ui";
+import styled from "styled-components";
+
+export const Container = styled.div`
+  padding: 10px;
+`;
+
+export const Header = styled.h1`
+  font-size: 24px;
+  color: rgb(200, 200, 200);
+  text-align: center;
+`;
 
 export const UsersPage: FC = () => {
   const dispatch = useDispatch();
@@ -12,5 +23,10 @@ export const UsersPage: FC = () => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  return <UserTableComponent users={users} height='80vh'/>;
+  return (
+    <Container>
+      <Header>Users: {users.length}</Header>
+      <UserTableComponent users={users} height='71vh'/>
+    </Container>
+  );
 };
