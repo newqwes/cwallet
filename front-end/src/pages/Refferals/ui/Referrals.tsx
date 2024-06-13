@@ -4,7 +4,7 @@ import {
   fetchReferrals,
   selectReferralChilds,
 } from "../../../entities/Referrals";
-import { MainImg, RefChild, RefHeader, Title, RefLinkWrapper, RefCode, RefLink, Wrapper } from "./styled";
+import { MainImg, RefChild, RefHeader, Title, RefLinkWrapper, RefCode, RefLink, Wrapper, Description } from "./styled";
 import { selectUserRefCode } from "../../../entities/User";
 import { postEvent } from "@tma.js/sdk";
 
@@ -58,7 +58,7 @@ export const Referrals: FC = () => {
         <Title>Referral code:</Title>
         <RefCode onClick={handleCodeCopyClick}>{userRefCode}</RefCode>
       </RefHeader>
-      <div>You and your friends will receive bonuses</div>
+      <Description>You and your friends will receive bonuses</Description>
       <RefLinkWrapper>
         <p>My referral link: </p>
         <RefLink onClick={handleLinkCopyClick}>Copy</RefLink>

@@ -6,7 +6,8 @@ import {
   AnswerCard,
   CardFront,
   CardBack,
-  SelectButton
+  SelectButton,
+  Card
 } from './styled';
 
 export const ShortPredictGame: FC = () => {
@@ -42,14 +43,18 @@ export const ShortPredictGame: FC = () => {
               </CardFront>
             }
             {
-              index === flippedCardIndex && <CardBack>
-                <div>{`You selected ${answer}`}</div>
-                <SelectButton>Select</SelectButton>
+              index === flippedCardIndex &&
+              <CardBack>
+                <Card>
+                  <h2>{`You selected ${answer}`}</h2>
+                  <SelectButton>Select</SelectButton>
+                </Card>
               </CardBack>
             }
           </AnswerCard>
         ))}
       </CardWrapper>
     </Container>
-  );
+  )
+    ;
 };

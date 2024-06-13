@@ -131,40 +131,31 @@ export const VersionBox = styled.div`
   font-size: 12px;
 `;
 
-const buttonPress = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.95);
-  }
-  100% {
-    transform: scale(1);
-  }
-`;
-
 export const UpgradeButton = styled.button`
-  background-color: rgba(240, 193, 75, 0.94);
-  border: none;
-  border-radius: 50px;
-  padding: 5px;
-  width: 53%;
-  font-size: 4.5vw;
-  ${coinFont};
-  line-height: 9vw;
-  color: rgba(28, 28, 28, 0.88);
+  background-color: hsl(39, 100%, 50%); /* оранжевый */
+  color: hsl(40, 33%, 15%);
+  border: 0;
+  border-radius: 0.5em;
+  padding: 1em;
+  font-size: 4vw;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
-
-  &:hover {
-    background-color: #e2a827;
-  }
+  box-shadow: 0 0.35em 0 0 hsl(39, 100%, 50%, 0.5);
 
   &:active {
-    background-color: #c69300;
-    animation: ${buttonPress} 0.3s ease;
+    transform: translateY(0.35em);
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    transform: translateY(0.35em);
+    box-shadow: none;
   }
 `;
+
+
 export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
