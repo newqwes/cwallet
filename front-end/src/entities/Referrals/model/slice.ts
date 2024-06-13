@@ -3,7 +3,8 @@ import { IUser } from '../../../shared/types';
 
 interface IReferralsState {
   data: {
-    childs: Array<IUser>,
+    children: Array<IUser>,
+    grandchildren: Array<IUser>,
     parent: IUser | null,
     referralCode: string | null,
   };
@@ -13,7 +14,8 @@ interface IReferralsState {
 
 const initialState: IReferralsState = {
   data: {
-    childs: [],
+    children: [],
+    grandchildren: [],
     parent: null,
     referralCode: null,
   },
@@ -28,10 +30,11 @@ export const referralsSlice = createSlice({
     fetchReferrals: (state) => {
       state.loading = true;
     },
-    fetchReferralsSuccess: (state, action: PayloadAction<any>) => {
+    fetchReferralsSuccess: (state, action: PayloadAction<{ children: Array<IUser>, grandchildren: Array<IUser> }>) => {
       state.loading = false;
       state.error = '';
-      state.data.childs = action.payload.referrals;
+      state.data.children = action.payload.children;
+      state.data.grandchildren = action.payload.grandchildren;
     },
     fetchReferralsError: (state, action: PayloadAction<any>) => {
       state.loading = false;

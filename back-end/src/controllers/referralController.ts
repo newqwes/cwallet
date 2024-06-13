@@ -4,17 +4,18 @@ import ApiError from '../exceptions/apiError';
 import { isValidReferralCode } from '../utils/referral';
 import User from '../database/models/user';
 import UserDto from '../dto/userDto';
+import { NextFunction } from "express";
 
 const REFERRAL_MIN_LENGTH = 5;
 
-export const updateOwnReferralCode = async (req: any, res: any, next: any) => {
+export const updateOwnReferralCode = async (req: any, res: any, next: NextFunction) => {
   try {
     const referralCode = req.body?.referralCode;
 
     if (!isValidReferralCode(referralCode) && referralCode.length < REFERRAL_MIN_LENGTH) {
       return next(ApiError.BadRequest('Referral code is not valid!'));
     }
-    const alreadyExistRefCode = await UserService.findOne({ referralCode });
+    const alreadyExistRefCode = await UserService.findOne({referralCode});
 
     if (alreadyExistRefCode) {
       return next(ApiError.AlreadyExists('Already exist this referral code!'));
@@ -30,13 +31,13 @@ export const updateOwnReferralCode = async (req: any, res: any, next: any) => {
     user.referralCode = referralCode;
     await user.save();
 
-    return res.status('201').json({ user });
+    return res.status('201').json({user});
   } catch (e) {
     next(e);
   }
 };
 
-export const updateParentReferralCode = async (req: any, res: any, next: any) => {
+export const updateParentReferralCode = async (req: any, res: any, next: NextFunction) => {
   try {
     const referralCode = req.body?.referralCode;
 
@@ -44,7 +45,7 @@ export const updateParentReferralCode = async (req: any, res: any, next: any) =>
       return next(ApiError.BadRequest('Referral code is not valid!'));
     }
 
-    const parent = await UserService.findOne({ referralCode });
+    const parent = await UserService.findOne({referralCode});
 
     if (!parent) {
       return next(ApiError.NotFound('This parent with this refCode not found!'));
@@ -61,18 +62,31 @@ export const updateParentReferralCode = async (req: any, res: any, next: any) =>
     user.refParentChangedTimes += 1;
     await user.save();
 
-    return res.status('201').json({ user });
+    return res.status('201').json({user});
   } catch (e) {
     next(e);
   }
 };
 
-export const getReferrals = async (req: any, res: any, next: any) => {
+export const getReferrals = async (req: any, res: any, next: NextFunction) => {
   try {
     const initData = getInitData(res);
-    const referrals = await UserService.findAll({ refParent: initData.user.id });
+    const userId = initData.user.id;
 
-    return res.status('201').json({ referrals: referrals.map((referral: User) => new UserDto(referral)) });
+    const conditions = [
+      {refParent: userId},
+      {refGrandParent: userId}
+    ];
+
+    const referralsAndGrandchildren = await UserService.findOp({
+      conditions: conditions,
+      orderBy: 'secretLevel'
+    });
+
+    const mapToDto = (user: User) => new UserDto(user);
+    const usersDto = referralsAndGrandchildren?.map(mapToDto) || [];
+
+    res.status(201).json({users: usersDto});
   } catch (e) {
     next(e);
   }

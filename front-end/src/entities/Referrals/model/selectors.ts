@@ -2,9 +2,14 @@ import { createSelector } from 'reselect';
 
 const selectReferrals = (state: RootState) => state.referrals;
 
-export const selectReferralChilds = createSelector(
+export const selectReferralChildren = createSelector(
   [selectReferrals],
-  (referrals) => referrals.data.childs,
+  (referrals) => referrals.data.children,
+);
+
+export const selectReferralGrandchildren = createSelector(
+  [selectReferrals],
+  (referrals) => referrals.data.grandchildren,
 );
 
 export const selectLoading = createSelector(

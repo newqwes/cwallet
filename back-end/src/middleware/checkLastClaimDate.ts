@@ -1,9 +1,10 @@
 import { pick } from 'lodash/fp';
 import ApiError from '../exceptions/apiError';
+import { NextFunction } from "express";
 
-const checkLastClaimDate = (req: any, res: any, next: any) => {
+const checkLastClaimDate = (req: any, res: any, next: NextFunction) => {
   try {
-    const { nextClaimDate } = pick(
+    const {nextClaimDate} = pick(
       ['nextClaimDate'],
       req.user,
     );

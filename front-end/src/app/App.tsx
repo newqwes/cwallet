@@ -58,7 +58,12 @@ export const App: FC = () => {
     return () => navigator.detach();
   }, [navigator]);
 
-  document.body.addEventListener('touchmove', (e) => e.preventDefault(), {passive: false})
+  document.body.addEventListener('touchmove', (e: any) => {
+    if (e.target.closest('.scroll_on')) {
+      return;
+    }
+    e.preventDefault();
+  }, {passive: false});
 
   const logLongString = (str: string, chunkSize = 100) => {
     for (let i = 0; i < str.length; i += chunkSize) {

@@ -45,18 +45,34 @@ export const Wrapper = styled.div`
 `;
 
 export const ReferralsContainer = styled.div`
-  margin-top: 25px;
+  margin-top: 15px;
   border: 1px solid #fff;
   border-radius: 30px;
   flex-grow: 1;
   position: relative;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.35);
+`;
+
+export const DescriptionWrapper = styled.div`
+  height: 4vh;
+`;
+
+export const Description = styled.div`
+  width: 40ch;
+  font-size: 4.4vw;
+  font-weight: 500;
+  border-right: 0.4em solid;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: ${typing} 2.5s steps(6, end) 3,
+  ${caret} 0.5s step-end infinite;
 `;
 
 export const MainImg = styled.div`
   background-image: url(${mainImg});
   position: absolute;
-  opacity: 0.7;
+  opacity: 0.8;
   content: '';
   width: 60vw;
   height: 60vh;
@@ -72,7 +88,7 @@ export const RefHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 2vw 0 6vw;
+  margin: 1vh 0 1.5vh;
 
   div {
     backface-visibility: hidden;
@@ -110,22 +126,11 @@ export const RefCode = styled.div`
   animation: ${blink} 4s infinite alternate;
 `;
 
-export const Description = styled.div`
-  width: 40ch;
-  font-size: 4.4vw;
-  font-weight: 500;
-  border-right: 0.4em solid;
-  overflow: hidden;
-  white-space: nowrap;
-  animation: ${typing} 2.5s steps(6, end) 3,
-  ${caret} 0.5s step-end infinite;
-`;
-
 export const RefChild = styled.div`
-  padding: 15px;
+  padding: 15px 10px 20px 10px;
   margin: 5px 0;
   width: 100%;
-  border: 1px solid #ffffff;
+  border-bottom: 1px solid #dddddd;
   display: flex;
   justify-content: space-between;
 `;
@@ -163,15 +168,6 @@ export const RefLink = styled.div`
   border-radius: 5px;
 `;
 
-export const TabWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background-color: hsl(217, 78%, 51%);
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
-`;
 
 export const Tab = styled.div<{ isActive: boolean }>`
   padding: 15px 45px;
@@ -182,4 +178,24 @@ export const Tab = styled.div<{ isActive: boolean }>`
   background-color: ${props => props.isActive ? 'hsl(39, 100%, 50%)' : 'hsl(217,78%,51%)'};
   transition: background-color 0.3s;
   border-radius: 30px 30px 0 0;
+`;
+
+export const RefTable = styled.div`
+  height: 45vh;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2vh;
+
+  :last-child {
+    height: auto;
+  }
+`;
+
+export const TabWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background-color: hsl(217, 78%, 51%);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom: 1px solid #ccc;
 `;

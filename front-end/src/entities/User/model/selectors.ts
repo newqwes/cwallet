@@ -12,6 +12,11 @@ export const selectUserClaimedCoins = createSelector(
   (user) => user.claimedCoins
 );
 
+export const selectUserTelegramId = createSelector(
+  [selectUser],
+  (user) => user.data.telegramId
+);
+
 export const selectUserRefCode = createSelector(
   [selectUser],
   (user) => user.data.referralCode

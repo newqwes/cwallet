@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import { validate, parse } from '@tma.js/init-data-node';
 import ApiError from '../exceptions/apiError';
 import { TelegramInitDataModel } from '../models';
+import { NextFunction } from "express";
 
 dotenv.config();
 
@@ -21,13 +22,13 @@ const setInitData = (res: any, initData: any) => {
  * @returns Init data stored in the Response object. Can return undefined in case,
  * the client is not authorized.
  */
-export const getInitData = (res: any): TelegramInitDataModel  => {
+export const getInitData = (res: any): TelegramInitDataModel => {
   const initData: TelegramInitDataModel = get(res, ['locals', 'initData']);
   if (!initData?.user?.id) {
     throw ApiError.BadRequest('Not valid user data');
   }
   return initData
-} ;
+};
 
 /**
  * Middleware which authorizes the external client.
@@ -35,7 +36,7 @@ export const getInitData = (res: any): TelegramInitDataModel  => {
  * @param res - Response object.
  * @param next - function to call the next middleware.
  */
-const authMiddleware = (req: any, res: any, next: any) => {
+const authMiddleware = (req: any, res: any, next: NextFunction) => {
   // We expect passing init data in the Authorization header in the following format:
   // <auth-type> <auth-data>
   // <auth-type> must be "tma", and <auth-data> is Telegram Mini Apps init data.

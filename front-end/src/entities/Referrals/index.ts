@@ -5,7 +5,8 @@ export {
   fetchReferralsError,
 } from './model/slice';
 export {
-  selectReferralChilds,
+  selectReferralChildren,
+  selectReferralGrandchildren,
   selectLoading,
   selectError,
 } from './model/selectors'

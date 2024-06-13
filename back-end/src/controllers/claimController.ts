@@ -4,8 +4,9 @@ import UserService from "../services/userService";
 import moment from "moment";
 import { getClaimCoins, getExtraTimeInMinutes } from "../utils/claimCoins";
 import { FIRST_LEVEL_REF_BACK, SECOND_LEVEL_REF_BACK } from "../constants/referrals";
+import { NextFunction } from "express";
 
-export const claim = async (req: any, res: any, next: any) => {
+export const claim = async (req: any, res: any, next: NextFunction) => {
   try {
     const initData = getInitData(res);
     const user = await UserService.findByTelegramUserId(initData.user.id);
@@ -46,8 +47,9 @@ export const claim = async (req: any, res: any, next: any) => {
     if (user.refParent) {
       const parent = await UserService.findByTelegramUserId(user.refParent);
 
+      const referralRewards = claimedCoins * FIRST_LEVEL_REF_BACK;
       if (parent) {
-        parent.referralRewards += claimedCoins * FIRST_LEVEL_REF_BACK;
+        parent.referralRewards += referralRewards > 1 ? referralRewards : 1;
         await parent.save();
       }
     }
@@ -55,8 +57,9 @@ export const claim = async (req: any, res: any, next: any) => {
     if (user.refGrandParent) {
       const grandParent = await UserService.findByTelegramUserId(user.refGrandParent);
 
+      const referralRewards = claimedCoins * SECOND_LEVEL_REF_BACK
       if (grandParent) {
-        grandParent.referralRewards += claimedCoins * SECOND_LEVEL_REF_BACK;
+        grandParent.referralRewards += referralRewards > 1 ? referralRewards : 1;
         await grandParent.save();
       }
     }

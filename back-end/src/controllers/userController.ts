@@ -2,8 +2,9 @@ import ApiError from '../exceptions/apiError';
 import { getInitData } from "../middleware/authMiddleware";
 import userService from '../services/userService';
 import UserDto from '../dto/userDto';
+import { NextFunction } from "express";
 
-export const getUserData = async (req: any, res: any, next: any) => {
+export const getUserData = async (req: any, res: any, next: NextFunction) => {
   try {
     const initData = getInitData(res);
     const {user, created}: any = await userService.findOrCreateById(initData.user);

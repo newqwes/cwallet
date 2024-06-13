@@ -1,4 +1,5 @@
 import User from '../database/models/user';
+import { Op } from 'sequelize';
 import { UserTelegramInitDataModel } from '../models';
 import ApiError from '../exceptions/apiError';
 import { generateReferralCode } from '../utils/referral';
@@ -42,6 +43,25 @@ class UserService {
     try {
       return User.findAll(arg ? {where: arg} : {});
     } catch (error) {
+      return null;
+    }
+  }
+
+  async findOp(options?: any) {
+    try {
+      const whereCondition = options ? {
+        where: {
+          [Op.or]: options.conditions
+        },
+        group: options.groupBy,
+        order: [
+          [options.orderBy, 'DESC']
+        ]
+      } : {};
+
+      return User.findAll(whereCondition as any);
+    } catch (error) {
+      console.error('Ошибка при поиске пользователей:', error);
       return null;
     }
   }
