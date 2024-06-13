@@ -56,5 +56,5 @@ export const VictoryMessage = styled.h2<{ isVictory: boolean }>`
   color: white;
   margin: 6vh 0;
   font-size: 4vh;
-  opacity: ${({isVictory}) => isVictory ? '1' : '10'};
+  opacity: ${({isVictory}) => isVictory ? '1' : '0'};
 `;
