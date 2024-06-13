@@ -11,6 +11,7 @@ import {
 } from './styled';
 
 import { NavButton } from "./NavButton";
+import { vibrateNow } from "../../../shared/libs/vibration.ts";
 
 export const NavBar: FC = () => {
   const location = useLocation();
@@ -32,7 +33,9 @@ export const NavBar: FC = () => {
         isActive={location.pathname === ROUTING_PATHS.TG_STYLES}
       />
       <Link to={ROUTING_PATHS.HOME}>
-        <StyledTapIcon isActive={location.pathname === ROUTING_PATHS.HOME}/>
+        <StyledTapIcon isActive={location.pathname === ROUTING_PATHS.HOME} onClick={() => {
+          vibrateNow('success', 'impact', 'light')
+        }}/>
       </Link>
       <NavButton
         key={ROUTING_PATHS.SHORT_PREDICTION_GAME}

@@ -22,6 +22,7 @@ import {
 import { useAnimatedNumber } from './useAnimatedNumber';
 import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.ts";
 import { Button } from "../../../shared/ui";
+import { vibrateNow } from "../../../shared/libs/vibration.ts";
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ export const ClaimComponent: FC = () => {
 
   const animatedCoins = useAnimatedNumber(coins, 1000);
   const handleUpgradeClick = () => {
-    console.log("Upgrade button clicked");
+    vibrateNow('success', 'impact', 'light');
   }
 
   return (

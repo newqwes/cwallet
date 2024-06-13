@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { GameBoard, Card, VictoryMessage, CardInner, CardFront, CardBack, Wrapper } from './styled';
 import { Button } from "../../../shared/ui";
+import { vibrateNow } from "../../../shared/libs/vibration.ts";
 
 const CARD_ELEMENTS = ["💵", "💶", "💷", "💴", "🧧", "🪙"];
 const CARDS_AMOUNT = 12;
@@ -23,8 +24,13 @@ export const TgStyles: FC = () => {
   const startGame = () => {
     setVisibleCards([]);
     setMatchedPairs([]);
+    vibrateNow('success', 'impact', 'light');
     const cardValues = generateArrayWithPairs(CARD_ELEMENTS, CARDS_AMOUNT);
-    setCards(cardValues.map((value, index) => ({id: index, ...value, isFlipped: false})));
+    setCards(cardValues.map((value, index) => ({id: index, ...value, isFlipped: true})));
+    setTimeout(() => {
+        setCards(cardValues.map((value, index) => ({id: index, ...value, isFlipped: false})));
+      },
+      1000)
   };
 
   const handleCardClick = (card: CardType) => {
@@ -40,6 +46,7 @@ export const TgStyles: FC = () => {
 
     if (newVisibleCards.length === 2) {
       if (newVisibleCards[0].value === newVisibleCards[1].value) {
+        vibrateNow('success');
         setMatchedPairs([...matchedPairs, newVisibleCards[0].value]);
         setVisibleCards([]);
       } else {
@@ -82,8 +89,8 @@ export const TgStyles: FC = () => {
           </Card>
         ))}
       </GameBoard>
-      {isVictory && <VictoryMessage>Поздравляю, вы победили!</VictoryMessage>}
-      <Button size='sm' btnStyle={'secondary'} onClick={startGame}>Новая игра</Button>
+      <VictoryMessage isVictory={isVictory}>Congratulations, you won 5$!</VictoryMessage>
+      <Button size='sm' btnStyle={'secondary'} onClick={startGame}>New game</Button>
     </Wrapper>
   );
 };
