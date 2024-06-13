@@ -126,21 +126,24 @@ export const RefCode = styled.div`
   animation: ${blink} 4s infinite alternate;
 `;
 
-export const RefChild = styled.div`
-  padding: 15px 10px 20px 10px;
-  margin: 5px 0;
-  width: 100%;
-  border-bottom: 1px solid #dddddd;
+export const Tab = styled.div<{ isActive: boolean }>`
+  padding: 15px 45px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 3.5vw;
+  color: hsl(210, 29%, 97%);
+  background-color: ${props => props.isActive ? 'hsl(39, 100%, 50%)' : 'hsl(217,78%,51%)'};
+  transition: background-color 0.3s;
+  border-radius: 30px 30px 0 0;
+`;
+
+export const TabWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-
-export const RefCoins = styled.div`
-
-`;
-
-export const RefName = styled.div`
-
+  background-color: hsl(217, 78%, 51%);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom: 1px solid #ccc;
 `;
 
 export const RefLinkWrapper = styled.div`
@@ -166,36 +169,4 @@ export const RefLink = styled.div`
   cursor: pointer;
   border: 1px solid #aaa;
   border-radius: 5px;
-`;
-
-
-export const Tab = styled.div<{ isActive: boolean }>`
-  padding: 15px 45px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 3.5vw;
-  color: hsl(210, 29%, 97%);
-  background-color: ${props => props.isActive ? 'hsl(39, 100%, 50%)' : 'hsl(217,78%,51%)'};
-  transition: background-color 0.3s;
-  border-radius: 30px 30px 0 0;
-`;
-
-export const RefTable = styled.div`
-  height: 45vh;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 2vh;
-
-  :last-child {
-    height: auto;
-  }
-`;
-
-export const TabWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background-color: hsl(217, 78%, 51%);
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  border-bottom: 1px solid #ccc;
 `;

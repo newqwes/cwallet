@@ -6,7 +6,6 @@ import {
 } from "../../../entities/Referrals";
 import {
   MainImg,
-  RefChild,
   RefHeader,
   Title,
   RefLinkWrapper,
@@ -17,15 +16,12 @@ import {
   Description,
   TabWrapper, Tab,
   ReferralsContainer,
-  RefName,
-  RefCoins,
-  RefTable
 } from "./styled";
 import { selectUserRefCode } from "../../../entities/User";
 import { REFERRAL_URL } from "../../../shared/consts";
 import { initUtils } from "@tma.js/sdk-react";
-import { secretLevelToSmile } from "../../../shared/libs";
 import { vibrateNow } from "../../../shared/libs/vibration.ts";
+import { UserTableComponent } from "../../../shared/ui";
 
 const MY_REFERRALS = 'myReferrals';
 const REFERRAL_TREE = 'referralTree';
@@ -94,28 +90,8 @@ export const Referrals: FC = () => {
           <Tab isActive={activeTab === REFERRAL_TREE} onClick={() => setActiveTab(REFERRAL_TREE)}>Referral
             Tree</Tab>
         </TabWrapper>
-        {activeTab === MY_REFERRALS && (
-          <RefTable className='scroll_on'>
-            {referralChildren?.map((refChild) =>
-              <RefChild
-                key={refChild.id}>
-                <RefName>{secretLevelToSmile(refChild.secretLevel)} {refChild.firstName}</RefName>
-                <RefCoins>{refChild.coins}$</RefCoins>
-              </RefChild>
-            )}
-          </RefTable>
-        )}
-        {activeTab === REFERRAL_TREE && (
-          <RefTable>
-            {referralGrandchildren?.map((refChild) =>
-              <RefChild
-                key={refChild.id}>
-                <RefName>{secretLevelToSmile(refChild.secretLevel)} {refChild.firstName}</RefName>
-                <RefCoins>{refChild.coins}$</RefCoins>
-              </RefChild>
-            )}
-          </RefTable>
-        )}
+        {activeTab === MY_REFERRALS && <UserTableComponent users={referralChildren}/>}
+        {activeTab === REFERRAL_TREE && <UserTableComponent users={referralGrandchildren}/>}
         <MainImg/>
       </ReferralsContainer>
     </Wrapper>
