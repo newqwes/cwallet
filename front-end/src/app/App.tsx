@@ -8,6 +8,8 @@ import {
   useMiniApp,
   useThemeParams,
   useViewport,
+  on,
+  postEvent
 } from '@tma.js/sdk-react';
 import { AppRoot } from '@telegram-apps/telegram-ui';
 import { useIntegration } from '@tma.js/react-router-integration';
@@ -18,6 +20,22 @@ import '@telegram-apps/telegram-ui/dist/styles.css';
 import { NavBar } from '../widgets/NavBar';
 import { fetchUser } from "../entities/User";
 import { useDispatch } from "react-redux";
+
+// Закрывает приложение при двойном клике назад
+let backPressedOnce = false;
+on('back_button_pressed', () => {
+  if (backPressedOnce) {
+    postEvent('web_app_close');
+  } else {
+    backPressedOnce = true;
+    postEvent('web_app_setup_back_button', {is_visible: false});
+    setTimeout(() => {
+      backPressedOnce = false;
+      postEvent('web_app_setup_back_button', {is_visible: true});
+    }, 2000);
+  }
+});
+postEvent('web_app_setup_closing_behavior', {need_confirmation: true});
 
 export const App: FC = () => {
   const dispatch = useDispatch();
@@ -65,12 +83,6 @@ export const App: FC = () => {
     e.preventDefault();
   }, {passive: false});
 
-  const logLongString = (str: string, chunkSize = 100) => {
-    for (let i = 0; i < str.length; i += chunkSize) {
-      console.log(str.substring(i, i + chunkSize));
-    }
-  };
-  logLongString(location.search);
   return (
     <AppRoot
       appearance={miniApp.isDark ? 'dark' : 'light'}

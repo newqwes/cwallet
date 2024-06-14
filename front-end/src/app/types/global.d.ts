@@ -1,4 +1,4 @@
-export { };
+export {};
 
 declare global {
   interface Window {
@@ -12,4 +12,5 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   declare type AppDispatch = import('../store').AppDispatch;
 
-};
+}
+;

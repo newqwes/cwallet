@@ -6,8 +6,7 @@ import { axiosInstance } from "../../../shared/api";
  */
 export const usersAPI = {
   getUsers: async (): Promise<any[]> => {
-    const { data } = await axiosInstance.get('users');
-    console.log(data);
+    const {data} = await axiosInstance.get('users');
     return data;
   },
 };
