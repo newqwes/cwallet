@@ -6,11 +6,9 @@ const truncateName = (name: string) => {
   return name.length > 14 ? `${name.substring(0, 11)}...` : name;
 };
 
-const UserTable = styled.div<{ height: string }>`
-  max-height: ${({height}) => height};
+export const UserTable = styled.div`
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-  background-color: rgba(255, 255, 255, 0.09);
   border-radius: 10px;
   padding: 5px 10px 2vh 10px;
 
@@ -28,6 +26,10 @@ const UserChild = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 4vw;
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 const UserName = styled.div``;
@@ -42,9 +44,9 @@ const UserCoins = styled.div`
   }
 `;
 
-export const UserTableComponent = ({users, height}: { users: IUser[], height?: string }) => {
+export const UserTableComponent = ({users}: { users: IUser[] }) => {
   return (
-    <UserTable className='scroll_on' height={height || '45vh'}>
+    <UserTable className='scroll_on'>
       {users?.map((user) => (
         <UserChild key={user.id}>
           <UserName>{secretLevelToSmile(user.secretLevel)} {truncateName(user.firstName)}</UserName>

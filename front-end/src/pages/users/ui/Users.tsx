@@ -4,9 +4,14 @@ import { fetchUsers } from '../../../entities/Users';
 import { selectUsersData } from '../../../entities/Users/model/selectors.ts';
 import { UserTableComponent } from "../../../shared/ui";
 import styled from "styled-components";
+import { UserTable } from "../../../shared/ui/UserTable.tsx";
 
 export const Container = styled.div`
   padding: 10px;
+
+  ${UserTable} {
+    height: 73vh;
+  }
 `;
 
 export const Header = styled.h1`
@@ -26,7 +31,7 @@ export const UsersPage: FC = () => {
   return (
     <Container>
       <Header>Users: {users.length}</Header>
-      <UserTableComponent users={users} height='71vh'/>
+      <UserTableComponent users={users}/>
     </Container>
   );
 };

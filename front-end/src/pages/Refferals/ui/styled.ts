@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import mainImg from '../../../shared/assets/main.png';
+import { UserTable } from "../../../shared/ui/UserTable.tsx";
 
 const buzz = keyframes`
   70% {
@@ -51,7 +52,10 @@ export const ReferralsContainer = styled.div`
   flex-grow: 1;
   position: relative;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.35);
+
+  ${UserTable} {
+    height: 90%;
+  }
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -127,7 +131,7 @@ export const RefCode = styled.div`
 `;
 
 export const Tab = styled.div<{ isActive: boolean }>`
-  padding: 15px 45px;
+  padding: 15px 35px;
   cursor: pointer;
   font-weight: 600;
   font-size: 3.5vw;
@@ -170,3 +174,10 @@ export const RefLink = styled.div`
   border: 1px solid #aaa;
   border-radius: 5px;
 `;
+
+export const Empty = styled.div`
+  font-size: 18px;
+  line-height: 24px;
+  margin: 20px;
+`;
+

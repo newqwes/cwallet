@@ -16,6 +16,7 @@ import {
   Description,
   TabWrapper, Tab,
   ReferralsContainer,
+  Empty
 } from "./styled";
 import { selectUserRefCode } from "../../../entities/User";
 import { REFERRAL_URL } from "../../../shared/consts";
@@ -70,6 +71,11 @@ export const Referrals: FC = () => {
     );
   };
 
+  const showRefChildren = activeTab === MY_REFERRALS && referralChildren.length > 0;
+  const showEmptyRefChildren = activeTab === MY_REFERRALS && referralChildren.length === 0;
+  const showRefGrandchildren = activeTab === REFERRAL_TREE && referralGrandchildren.length > 0;
+  const showEmptyGrandchildren = activeTab === REFERRAL_TREE && referralGrandchildren.length === 0;
+
   return (
     <Wrapper>
       <RefHeader>
@@ -86,12 +92,15 @@ export const Referrals: FC = () => {
       <ReferralsContainer>
         <TabWrapper>
           <Tab isActive={activeTab === MY_REFERRALS} onClick={() => setActiveTab(MY_REFERRALS)}>My
-            Referrals</Tab>
+            Referrals {referralChildren.length}</Tab>
           <Tab isActive={activeTab === REFERRAL_TREE} onClick={() => setActiveTab(REFERRAL_TREE)}>Referral
-            Tree</Tab>
+            Tree {referralGrandchildren.length}</Tab>
         </TabWrapper>
-        {activeTab === MY_REFERRALS && <UserTableComponent users={referralChildren}/>}
-        {activeTab === REFERRAL_TREE && <UserTableComponent users={referralGrandchildren}/>}
+        {showRefChildren && <UserTableComponent
+          users={referralChildren}/>}
+        {showEmptyRefChildren && <Empty>List is empty</Empty>}
+        {showRefGrandchildren && <UserTableComponent users={referralGrandchildren}/>}
+        {showEmptyGrandchildren && <Empty>List is empty</Empty>}
         <MainImg/>
       </ReferralsContainer>
     </Wrapper>
