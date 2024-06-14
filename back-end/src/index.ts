@@ -16,6 +16,7 @@ import claimRoute from './routes/claimRoute';
 import userRoute from './routes/userRoute';
 import usersRoute from './routes/usersRoute';
 import referralRoute from './routes/referralRoute';
+import longGameRoute from './routes/longGameRoute';
 import cron from 'node-cron';
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use('/api/claim', claimRoute);
 app.use('/api/user', userRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/referral', referralRoute);
+app.use('/api/long_game', longGameRoute);
 
 app.use(errorMiddleware);
 

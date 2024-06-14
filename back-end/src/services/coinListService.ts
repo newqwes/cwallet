@@ -3,7 +3,7 @@ import createResponse from '../utils/createResponse';
 import { CoinListInitDataModel } from '../models';
 
 class CoinListService {
-  async findOneByCoinId(coin_id: string) {
+  async findOneByCoinId(coin_id: string): Promise<CoinList> {
     try {
       return await CoinList.findOne({
         where: { coin_id },
