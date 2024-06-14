@@ -73,6 +73,9 @@ class UserService {
         referralCode: generateReferralCode(REFERRAL_CODE_LENGTH),
         refParent: user.refParent,
         firstName: user.firstName,
+        lastName: user.lastName,
+        refGrandParent: user.refGrandParent,
+        languageCode: user.languageCode
       });
     } catch (error) {
       return null;
