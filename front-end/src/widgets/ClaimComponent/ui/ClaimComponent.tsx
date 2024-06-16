@@ -74,9 +74,9 @@ export const ClaimComponent: FC = () => {
     const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((time % (1000 * 60)) / 1000);
 
-    return `${hours.toString().padStart(2, '0')}:${minutes
+    return `${ hours.toString().padStart(2, '0') }:${ minutes
       .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      .padStart(2, '0') }:${ seconds.toString().padStart(2, '0') }`;
   };
 
   const animatedCoins = useAnimatedNumber(coins, 1000);
@@ -88,19 +88,19 @@ export const ClaimComponent: FC = () => {
     <Wrapper>
       <CoinWrapper>
         <h1>Level 1</h1>
-        <Coins>{animatedCoins}$</Coins>
+        <Coins>{ animatedCoins }✨</Coins>
       </CoinWrapper>
-      {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
+      { claimedCoins !== null && <CoinChangeText isActive={ !isTimerActive }>+{ claimedCoins }</CoinChangeText> }
       <VersionBox>
-        <h6>App Version: 0.1.15</h6>
+        <h6>App Version: 0.1.16</h6>
       </VersionBox>
-      <MainWrapper onClick={handleClickNotYet}>
-        <MainImg isActive={!isTimerActive}/>
-        <InvisibleButton onClick={handleClickClaimBtn} isActive={!isTimerActive}/>
-        <Timer>{isTimerActive && formatTime(timeLeft)}</Timer>
+      <MainWrapper onClick={ handleClickNotYet }>
+        <MainImg isActive={ !isTimerActive }/>
+        <InvisibleButton onClick={ handleClickClaimBtn } isActive={ !isTimerActive }/>
+        <Timer>{ isTimerActive && formatTime(timeLeft) }</Timer>
       </MainWrapper>
       <UpgradeButtonWrapper>
-        <Button btnStyle={'primary'} onClick={handleUpgradeClick}>
+        <Button btnStyle={ 'primary' } onClick={ handleUpgradeClick }>
           Upgrade
         </Button>
       </UpgradeButtonWrapper>

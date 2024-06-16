@@ -3,7 +3,7 @@ import { IUser } from "../types";
 import { secretLevelToSmile } from "../libs";
 
 const truncateName = (name: string) => {
-  return name.length > 14 ? `${name.substring(0, 11)}...` : name;
+  return name.length > 14 ? `${ name.substring(0, 11) }...` : name;
 };
 
 export const UserTable = styled.div`
@@ -44,15 +44,15 @@ const UserCoins = styled.div`
   }
 `;
 
-export const UserTableComponent = ({users}: { users: IUser[] }) => {
+export const UserTableComponent = ({ users }: { users: IUser[] }) => {
   return (
     <UserTable className='scroll_on'>
-      {users?.map((user) => (
-        <UserChild key={user.id}>
-          <UserName>{secretLevelToSmile(user.secretLevel)} {truncateName(user.firstName)}</UserName>
-          <UserCoins>{user.referralCode} <span>{user.coins}$</span></UserCoins>
+      { users?.map((user) => (
+        <UserChild key={ user.id }>
+          <UserName>{ secretLevelToSmile(user.secretLevel) } { truncateName(user.firstName) }</UserName>
+          <UserCoins>{ user.referralCode } <span>{ user.coins }✨</span></UserCoins>
         </UserChild>
-      ))}
+      )) }
     </UserTable>
   );
 };
