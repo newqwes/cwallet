@@ -15,7 +15,7 @@ class CoinListService {
 
   async create(defaults: CoinListInitDataModel) {
     try {
-      const { coin_id, symbol, name, image_link, current_price, last_updated } =
+      const { coin_id, symbol, name, image_link, current_price, last_updated, market_cap_rank, market_cap } =
         defaults;
 
       return await CoinList.create({
@@ -25,6 +25,8 @@ class CoinListService {
         image_link,
         current_price,
         last_updated,
+        market_cap_rank,
+        market_cap
       });
     } catch (error) {
       console.log('error', error);
@@ -34,7 +36,7 @@ class CoinListService {
 
   async update(defaults: CoinListInitDataModel) {
     try {
-      const { coin_id, symbol, name, image_link, current_price, last_updated } =
+      const { coin_id, symbol, name, image_link, current_price, last_updated, market_cap_rank, market_cap } =
         defaults;
 
       return await CoinList.update(
@@ -45,6 +47,8 @@ class CoinListService {
           image_link,
           current_price,
           last_updated,
+          market_cap_rank,
+          market_cap
         },
         {
           where: { coin_id },

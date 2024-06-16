@@ -24,6 +24,8 @@ export async function getCoinsInfo() {
         image_link: coin_el.image,
         current_price: coin_el.current_price,
         last_updated: coin_el.last_updated,
+        market_cap_rank: coin_el.market_cap_rank,
+        market_cap: coin_el.market_cap
       };
 
       const getCoin = await CoinListService.findOneByCoinId(

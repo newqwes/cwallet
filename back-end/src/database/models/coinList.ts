@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import sequelize from '..';
 
-class CoinList extends Model {}
+class CoinList extends Model {
+}
 
 CoinList.init(
   {
@@ -14,6 +15,8 @@ CoinList.init(
       defaultValue: () => uuidv4(),
     },
     coin_id: { type: DataTypes.STRING, allowNull: false },
+    market_cap_rank: { type: DataTypes.FLOAT },
+    market_cap: { type: DataTypes.FLOAT },
     symbol: { type: DataTypes.STRING, allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
     image_link: { type: DataTypes.STRING, allowNull: false },

@@ -92,7 +92,7 @@ export const ClaimComponent: FC = () => {
       </CoinWrapper>
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
       <VersionBox>
-        <h6>App Version: 0.1.3</h6>
+        <h6>App Version: 0.1.15</h6>
       </VersionBox>
       <MainWrapper onClick={handleClickNotYet}>
         <MainImg isActive={!isTimerActive}/>

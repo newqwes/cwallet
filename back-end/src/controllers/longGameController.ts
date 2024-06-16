@@ -64,7 +64,7 @@ export const sendUserCryptoBag = async (req: any, res: any, next: any) => {
       }
     }
 
-    return res.status('201').json({ sucess: true });
+    return res.status('201').json({ success: true });
   } catch (e) {
     next(e);
   }
