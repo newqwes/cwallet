@@ -1,9 +1,16 @@
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware';
-import { getDataByShortGame } from '../controllers/shortGameController';
+import {
+  getSortedDataByShortGame,
+  setShortGameData,
+  getShortGameResultData,
+} from '../controllers/shortGameController';
 
 const shortGameRoute = express.Router();
 
-shortGameRoute.get('/', authMiddleware, getDataByShortGame);
+shortGameRoute.get('/', authMiddleware, getSortedDataByShortGame);
+
+shortGameRoute.post('/create_data', authMiddleware, setShortGameData);
+shortGameRoute.get('/game_result', authMiddleware, getShortGameResultData);
 
 export default shortGameRoute;

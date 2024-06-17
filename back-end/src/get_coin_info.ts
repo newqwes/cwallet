@@ -2,6 +2,8 @@ import 'dotenv/config';
 import axios from 'axios';
 import createOptionsRequest from './utils/createCGOptionsRequest';
 import CoinListService from './services/coinListService';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const CG_domain = process.env.CG_DOMAIN;
 const CG_HC_days = 7; //data up to number of days ago (for example: 7)
@@ -25,7 +27,7 @@ export async function getCoinsInfo() {
         current_price: coin_el.current_price,
         last_updated: coin_el.last_updated,
         market_cap_rank: coin_el.market_cap_rank,
-        market_cap: coin_el.market_cap
+        market_cap: coin_el.market_cap,
       };
 
       const getCoin = await CoinListService.findOneByCoinId(
