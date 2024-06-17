@@ -6,7 +6,7 @@ import { axiosInstance } from "../../../shared/api";
  */
 export const referralsAPI = {
   getReferrals: async (): Promise<any[]> => {
-    const {data} = await axiosInstance.get('referral');
+    const { data } = await axiosInstance.get('referral');
     return data;
   },
 };

@@ -21,22 +21,6 @@ import { NavBar } from '../widgets/NavBar';
 import { fetchUser } from "../entities/User";
 import { useDispatch } from "react-redux";
 
-// Закрывает приложение при двойном клике назад
-let backPressedOnce = false;
-on('back_button_pressed', () => {
-  if (backPressedOnce) {
-    postEvent('web_app_close');
-  } else {
-    backPressedOnce = true;
-    postEvent('web_app_setup_back_button', {is_visible: false});
-    setTimeout(() => {
-      backPressedOnce = false;
-      postEvent('web_app_setup_back_button', {is_visible: true});
-    }, 2000);
-  }
-});
-postEvent('web_app_setup_closing_behavior', {need_confirmation: true});
-
 export const App: FC = () => {
   const dispatch = useDispatch();
   const lp = useLaunchParams();
@@ -45,7 +29,23 @@ export const App: FC = () => {
   const viewport = useViewport();
 
   useEffect(() => {
+    postEvent('web_app_setup_closing_behavior', { need_confirmation: true });
+    // Закрывает приложение при двойном клике назад
+    let backPressedOnce = false;
+    on('back_button_pressed', () => {
+      if (backPressedOnce) {
+        postEvent('web_app_close');
+      } else {
+        backPressedOnce = true;
+        postEvent('web_app_setup_back_button', { is_visible: false });
+        setTimeout(() => {
+          backPressedOnce = false;
+          postEvent('web_app_setup_back_button', { is_visible: true });
+        }, 2000);
+      }
+    });
     dispatch(fetchUser());
+    postEvent('web_app_ready');
   }, []);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export const App: FC = () => {
       return;
     }
     e.preventDefault();
-  }, {passive: false});
+  }, { passive: false });
 
   return (
     <AppRoot

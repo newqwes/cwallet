@@ -4,6 +4,8 @@ import { App } from './App';
 import { SDKProvider } from '@tma.js/sdk-react';
 import { Provider } from 'react-redux';
 import store from './store';
+import { token } from "../shared/api/axiosInstance.ts";
+import { LandingPage } from "../pages/Landing";
 
 const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
   <div>
@@ -21,13 +23,13 @@ const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
 );
 
 export const Root: FC = () => {
-  return (
+  return token ? (
     <ErrorBoundary fallback={ErrorBoundaryError}>
       <SDKProvider>
         <Provider store={store}>
-          <App />
+          <App/>
         </Provider>
       </SDKProvider>
     </ErrorBoundary>
-  );
+  ) : <LandingPage/>;
 };

@@ -22,7 +22,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   margin: 0;
-  padding: 5px;
   background: radial-gradient(150% 55% at -15% 35%, #cfb266 0%, #2b2d5c 60%, #1b1639 85%);
   background-size: 400% 400%;
   height: 100vh;

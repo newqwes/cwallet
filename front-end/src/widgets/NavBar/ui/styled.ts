@@ -13,7 +13,7 @@ import { IButtonLink } from "./types";
 export const NavBarWrapper = styled.div`
   position: fixed;
   left: 50%;
-  bottom: 10px;
+  bottom: 15px;
   transform: translateX(-50%);
   align-items: center;
   display: flex;
@@ -26,8 +26,8 @@ export const StyledLink = styled(Link)`
 `;
 
 export const ButtonLink = styled.button<IButtonLink>`
-  width: 15vw;
-  height: 15vw;
+  width: 14vw;
+  height: 13.5vw;
   border: none;
   border-radius: 0.33rem;
   display: flex;
@@ -36,7 +36,7 @@ export const ButtonLink = styled.button<IButtonLink>`
   align-items: center;
   color: #FFFFFF;
 
-  background: ${({isActive}) => (isActive ? '#D9D9D96F' : '#D9D9D940')};
+  background: ${({ isActive }) => (isActive ? '#D9D9D96F' : '#D9D9D940')};
 `;
 
 export const LinkTitle = styled.span`
@@ -56,7 +56,7 @@ export const StyledTapIcon = styled.div<IButtonLink>`
   background-image: url(${logoImg});
 
   transition: filter 0.5s ease;
-  filter: ${({isActive}) => (isActive ? 'grayscale(0%)' : 'grayscale(100%)')};
+  filter: ${({ isActive }) => (isActive ? 'grayscale(0%)' : 'grayscale(100%)')};
   background-size: cover;
   background-position: center;
 
