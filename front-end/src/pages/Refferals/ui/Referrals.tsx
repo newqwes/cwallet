@@ -16,13 +16,14 @@ import {
   Description,
   TabWrapper, Tab,
   ReferralsContainer,
-  Empty
+  Empty,
+  ButtonContainer
 } from "./styled";
 import { selectUserRefCode } from "../../../entities/User";
 import { REFERRAL_URL } from "../../../shared/consts";
 import { initUtils } from "@tma.js/sdk-react";
 import { vibrateNow } from "../../../shared/libs/vibration.ts";
-import { UserTableComponent } from "../../../shared/ui";
+import { Button, UserTableComponent } from "../../../shared/ui";
 
 const MY_REFERRALS = 'myReferrals';
 const REFERRAL_TREE = 'referralTree';
@@ -83,12 +84,19 @@ export const Referrals: FC = () => {
         <RefCode onClick={handleCodeCopyClick}>{userRefCode}</RefCode>
       </RefHeader>
       <DescriptionWrapper>
-        <Description>You and your friends will receive bonuses</Description>
+        <Description>Form first level: 5%. Second: 1%</Description>
       </DescriptionWrapper>
-      <RefLinkWrapper>
-        <p>My referral link</p>
-        <RefLink onClick={handleLinkCopyClick}>Share</RefLink>
-      </RefLinkWrapper>
+      <ButtonContainer>
+        <Button btnStyle={'secondary'} onClick={() => {
+          vibrateNow('error');
+        }}>
+          Claim
+        </Button>
+        <RefLinkWrapper>
+          <p>My referral link</p>
+          <RefLink onClick={handleLinkCopyClick}>Share</RefLink>
+        </RefLinkWrapper>
+      </ButtonContainer>
       <ReferralsContainer>
         <TabWrapper>
           <Tab isActive={activeTab === MY_REFERRALS} onClick={() => setActiveTab(MY_REFERRALS)}>My

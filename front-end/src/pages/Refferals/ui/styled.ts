@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import mainImg from '../../../shared/assets/main.png';
 import { UserTable } from "../../../shared/ui/UserTable.tsx";
+import { Button } from "../../../shared/ui";
 
 const buzz = keyframes`
   70% {
@@ -47,11 +48,11 @@ export const Wrapper = styled.div`
 
 export const ReferralsContainer = styled.div`
   margin-top: 15px;
-  border: 1px solid #fff;
   border-radius: 30px;
   flex-grow: 1;
   position: relative;
   overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
 
   ${UserTable} {
     height: 90%;
@@ -92,7 +93,7 @@ export const RefHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 1vh 0 1.5vh;
+  margin: 0.8vh 0 1vh;
 
   div {
     backface-visibility: hidden;
@@ -131,12 +132,12 @@ export const RefCode = styled.div`
 `;
 
 export const Tab = styled.div<{ isActive: boolean }>`
-  padding: 15px 35px;
+  padding: 12px 40px;
   cursor: pointer;
   font-weight: 600;
   font-size: 3.5vw;
   color: hsl(210, 29%, 97%);
-  background-color: ${props => props.isActive ? 'hsl(39, 100%, 50%)' : 'hsl(217,78%,51%)'};
+  background-color: ${props => props.isActive ? 'hsla(32,100%,50%,0.93)' : 'hsl(237,78%,51%)'};
   transition: background-color 0.3s;
   border-radius: 30px 30px 0 0;
 `;
@@ -144,19 +145,37 @@ export const Tab = styled.div<{ isActive: boolean }>`
 export const TabWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: hsl(217, 78%, 51%);
+  background-color: hsl(237, 78%, 51%);
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  border-bottom: 1px solid #ccc;
+`;
+
+export const ButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  justify-content: space-between;
+  margin-top: 15px;
+  align-items: center;
+  padding: 0 5px;
+
+  ${Button} {
+    padding: 8px 14px;
+    margin-right: 25px;
+    margin-bottom: 6px;
+  }
+
+  h4 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
 `;
 
 export const RefLinkWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  margin-top: 20px;
-  padding: 5px 20px;
   background: #D9D9D94D;
   font-size: 16px;
   font-weight: 600;

@@ -4,6 +4,7 @@ import { UsersPage } from '../../pages/users';
 import { ShortPredictGame } from '../../pages/short-prediction-game';
 import { TgStyles } from '../../pages/TgStyles';
 import { Referrals } from '../../pages/Refferals';
+import { Upgrade } from '../../pages/Upgrade';
 import { ROUTING_PATHS } from '../../shared/consts';
 
 interface Route {
@@ -19,4 +20,5 @@ export const routes: Route[] = [
   { path: ROUTING_PATHS.TG_STYLES, Component: TgStyles, title: 'Predict game' },
   { path: ROUTING_PATHS.USERS, Component: UsersPage, title: 'Людня, вся кароч..' },
   { path: ROUTING_PATHS.REFERRALS, Component: Referrals, title: 'Friends' },
+  { path: ROUTING_PATHS.UPGRADE, Component: Upgrade, title: 'Upgrade' },
 ];

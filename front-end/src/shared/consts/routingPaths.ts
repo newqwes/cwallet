@@ -4,4 +4,5 @@ export enum ROUTING_PATHS {
   TG_STYLES = '/tg-styles',
   USERS = '/users',
   REFERRALS = '/referrals',
+  UPGRADE = '/upgrade',
 };

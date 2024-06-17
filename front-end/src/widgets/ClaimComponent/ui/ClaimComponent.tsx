@@ -23,9 +23,11 @@ import { useAnimatedNumber } from './useAnimatedNumber';
 import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.ts";
 import { Button } from "../../../shared/ui";
 import { vibrateNow } from "../../../shared/libs/vibration.ts";
+import { useNavigate } from "react-router-dom";
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const coins = useSelector(selectUserCoinCount);
   const claimedCoins = useSelector(selectUserClaimedCoins);
   const nextClaimDate = useSelector(selectUserNextClaimDate);
@@ -74,33 +76,34 @@ export const ClaimComponent: FC = () => {
     const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((time % (1000 * 60)) / 1000);
 
-    return `${ hours.toString().padStart(2, '0') }:${ minutes
+    return `${hours.toString().padStart(2, '0')}:${minutes
       .toString()
-      .padStart(2, '0') }:${ seconds.toString().padStart(2, '0') }`;
+      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
   const animatedCoins = useAnimatedNumber(coins, 1000);
   const handleUpgradeClick = () => {
     vibrateNow('success', 'impact', 'light');
+    navigate('/upgrade');
   }
 
   return (
     <Wrapper>
       <CoinWrapper>
         <h1>Level 1</h1>
-        <Coins>{ animatedCoins }✨</Coins>
+        <Coins>{animatedCoins}✨</Coins>
       </CoinWrapper>
-      { claimedCoins !== null && <CoinChangeText isActive={ !isTimerActive }>+{ claimedCoins }</CoinChangeText> }
+      {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
       <VersionBox>
-        <h6>App Version: 0.1.16</h6>
+        <h6>App Version: 0.1.17</h6>
       </VersionBox>
-      <MainWrapper onClick={ handleClickNotYet }>
-        <MainImg isActive={ !isTimerActive }/>
-        <InvisibleButton onClick={ handleClickClaimBtn } isActive={ !isTimerActive }/>
-        <Timer>{ isTimerActive && formatTime(timeLeft) }</Timer>
+      <MainWrapper onClick={handleClickNotYet}>
+        <MainImg isActive={!isTimerActive}/>
+        <InvisibleButton onClick={handleClickClaimBtn} isActive={!isTimerActive}/>
+        <Timer>{isTimerActive && formatTime(timeLeft)}</Timer>
       </MainWrapper>
       <UpgradeButtonWrapper>
-        <Button btnStyle={ 'primary' } onClick={ handleUpgradeClick }>
+        <Button btnStyle={'primary'} onClick={handleUpgradeClick}>
           Upgrade
         </Button>
       </UpgradeButtonWrapper>
