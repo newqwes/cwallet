@@ -62,6 +62,8 @@ export async function shortGame() {
 
       //Запускаем обновлениее графиков для этих монет, таблица coinList
       await getHistoricalChart();
+      //Снимаем галочки с обновления всех графиков (не окончательный вариант, подумать как лучше сделать)
+      await CoinListService.updateAllHCFlags();
     } else {
       const coins_array_short_game = await ShortGameCoinsService.findCoins();
       if (!coins_array_short_game.length) {

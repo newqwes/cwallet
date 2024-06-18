@@ -134,6 +134,21 @@ class CoinListService {
       createResponse(404, 'Server Error getRandomCoins', error);
     }
   }
+
+  async updateAllHCFlags() {
+    try {
+      return await CoinList.update(
+        {
+          historical_chart_active: false,
+        },
+        {
+          where: {}, // Empty where clause to target all rows
+        }
+      );
+    } catch (error) {
+      createResponse(404, 'Server Error updateAllHCFlags', error);
+    }
+  }
 }
 
 export default new CoinListService();
