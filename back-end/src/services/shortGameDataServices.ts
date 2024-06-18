@@ -17,6 +17,16 @@ class ShortGameDataService {
     }
   }
 
+  async findOneByUserId(user_id: string) {
+    try {
+      return await ShortGameData.findOne({
+        where: { user_id },
+      });
+    } catch (error) {
+      createResponse(404, 'Server Error findOneByCoinId', error);
+    }
+  }
+
   async updateUserPlace(defaults: ShortGameUpdatePlaceDataModel) {
     try {
       const { coin_list_id, place } = defaults;

@@ -31,8 +31,9 @@ export const getSortedDataByShortGame = async (
         coin_info: coin_info_json,
       });
     }
+    const already_selected = await ShortGameDataService.findOneByUserId(user.id);
 
-    return res.status('200').json({ final_result });
+    return res.status('200').json({ final_result, already_selected });
   } catch (e) {
     next(e);
   }
@@ -45,10 +46,14 @@ export const setShortGameData = async (req: any, res: any, next: any) => {
     if (!user) {
       return next(ApiError.NotFound('User not found by telegramId'));
     }
+    const userAlreadySelectedCoin = await ShortGameDataService.findOneByUserId(user.id);
+    if (userAlreadySelectedCoin) {
+      return next(ApiError.BadRequest('You already selected coin!'));
+    }
 
     const coin_id = req.body.coin_id;
-    const coin_liist_value = await CoinListService.findOneByCoinId(coin_id);
-    const { id } = coin_liist_value.toJSON();
+    const coin_list_value = await CoinListService.findOneByCoinId(coin_id);
+    const { id } = coin_list_value.toJSON();
 
     const isShortGameCoin =
       await ShortGameCoinsService.findCoinByCoinListId(id);

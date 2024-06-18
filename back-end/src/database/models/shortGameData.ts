@@ -3,7 +3,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 import sequelize from '..';
 
-class ShortGameData extends Model {}
+class ShortGameData extends Model {
+  id: string;
+  user_id: string;
+  coin_list_id: string;
+  place: number;
+  game_period: string;
+  game_ended: boolean;
+}
 
 ShortGameData.init(
   {

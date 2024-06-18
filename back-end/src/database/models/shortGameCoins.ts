@@ -3,7 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 import sequelize from '..';
 
-class ShortGameCoins extends Model {}
+class ShortGameCoins extends Model {
+  id: string;
+  coin_list_id: string;
+  start_price: number;
+  volatility: number;
+}
 
 ShortGameCoins.init(
   {

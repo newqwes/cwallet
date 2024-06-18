@@ -1,7 +1,9 @@
+import { Op } from 'sequelize';
 import CoinList from '../database/models/coinList';
 import createResponse from '../utils/createResponse';
 import { CoinListInitDataModel } from '../models';
 import sequelize from '../database';
+import ManualCoin from "../database/models/manualCoin";
 
 class CoinListService {
   async findOneById(id: string): Promise<CoinList> {
@@ -119,6 +121,24 @@ class CoinListService {
       });
     } catch (error) {
       createResponse(404, 'Server Error getRandomCoins', error);
+    }
+  }
+
+  async getCoinsForShortGame(limit_value: number) {
+    try {
+      const manualCoins = await ManualCoin.findAll();
+      const coinIds = manualCoins.map(coin => coin.coin_id);
+
+      return await CoinList.findAll({
+        where: {
+          coin_id: {
+            [Op.in]: coinIds
+          }
+        },
+        limit: limit_value,
+      });
+    } catch (error) {
+      createResponse(404, 'Server Error getCoinsForShortGame', error);
     }
   }
 

@@ -33,29 +33,54 @@ export const CardWrapper = styled.div`
 `;
 
 export const AnswerCard = styled.div<{ isFlipped: boolean }>`
-  border: none;
   border-radius: 20px;
   font-size: 16px;
   ${coinFont};
   color: #2c1818;
   display: grid;
-  align-items: ${({isFlipped}) => (isFlipped ? 'normal' : 'center')};
+  align-items: ${({ isFlipped }) => (isFlipped ? 'normal' : 'center')};
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.6s ease;
   transform-style: preserve-3d;
-  transform: ${({isFlipped}) => (isFlipped ? 'translate(0, 0) rotateY(180deg) scale(1)' : 'rotateY(0)')};
-  z-index: ${({isFlipped}) => (isFlipped ? 100 : 1)};
-  position: ${({isFlipped}) => (isFlipped ? 'fixed' : 'relative')};
-  top: ${({isFlipped}) => (isFlipped ? '15%' : 'initial')};
-  left: ${({isFlipped}) => (isFlipped ? '15%' : 'initial')};
-  width: ${({isFlipped}) => (isFlipped ? '70%' : '160px')};
-  height: ${({isFlipped}) => (isFlipped ? '70%' : '90px')};
-  background-color: ${({isFlipped}) => (isFlipped ? '#D8D8D8F9' : '#F0C14BB5')};
+  transform: ${({ isFlipped }) => (isFlipped ? 'translate(0, 0) rotateY(180deg) scale(1)' : 'rotateY(0)')};
+  z-index: ${({ isFlipped }) => (isFlipped ? 100 : 1)};
+  position: ${({ isFlipped }) => (isFlipped ? 'fixed' : 'relative')};
+  top: ${({ isFlipped }) => (isFlipped ? '15%' : 'initial')};
+  left: ${({ isFlipped }) => (isFlipped ? '2%' : 'initial')};
+  width: ${({ isFlipped }) => (isFlipped ? '96%' : '160px')};
+  height: ${({ isFlipped }) => (isFlipped ? '70%' : '90px')};
+  background-color: ${({ isFlipped }) => (isFlipped ? 'rgba(0,0,0,0.98)' : 'rgba(0,0,0,0.41)')};
+  border: 1px #fff solid;
 `;
 
 export const CardFront = styled.div`
-  backface-visibility: hidden;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  text-shadow: none;
 `;
+
+export const CoinImage = styled.img`
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+export const CoinInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const CoinName = styled.div`
+  font-size: 16px;
+  height: 28px;
+`;
+
+export const CoinPrice = styled.div`
+  font-size: 14px;
+`;
+
 export const CardBack = styled.div`
   position: relative;
   backface-visibility: hidden;
@@ -76,9 +101,20 @@ export const CardBack = styled.div`
     position: absolute;
     width: 40%;
     height: 150%;
-    background: linear-gradient(to right, hsl(39, 100%, 50%), hsl(54, 100%, 50%), hsl(120, 56%, 45%)); /* оранжевый, желтый и зеленый */
+    background: linear-gradient(to right, hsla(40, 100%, 50%, 0.41), hsla(56, 100%, 50%, 0.38), hsla(0, 100%, 50%, 0.45)); /* оранжевый, желтый и зеленый */
     transform-origin: center;
     animation: ${glowing} 5s linear infinite;
+  }
+
+  ${CoinImage} {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto;
+  }
+
+  ${CoinPrice} {
+    margin-top: 20px;
+    font-size: 24px;
   }
 `;
 
@@ -86,11 +122,10 @@ export const Card = styled.div`
   position: absolute;
   width: 95%;
   height: 95%;
-  background: hsl(39, 80%, 90%); /* светло-оранжевый фон */
+  background: hsl(45, 9%, 9%); /* светло-оранжевый фон */
   border-radius: 20px;
   z-index: 5;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
@@ -107,12 +142,12 @@ export const SelectButton = styled.button`
   bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: hsl(39, 100%, 70%); /* светло-оранжевый фон */
+  background-color: hsl(39, 95%, 65%); /* светло-оранжевый фон */
   border: none;
   border-radius: 10px;
   padding: 6px 20px;
   font-size: 5vw;
-  color: hsl(33, 33%, 15%); /* темный оттенок для текста */
+  color: hsl(0, 0%, 97%); /* темный оттенок для текста */
   cursor: pointer;
   margin-top: 10px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -124,4 +159,14 @@ export const SelectButton = styled.button`
   &:active {
     background-color: hsl(39, 80%, 50%); /* еще темнее при нажатии */
   }
+`;
+
+export const StyledChartContainer = styled.div`
+  width: 50%;
+`;
+
+export const InGame = styled.div`
+  margin: 20vw auto;
+  text-align: center;
+  font-size: 10vw;
 `;

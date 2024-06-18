@@ -4,9 +4,10 @@ import CoinListService from './services/coinListService';
 import ShortGameCoinsService from './services/shortGameCoinsService';
 import ShortGameDataService from './services/shortGameDataServices';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-const coins_limit = process.env.SHORT_GAME_COINS_LIMIT;
+const coins_limit = process.env.SHORT_GAME_COINS_LIMIT || 6;
 
 export async function shortGame() {
   try {
@@ -16,7 +17,7 @@ export async function shortGame() {
       const coins_exist = await ShortGameCoinsService.findCoins();
       const coins_exist_json = coins_exist.map((el) => el.toJSON());
       const random_coins_array =
-        await CoinListService.getRandomCoins(+coins_limit);
+        await CoinListService.getCoinsForShortGame(+coins_limit);
       let i = 0;
       if (coins_exist_json.length) {
         //Перед обновлением

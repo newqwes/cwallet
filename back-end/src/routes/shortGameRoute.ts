@@ -9,7 +9,6 @@ import {
 const shortGameRoute = express.Router();
 
 shortGameRoute.get('/', authMiddleware, getSortedDataByShortGame);
-
 shortGameRoute.post('/create_data', authMiddleware, setShortGameData);
 shortGameRoute.get('/game_result', authMiddleware, getShortGameResultData);
 

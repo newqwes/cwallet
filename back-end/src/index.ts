@@ -42,7 +42,7 @@ app.use('/api/long_game', longGameRoute);
 app.use('/api/short_game', shortGameRoute);
 
 // coinListRoute - получаем инфу по монете. Забивая в url, ее id.
-//Может пригодится позже, пока не удаляйте
+// Может пригодиться позже, пока не удаляйте
 app.use('/api/coin_list', coinListRoute);
 
 app.use(errorMiddleware);
@@ -61,7 +61,7 @@ const start = async () => {
 
       //Обновляем инфу по монетам, раз в час
       cron.schedule('23 * * * *', getCoinsInfo);
-      getCoinsInfo();
+      // getCoinsInfo();
 
       //Short game, раз в час
       cron.schedule('0 * * * *', shortGame);

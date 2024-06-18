@@ -15,7 +15,7 @@ module.exports = {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: 'user', // Убедитесь, что имя таблицы правильное
+          model: 'user',
           key: 'id',
         },
         onUpdate: 'CASCADE',

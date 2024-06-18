@@ -4,6 +4,17 @@ import { v4 as uuidv4 } from 'uuid';
 import sequelize from '..';
 
 class CoinList extends Model {
+  id: string;
+  coin_id: string;
+  market_cap_rank: number;
+  market_cap: number;
+  symbol: string;
+  name: string;
+  image_link: string;
+  current_price: number;
+  last_updated: string;
+  historical_chart_active: boolean;
+  historical_chart_prices: any[];
 }
 
 CoinList.init(
