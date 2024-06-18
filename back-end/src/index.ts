@@ -61,7 +61,7 @@ const start = async () => {
 
       //Обновляем инфу по монетам, раз в час
       cron.schedule('23 * * * *', getCoinsInfo);
-      // getCoinsInfo();
+      getCoinsInfo();
 
       //Short game, раз в час
       cron.schedule('0 * * * *', shortGame);
