@@ -161,12 +161,3 @@ export const SelectButton = styled.button`
   }
 `;
 
-export const StyledChartContainer = styled.div`
-  width: 50%;
-`;
-
-export const InGame = styled.div`
-  margin: 20vw auto;
-  text-align: center;
-  font-size: 10vw;
-`;

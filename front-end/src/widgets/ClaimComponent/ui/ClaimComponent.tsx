@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { differenceInMilliseconds } from 'date-fns';
 import { postEvent } from '@tma.js/sdk';
@@ -8,7 +8,6 @@ import {
   selectUserNextClaimDate,
 } from '../../../entities/User';
 import {
-  Timer,
   Coins,
   Wrapper,
   CoinWrapper,
@@ -24,6 +23,7 @@ import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.t
 import { Button } from "../../../shared/ui";
 import { vibrateNow } from "../../../shared/libs/vibration.ts";
 import { useNavigate } from "react-router-dom";
+import { TimerComponent } from "../../../shared/libs/Timer/Timer.tsx";
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
@@ -34,27 +34,7 @@ export const ClaimComponent: FC = () => {
 
   const currentDateMs = new Date();
   const nextClaimDateMs = new Date(nextClaimDate);
-  const initialTimeLeft = differenceInMilliseconds(nextClaimDateMs, currentDateMs);
-
-  const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
-  const isTimerActive = timeLeft >= 0;
-
-
-  useEffect(() => {
-    setTimeLeft(initialTimeLeft);
-  }, [nextClaimDate]);
-
-  useEffect(() => {
-    if (timeLeft <= 0) {
-      return;
-    }
-
-    const timerId = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1000);
-    }, 1000);
-
-    return () => clearInterval(timerId);
-  }, [timeLeft]);
+  const isTimerActive = differenceInMilliseconds(nextClaimDateMs, currentDateMs) >= 0;
 
   const handleClickClaimBtn = () => {
     dispatch(claimCoins());
@@ -71,16 +51,6 @@ export const ClaimComponent: FC = () => {
     }
   }
 
-  const formatTime = (time: number) => {
-    const hours = Math.floor(time / (1000 * 60 * 60));
-    const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((time % (1000 * 60)) / 1000);
-
-    return `${hours.toString().padStart(2, '0')}:${minutes
-      .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
-
   const animatedCoins = useAnimatedNumber(coins, 1000);
   const handleUpgradeClick = () => {
     vibrateNow('success', 'impact', 'light');
@@ -95,12 +65,12 @@ export const ClaimComponent: FC = () => {
       </CoinWrapper>
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
       <VersionBox>
-        <h6>App Version: 0.1.17</h6>
+        <h6>App Version: 0.1.19</h6>
       </VersionBox>
       <MainWrapper onClick={handleClickNotYet}>
         <MainImg isActive={!isTimerActive}/>
         <InvisibleButton onClick={handleClickClaimBtn} isActive={!isTimerActive}/>
-        <Timer>{isTimerActive && formatTime(timeLeft)}</Timer>
+        <TimerComponent nextDate={nextClaimDate}/>
       </MainWrapper>
       <UpgradeButtonWrapper>
         <Button btnStyle={'primary'} onClick={handleUpgradeClick}>

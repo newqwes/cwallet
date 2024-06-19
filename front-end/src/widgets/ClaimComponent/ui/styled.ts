@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import mainImg from '../../../shared/assets/main.png';
 import { coinFont } from "../../../shared/ui";
+import { Timer } from "../../../shared/libs/Timer/styled";
 
 interface IStyledProp {
   isActive: boolean;
@@ -68,20 +69,10 @@ export const MainImg = styled.div<IStyledProp>`
     background-size: cover;
     background-position: center;
     transition: 0.5s ease;
-    filter: ${({isActive}) => isActive ? 'none' : 'grayscale(80%)'};
-    animation: 2s ease-in ${({isActive}) => isActive ? '1.5s infinite' : '0s 0'} ${pressButton};
+    filter: ${({ isActive }) => isActive ? 'none' : 'grayscale(80%)'};
+    animation: 2s ease-in ${({ isActive }) => isActive ? '1.5s infinite' : '0s 0'} ${pressButton};
   }
 }
-`;
-
-export const Timer = styled.div`
-  font-size: 7vw;
-  margin-top: -6vh;
-  font-weight: 700;
-  text-align: center;
-  height: 20px;
-  color: #FCD97E;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавление тени к тексту */
 `;
 
 export const InvisibleButton = styled.div<IStyledProp>`
@@ -95,7 +86,7 @@ export const InvisibleButton = styled.div<IStyledProp>`
   position: fixed;
   top: 17vh;
 
-  pointer-events: ${({isActive}) => isActive ? 'auto' : 'none'};
+  pointer-events: ${({ isActive }) => isActive ? 'auto' : 'none'};
 `;
 
 const fadeInCoins = keyframes`
@@ -134,6 +125,10 @@ export const VersionBox = styled.div`
 export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  ${Timer} {
+    margin-top: -6vh;
+  }
 `;
 
 export const UpgradeButtonWrapper = styled.div`

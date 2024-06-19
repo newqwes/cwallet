@@ -24,7 +24,6 @@ function* fetchSortedDataByShortGameSaga() {
 
 function* selectShortGameCoinSaga({ payload }: PayloadAction<string>) {
   try {
-    console.log('--QWES-- saga payload: ', payload);
     const response: IAlreadyExistShortGame = yield call(shortGameAPI.selectShortGameCoin, { coin_id: payload });
     yield put(selectShortGameCoinSuccess(response));
   } catch (error) {

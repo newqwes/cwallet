@@ -1,6 +1,6 @@
 import { round } from 'lodash';
 
-export const toNormalNumber = (value: number): string => {
+const toNormalNumberLength = (value: number): string => {
   if (!value) return '0';
 
   let normalNumber: string | number = Number(value);
@@ -84,3 +84,5 @@ export const toNormalNumber = (value: number): string => {
 
   return '0';
 };
+
+export const toNormalNumber = (value: number) => Number(toNormalNumberLength(value));
