@@ -28,7 +28,7 @@ function parseDate(dateStr: string | null | undefined) {
     return new Date();
   }
   const [day, month, year] = dateStr.split('.');
-  return new Date(`${year}-${month}-${Number(day) + 2}T00:00:00Z`);
+  return new Date(`${year}-${month}-${Number(day) + 1}T00:00:00Z`);
 }
 
 export const InGameComponent = ({ place, gamePeriod, selectedCoinId, coins }: Props) => {
