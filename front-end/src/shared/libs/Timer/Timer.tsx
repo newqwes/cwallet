@@ -17,7 +17,6 @@ interface Props {
 }
 
 export const TimerComponent = ({ nextDate }: Props) => {
-
   const currentDateMs = new Date();
   const nextClaimDateMs = new Date(nextDate);
   const initialTimeLeft = differenceInMilliseconds(nextClaimDateMs, currentDateMs);

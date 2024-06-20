@@ -21,18 +21,19 @@ export const Container = styled.div`
 export const Question = styled.h1`
   font-size: 24px;
   color: rgb(200, 200, 200);
+  margin-bottom: 15px;
 `;
 
 export const CardWrapper = styled.div`
   position: fixed;
-  bottom: 20vh;
+  bottom: 18vh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 25px;
   justify-items: center;
 `;
 
-export const AnswerCard = styled.div<{ isFlipped: boolean }>`
+export const AnswerCard = styled.div<{ isFlipped: boolean, isSelected: boolean }>`
   border-radius: 20px;
   font-size: 16px;
   ${coinFont};
@@ -49,7 +50,7 @@ export const AnswerCard = styled.div<{ isFlipped: boolean }>`
   width: ${({ isFlipped }) => (isFlipped ? '96%' : '160px')};
   height: ${({ isFlipped }) => (isFlipped ? '70%' : '90px')};
   background-color: ${({ isFlipped }) => (isFlipped ? 'rgba(0,0,0,0.98)' : 'rgba(0,0,0,0.41)')};
-  border: 1px #fff solid;
+  border: 1px solid ${({ isSelected }) => (isSelected ? '#f5b53d' : '#fff')};
 `;
 
 export const CardFront = styled.div`

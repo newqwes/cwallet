@@ -22,6 +22,7 @@ import {
   selectIsActiveGame, selectGamePeriod
 } from "../../../entities/ShortGame";
 import { InGameComponent } from "./InGameComponent/InGame.tsx";
+import { TimerComponent } from "../../../shared/libs/Timer/Timer.tsx";
 
 export const ShortPredictGame: FC = () => {
   const [flippedCardIndex, setFlippedCardIndex] = useState<number | null>(null);
@@ -52,19 +53,21 @@ export const ShortPredictGame: FC = () => {
 
     dispatch(selectShortGameCoin(coinId));
   };
-
   return isActive ?
     <Container onClick={() => handleOutsideClick()}>
+      <TimerComponent nextDate={gamePeriod.end}/>
       <Question>Which coin will show the best result in 24 hours?</Question>
       <CardWrapper>
         {shortGameData.map((coin, index) => (
           <AnswerCard
             key={index}
+            isSelected={!!alreadyInGame.coin_list_id && (alreadyInGame.coin_list_id === coin.coin_list_id)}
             isFlipped={index === flippedCardIndex}
           >
             {
               index !== flippedCardIndex &&
-              <CardFront onClick={(e) => handleCardClick(index, e)}>
+              <CardFront
+                onClick={(e) => handleCardClick(index, e)}>
                 <CoinImage src={coin.coin_info.image_link} alt={coin.coin_info.name}/>
                 <CoinInfo>
                   <CoinName>{coin.coin_info.name}</CoinName>
