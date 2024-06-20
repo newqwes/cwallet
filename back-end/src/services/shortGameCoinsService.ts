@@ -83,6 +83,15 @@ class ShortGameCoinsService {
       createResponse(404, 'Server Error update coin info short game', error);
     }
   }
+
+  async deleteAllCoins() {
+    try {
+      return await ShortGameCoins.destroy({ where: {} });
+    } catch (error) {
+      console.log('error', error);
+      createResponse(404, 'Server Error update coin info short game', error);
+    }
+  }
 }
 
 export default new ShortGameCoinsService();

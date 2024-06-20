@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import sequelize from '..';
 
-class Token extends Model {}
+class Token extends Model {
+}
 
 Token.init(
   {

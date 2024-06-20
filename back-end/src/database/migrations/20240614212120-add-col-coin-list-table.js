@@ -12,7 +12,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn('long_game', 'market_cap_rank');
-    await queryInterface.removeColumn('long_game', 'market_cap');
+    await queryInterface.removeColumn('coin_list', 'market_cap_rank');
+    await queryInterface.removeColumn('coin_list', 'market_cap');
   }
 };

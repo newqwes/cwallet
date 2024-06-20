@@ -5,23 +5,32 @@ const selectShortGame = (state: RootState) => state.shortGame;
 
 export const selectShortGameData = createSelector(
   [selectShortGame],
-  (referrals) => referrals.data.map((shortGame) => ({
-    ...shortGame,
-    volatility: toNormalNumber(shortGame.volatility),
+  ({ gameCoins }) => gameCoins.map((gameCoin) => ({
+    ...gameCoin,
+    volatility: toNormalNumber(gameCoin.volatility),
     coin_info: {
-      ...shortGame.coin_info,
-      current_price: toNormalNumber(shortGame.coin_info.current_price),
-
+      ...gameCoin.coin_info,
+      current_price: toNormalNumber(gameCoin.coin_info.current_price),
     },
   })),
 );
 
 export const selectAlreadyInGame = createSelector(
   [selectShortGame],
-  (referrals) => ({
-    place: referrals.place,
-    game_period: referrals.game_period,
-    game_ended: referrals.game_ended,
-    coin_list_id: referrals.coin_list_id,
+  ({ selectedCoinData }) => ({
+    place: selectedCoinData?.place,
+    game_period: selectedCoinData?.game_period,
+    game_ended: selectedCoinData?.game_ended,
+    coin_list_id: selectedCoinData?.coin_list_id,
   })
+);
+
+export const selectIsActiveGame = createSelector(
+  [selectShortGame],
+  ({ isActive }) => isActive,
+);
+
+export const selectGamePeriod = createSelector(
+  [selectShortGame],
+  ({ gamePeriod }) => gamePeriod,
 );

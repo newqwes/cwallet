@@ -18,9 +18,9 @@ import {
   fetchShortGameData,
   selectShortGameCoin,
   selectShortGameData,
-  selectAlreadyInGame
+  selectAlreadyInGame,
+  selectIsActiveGame, selectGamePeriod
 } from "../../../entities/ShortGame";
-import { isNumber } from "lodash";
 import { InGameComponent } from "./InGameComponent/InGame.tsx";
 
 export const ShortPredictGame: FC = () => {
@@ -28,6 +28,10 @@ export const ShortPredictGame: FC = () => {
 
   const shortGameData = useSelector(selectShortGameData);
   const alreadyInGame = useSelector(selectAlreadyInGame);
+  const isActive = useSelector(selectIsActiveGame);
+  const gamePeriod = useSelector(selectGamePeriod);
+
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,13 +53,7 @@ export const ShortPredictGame: FC = () => {
     dispatch(selectShortGameCoin(coinId));
   };
 
-  return isNumber(alreadyInGame.place) ?
-    <InGameComponent
-      place={alreadyInGame.place + 1}
-      gamePeriod={alreadyInGame.game_period}
-      selectedCoinId={alreadyInGame.coin_list_id}
-      coins={shortGameData}
-    /> :
+  return isActive ?
     <Container onClick={() => handleOutsideClick()}>
       <Question>Which coin will show the best result in 24 hours?</Question>
       <CardWrapper>
@@ -88,5 +86,11 @@ export const ShortPredictGame: FC = () => {
           </AnswerCard>
         ))}
       </CardWrapper>
-    </Container>;
+    </Container> :
+    <InGameComponent
+      gamePeriod={gamePeriod.end}
+      selectedCoinId={alreadyInGame.coin_list_id}
+      coins={shortGameData}
+    />
+    ;
 };

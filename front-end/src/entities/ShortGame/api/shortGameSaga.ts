@@ -6,17 +6,14 @@ import {
   selectShortGameCoin, selectShortGameCoinSuccess, selectShortGameCoinError
 } from '../model/slice';
 import { shortGameAPI } from './shortGameAPI';
-import { IShortGame, IAlreadyExistShortGame } from "../../../shared/types";
+import { IShortGame } from "../../../shared/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 function* fetchSortedDataByShortGameSaga() {
   try {
-    const { final_result, already_selected }: {
-      final_result: IShortGame[],
-      already_selected: IAlreadyExistShortGame
-    } = yield call(shortGameAPI.getSortedDataByShortGame);
+    const data: IShortGame = yield call(shortGameAPI.getSortedDataByShortGame);
 
-    yield put(fetchShortGameDataSuccess({ final_result, already_selected }));
+    yield put(fetchShortGameDataSuccess(data));
   } catch (error) {
     yield put(fetchShortGameDataError(error || 'An error occurred'));
   }
@@ -24,8 +21,9 @@ function* fetchSortedDataByShortGameSaga() {
 
 function* selectShortGameCoinSaga({ payload }: PayloadAction<string>) {
   try {
-    const response: IAlreadyExistShortGame = yield call(shortGameAPI.selectShortGameCoin, { coin_id: payload });
-    yield put(selectShortGameCoinSuccess(response));
+    yield call(shortGameAPI.selectShortGameCoin, { coin_id: payload });
+    yield put(selectShortGameCoinSuccess());
+    yield put(fetchShortGameData());
   } catch (error) {
     yield put(selectShortGameCoinError(error || 'An error occurred'));
   }

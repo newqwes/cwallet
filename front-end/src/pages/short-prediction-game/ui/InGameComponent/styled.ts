@@ -6,13 +6,6 @@ export const Wrapper = styled.div`
   overflow: scroll;
 `;
 
-export const Title = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 export const Place = styled.div`
   font-size: 6vw;
   font-weight: 500;

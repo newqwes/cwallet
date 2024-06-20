@@ -8,4 +8,4 @@ export {
   selectShortGameCoinError
 } from './model/slice';
 export { shortGame } from './api/shortGameSaga'
-export { selectShortGameData, selectAlreadyInGame } from './model/selectors';
+export { selectShortGameData, selectAlreadyInGame, selectIsActiveGame, selectGamePeriod } from './model/selectors';

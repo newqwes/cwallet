@@ -8,24 +8,24 @@ import { REFERRAL_CODE_LENGTH } from '../constants';
 class UserService {
   async findOrCreateById(defaults: UserTelegramInitDataModel): Promise<{ user: User, created: boolean }> {
     try {
-      const {id, firstName, lastName, languageCode} = defaults;
+      const { id, firstName, lastName, languageCode } = defaults;
       const telegramId = Number(id);
 
       const [user, created] = await User.findOrCreate({
-        where: {telegramId},
+        where: { telegramId },
         defaults: {
           firstName, lastName, languageCode, referralCode: generateReferralCode(REFERRAL_CODE_LENGTH)
         },
       });
-      return {user, created};
+      return { user, created };
     } catch (error) {
       throw new ApiError(404, 'Server Error findOrCreateById', error);
     }
   }
 
-  async findByTelegramUserId(telegramId: number) {
+  async findByTelegramUserId(telegramId: number, transaction = null) {
     try {
-      return User.findOne({where: {telegramId}});
+      return User.findOne({ where: { telegramId }, transaction });
     } catch (error) {
       return null;
     }
@@ -33,7 +33,7 @@ class UserService {
 
   async findOne(arg: any) {
     try {
-      return User.findOne({where: arg});
+      return User.findOne({ where: arg });
     } catch (error) {
       return null;
     }
@@ -41,7 +41,7 @@ class UserService {
 
   async findAll(arg?: any) {
     try {
-      return User.findAll(arg ? {where: arg} : {});
+      return User.findAll(arg ? { where: arg } : {});
     } catch (error) {
       return null;
     }

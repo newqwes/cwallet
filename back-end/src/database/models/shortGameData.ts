@@ -8,8 +8,18 @@ class ShortGameData extends Model {
   user_id: string;
   coin_list_id: string;
   place: number;
-  game_period: string;
   game_ended: boolean;
+
+  /**
+   * Example: "2024-05-29T08:26:42.000Z"
+   */
+  game_period: Date;
+  volatility_result: number;
+  is_shown: boolean;
+  in_progress: boolean;
+  is_paid: boolean;
+  created_at: Date;
+  updated_at: Date;
 }
 
 ShortGameData.init(
@@ -22,7 +32,6 @@ ShortGameData.init(
     },
     user_id: {
       type: DataTypes.UUID,
-      allowNull: false,
       references: {
         model: 'user',
         key: 'id',
@@ -32,7 +41,6 @@ ShortGameData.init(
     },
     coin_list_id: {
       type: DataTypes.UUID,
-      allowNull: false,
       references: {
         model: 'coin_list',
         key: 'id',
@@ -42,23 +50,51 @@ ShortGameData.init(
     },
     place: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       defaultValue: 0,
     },
     game_period: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.DATE,
+      allowNull: true,
     },
     game_ended: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
       defaultValue: false,
+    },
+    volatility_result: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    is_shown: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    in_progress: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    is_paid: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {
     sequelize,
     tableName: 'short_game_data',
-    timestamps: false,
+    timestamps: true,
     underscored: true,
   }
 );

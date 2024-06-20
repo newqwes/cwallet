@@ -3,6 +3,7 @@ import axios from 'axios';
 import createOptionsRequest from './utils/createCGOptionsRequest';
 import CoinListService from './services/coinListService';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const CG_domain = process.env.CG_DOMAIN;
@@ -39,22 +40,22 @@ export async function getCoinsInfo() {
         await CoinListService.create(request_data);
       }
     }
-    console.log('Процесс получения данных завершен');
+    console.log('The data retrieval process is complete!');
   } catch (error) {
-    console.error('Ошибка запроса:', error.message);
+    console.error('Request error:', error.message);
     if (error.response) {
-      console.error('Статус:', error.response.status);
-      console.error('Данные ответа:', error.response.data);
+      console.error('Status:', error.response.status);
+      console.error('Response Data:', error.response.data);
     }
   }
 }
 
 export async function getHistoricalChart() {
   try {
-    console.log('Стартовал процесс получения данных Historical Chart');
+    console.log('The process of obtaining Historical Chart data has started');
     const active_coins = await CoinListService.findAllHCActiveCoins();
     if (!active_coins.length) {
-      console.log('Активыне монеты отсутсвуют');
+      console.log('There are no active coins!');
       return;
     }
 
@@ -71,12 +72,12 @@ export async function getHistoricalChart() {
         coin_el_json.coin_id
       );
     }
-    console.log('Процесс получения данных Historical Chart завершен');
+    console.log('The Historical Chart data retrieval process is complete');
   } catch (error) {
-    console.error('Ошибка запроса:', error.message);
+    console.error('Request error:', error.message);
     if (error.response) {
-      console.error('Статус:', error.response.status);
-      console.error('Данные ответа:', error.response.data);
+      console.error('Status:', error.response.status);
+      console.error('Response Data:', error.response.data);
     }
   }
 }

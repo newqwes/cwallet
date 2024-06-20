@@ -17,26 +17,56 @@ class ShortGameDataService {
     }
   }
 
-  async findOneByUserId(user_id: string) {
+  async findActiveGameByUserId(user_id: string) {
     try {
       return await ShortGameData.findOne({
-        where: { user_id },
+        where: { user_id, game_ended: false },
       });
     } catch (error) {
-      createResponse(404, 'Server Error findOneByCoinId', error);
+      createResponse(404, 'Server Error findActiveGameByUserId', error);
     }
   }
 
-  async updateUserPlace(defaults: ShortGameUpdatePlaceDataModel) {
+  async historyByUserId(user_id: string) {
     try {
-      const { coin_list_id, place } = defaults;
+      const results = await ShortGameData.findAll({
+        where: { user_id, game_ended: true },
+      });
+      return results; // Это вернет результат или пустой массив, если записи не найдены
+    } catch (error) {
+      console.error('Error fetching game history:', error); // Лучше использовать console.error для ошибок
+      createResponse(404, 'Server Error historyByUserId', error);
+      return null; // Явно возвращаем null, чтобы указать на ошибку
+    }
+  }
+
+  async findActiveGames() {
+    try {
+      return await ShortGameData.findAll({
+        where: { game_ended: false },
+      });
+    } catch (error) {
+      createResponse(404, 'Server Error findActiveGames', error);
+    }
+  }
+
+  async findProgressGames() {
+    try {
+      return await ShortGameData.findAll({
+        where: { game_ended: false, in_progress: true },
+      });
+    } catch (error) {
+      createResponse(404, 'Server Error findProgressGames', error);
+    }
+  }
+
+  async updateUserGameData(defaults: ShortGameUpdatePlaceDataModel) {
+    try {
+      const { coin_list_id, ...values } = defaults;
       return await ShortGameData.update(
+        values,
         {
-          game_ended: true,
-          place,
-        },
-        {
-          where: { coin_list_id },
+          where: { coin_list_id, game_ended: false },
         }
       );
     } catch (error) {
@@ -45,28 +75,47 @@ class ShortGameDataService {
     }
   }
 
-  async getResult() {
+  async updateUserGameDataByUser(defaults: ShortGameUpdatePlaceDataModel) {
     try {
-      return await ShortGameData.findAll({
-        where: { game_ended: true },
-      });
+      const { user_id, ...values } = defaults;
+      return await ShortGameData.update(
+        values,
+        {
+          where: { user_id, game_ended: false, in_progress: false },
+        }
+      );
     } catch (error) {
       console.log('error', error);
-      createResponse(404, 'Server Error getResult', error);
+      createResponse(404, 'Server Error update', error);
     }
   }
 
-  async deleteEndedGames() {
+  async getUnpaidUserGames(user_id: string, transaction = null) {
     try {
-      const deletedCount = await ShortGameData.destroy({
-        where: {
-          game_ended: true,
-        },
-      });
-      return deletedCount;
+      return await ShortGameData.findAll(
+        {
+          where: { user_id, game_ended: true, is_paid: false },
+          transaction
+        }
+      );
     } catch (error) {
       console.log('error', error);
-      createResponse(404, 'Server Error getResult', error);
+      createResponse(404, 'Server Error update', error);
+    }
+  }
+
+  async updateUnpaidGamesToPaid(user_id: string, transaction = null) {
+    try {
+      const [updatedCount] = await ShortGameData.update(
+        { is_paid: true },
+        { where: { user_id, game_ended: true, is_paid: false }, transaction },
+      );
+      console.log(`Updated ${updatedCount} games to paid.`);
+      return updatedCount;
+    } catch (error) {
+      console.log('error', error);
+      createResponse(404, 'Server Error update', error);
+      return 0;
     }
   }
 }

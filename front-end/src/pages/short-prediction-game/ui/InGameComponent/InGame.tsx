@@ -1,7 +1,5 @@
 import {
   Wrapper,
-  Title,
-  Place,
   CoinCard,
   CoinCardImg,
   CoinCardNameWrapper,
@@ -12,32 +10,20 @@ import {
   CoinCardPrice,
   CoinCardChart
 } from './styled.ts';
-import { IShortGame } from "../../../../shared/types";
 import { TimerComponent } from "../../../../shared/libs/Timer/Timer.tsx";
 import { LineGraph } from "../../../../shared/libs/LineGraph/LineGraph.tsx";
+import { IGameCoin } from "../../../../shared/types";
 
 interface Props {
-  place: number;
-  gamePeriod: string | null | undefined;
+  gamePeriod: Date | string;
   selectedCoinId: string | null | undefined;
-  coins: IShortGame[];
+  coins: IGameCoin[];
 }
 
-function parseDate(dateStr: string | null | undefined) {
-  if (!dateStr) {
-    return new Date();
-  }
-  const [day, month, year] = dateStr.split('.');
-  return new Date(`${year}-${month}-${Number(day) + 1}T00:00:00Z`);
-}
-
-export const InGameComponent = ({ place, gamePeriod, selectedCoinId, coins }: Props) => {
+export const InGameComponent = ({ gamePeriod, selectedCoinId, coins }: Props) => {
   return (
     <Wrapper>
-      <Title>
-        <TimerComponent nextDate={parseDate(gamePeriod)}/>
-        <Place>Place: #{place}</Place>
-      </Title>
+      <TimerComponent nextDate={gamePeriod}/>
       {
         coins.map((coin) => (
           <CoinCard isSelected={coin.coin_list_id === selectedCoinId}>

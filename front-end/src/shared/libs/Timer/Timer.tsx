@@ -13,7 +13,7 @@ const formatTime = (time: number) => {
 };
 
 interface Props {
-  nextDate: Date;
+  nextDate: Date | string;
 }
 
 export const TimerComponent = ({ nextDate }: Props) => {

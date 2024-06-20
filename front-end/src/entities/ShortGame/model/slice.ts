@@ -1,32 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAlreadyExistShortGame, IShortGame } from "../../../shared/types";
+import { IGameCoin, ISelectedCoinData, IShortGame, IGamePeriod } from "../../../shared/types";
 
 interface IShortGameState {
-  data: IShortGame[];
+  isActive: boolean;
+  selectedCoinData: ISelectedCoinData | null;
+  gameCoins: IGameCoin[];
+  gamePeriod: IGamePeriod;
+  isShow: boolean;
+  history: ISelectedCoinData[];
+
   error: string | null;
   loading: boolean;
-  place: number | undefined | null;
-  game_period: string | undefined | null;
-  game_ended: boolean | undefined | null;
-  coin_list_id: string | undefined | null;
-}
-
-interface FinalResult {
-  final_result: IShortGame[];
-  already_selected?: {
-    place: number | undefined;
-    game_period: string | undefined;
-    game_ended: boolean | undefined;
-    coin_list_id: string | undefined;
-  };
 }
 
 const initialState: IShortGameState = {
-  data: [],
-  place: null,
-  game_period: null,
-  game_ended: null,
-  coin_list_id: null,
+  isActive: false,
+  selectedCoinData: null,
+  gameCoins: [],
+  gamePeriod: { start: '', progress: '', end: '' },
+  isShow: true,
+  history: [],
+
   error: null,
   loading: false,
 };
@@ -42,34 +36,27 @@ export const shortGameSlice = createSlice({
     selectShortGameCoin: (state, { payload }: PayloadAction<string>) => {
       state.loading = true;
     },
-    fetchShortGameDataSuccess: (state, { payload }: PayloadAction<FinalResult>) => {
+    fetchShortGameDataSuccess: (state, { payload }: PayloadAction<IShortGame>) => {
       state.loading = false;
-      state.data = payload?.final_result;
-
-      const { place, game_period, game_ended, coin_list_id } = payload.already_selected || {};
-
-      if (payload.already_selected) {
-        state.place = place;
-        state.game_period = game_period;
-        state.game_ended = game_ended;
-        state.coin_list_id = coin_list_id;
-      }
       state.error = null;
+
+      state.isActive = payload.is_active;
+      state.selectedCoinData = payload.selected_coin_data;
+      state.gameCoins = payload.game_coins;
+      state.gamePeriod = payload.game_period;
+      state.isShow = payload.is_shown;
+      state.history = payload.history;
     },
-    selectShortGameCoinSuccess: (state, { payload }: PayloadAction<IAlreadyExistShortGame>) => {
+    selectShortGameCoinSuccess: (state) => {
       state.loading = false;
-      state.place = payload.place;
-      state.game_period = payload.game_period;
-      state.game_ended = payload.game_ended;
-      state.coin_list_id = payload.coin_list_id;
       state.error = null;
     },
     fetchShortGameDataError: (state, action: PayloadAction<any>) => {
-      state.loading = false;
+      state = initialState;
       state.error = action.payload;
     },
     selectShortGameCoinError: (state, action: PayloadAction<any>) => {
-      state.loading = false;
+      state = initialState;
       state.error = action.payload;
     },
   },

@@ -8,7 +8,7 @@ import bodyParser from 'body-parser';
 import { swaggerDocs } from './swagger';
 import { app, connectNotificationToDatabase, server } from './config';
 import { getCoinsInfo, getHistoricalChart } from './get_coin_info';
-import { shortGame } from './short_game';
+import { startEndShortGame, progressShortGame, checkProgressShortGame } from './short_game';
 import sequelize from './database';
 import cors from './middleware/cors';
 import limiter from './middleware/limiter';
@@ -21,6 +21,7 @@ import referralRoute from './routes/referralRoute';
 import longGameRoute from './routes/longGameRoute';
 import shortGameRoute from './routes/shortGameRoute';
 import coinListRoute from './routes/coinListRoute';
+import { PROGRESS_SHORT_GAME_PERIOD, START_SHORT_GAME_PERIOD } from "./constants/periodTime";
 
 dotenv.config();
 
@@ -59,15 +60,14 @@ const start = async () => {
       await connectNotificationToDatabase();
       console.log('Database Connected!');
 
-      //Обновляем инфу по монетам, раз в час
-      cron.schedule('23 * * * *', getCoinsInfo);
-      getCoinsInfo();
+      cron.schedule(`0 ${START_SHORT_GAME_PERIOD} * * *`, startEndShortGame);
+      cron.schedule(`0 ${PROGRESS_SHORT_GAME_PERIOD} * * *`, progressShortGame);
 
-      //Short game, раз в час
-      cron.schedule('0 * * * *', shortGame);
-      shortGame();
-      //Обновляем инфу по графикам, раз в день
-      cron.schedule('0 0 * * *', getHistoricalChart);
+      // check progress Short game, every hour
+      cron.schedule('35 * * * *', checkProgressShortGame);
+
+      //Обновляем информацию по графикам, раз в день
+      cron.schedule('25 0 * * *', getHistoricalChart);
     });
 
     await runTelegramBotService();

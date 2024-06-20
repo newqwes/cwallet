@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { getHistoricalChart } from './get_coin_info';
+import { getCoinsInfo } from './get_coin_info';
 import CoinListService from './services/coinListService';
 import ShortGameCoinsService from './services/shortGameCoinsService';
 import ShortGameDataService from './services/shortGameDataServices';
@@ -7,87 +7,155 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const coins_limit = process.env.SHORT_GAME_COINS_LIMIT || 6;
+const coins_limit = Number(process.env.SHORT_GAME_COINS_LIMIT || 6);
 
-export async function shortGame() {
+const calcVolatility = (startPrice: number, currentPrice: number): number => {
+  return ((currentPrice - startPrice) / startPrice) * 100
+}
+
+const updateInfoGameCoins = async (updateStartPrice: boolean) => {
+  const gameCoins = await ShortGameCoinsService.findCoins();
+  if (!gameCoins.length) {
+    console.log('There are no coins for the game, there is nothing to update');
+    return;
+  } else {
+    console.log('Updating information on the coins');
+    for (let gameCoin of gameCoins) {
+      const { id, coin_list_id, start_price } = gameCoin.toJSON();
+      const currentCoinInfo = await CoinListService.findOneById(coin_list_id);
+      const { current_price } = currentCoinInfo.toJSON();
+
+      await ShortGameCoinsService.updateCoinInfoShortGame({
+        volatility: calcVolatility(start_price, current_price),
+        id,
+        ...(updateStartPrice ? { volatility: 0, start_price: current_price } : {})
+      });
+    }
+  }
+}
+
+export const startEndShortGame = async () => {
   try {
-    let currentUTCHours = new Date().getUTCHours();
-    console.log('UTC0 Time:', currentUTCHours);
-    if (currentUTCHours === 0) {
-      const coins_exist = await ShortGameCoinsService.findCoins();
-      const coins_exist_json = coins_exist.map((el) => el.toJSON());
-      const random_coins_array =
-        await CoinListService.getCoinsForShortGame(+coins_limit);
-      let i = 0;
-      if (coins_exist_json.length) {
-        //Перед обновлением
-        //1. Удаляем все записи из таблицы short_game_data с game_ended = true. Это старые данные , они нам не нужны.
-        await ShortGameDataService.deleteEndedGames();
+    await getCoinsInfo();
+    await updateInfoGameCoins(false);
+    const gameCoins = await ShortGameCoinsService.findSortCoins();
+    const activeGames = await ShortGameDataService.findActiveGames();
 
-        //2. Cмотрим на положение монет и проставляем места в таблице short_game_data и мееняем флаг game_ended = true
-        const coins_game_result = await ShortGameCoinsService.findSortCoins();
-
-        let place = 1;
-        for (let el of coins_game_result) {
-          const { coin_list_id } = el.toJSON();
-          await ShortGameDataService.updateUserPlace({
-            coin_list_id,
-            place,
-          });
-          place++;
-        }
-      }
-
-      for (let el of random_coins_array) {
-        const { id, current_price } = el.toJSON();
-        await CoinListService.updateHCFlag(id, true);
-        if (coins_exist_json.length) {
-          //Обновляем монеты
-          await ShortGameCoinsService.updateCoinListForShortGame(
-            {
-              coin_list_id: id,
-              start_price: current_price,
-              volatility: 0,
-            },
-            coins_exist_json[i]?.id
-          );
-          i++;
-        } else {
-          await ShortGameCoinsService.createNewListForShortGame({
-            coin_list_id: id,
-            start_price: current_price,
-            volatility: 0,
-          });
-        }
-      }
-
-      //Запускаем обновлениее графиков для этих монет, таблица coinList
-      await getHistoricalChart();
-      //Снимаем галочки с обновления всех графиков (не окончательный вариант, подумать как лучше сделать)
+    const canUpdateGameData = activeGames && gameCoins && activeGames.length > 0 && gameCoins.length > 0;
+    if (canUpdateGameData) {
       await CoinListService.updateAllHCFlags();
-    } else {
-      const coins_array_short_game = await ShortGameCoinsService.findCoins();
-      if (!coins_array_short_game.length) {
-        console.log('Монет для игры не существует, обновлять нечего');
-        return;
-      } else {
-        console.log('Обнавляем инфу по монетам');
-        for (let el of coins_array_short_game) {
-          const { id, coin_list_id, start_price } = el.toJSON();
-          const coin_info_from_coin_list =
-            await CoinListService.findOneById(coin_list_id);
-          const { current_price } = coin_info_from_coin_list.toJSON();
-
-          //Переписать, не знаю как правильно считать валотильность
-          const volatility =
-            ((current_price - start_price) / start_price) * 100;
-          await ShortGameCoinsService.updateCoinInfoShortGame({
-            volatility,
-            id,
-          });
+      for (let activeGame of activeGames) {
+        const { coin_list_id } = activeGame.toJSON();
+        let place = 0;
+        let volatility_result = 0;
+        const currentCoin = gameCoins.find(((gameCoin, index) => {
+          const found = gameCoin.coin_list_id === coin_list_id;
+          if (found) {
+            place = index + 1;
+          }
+          return found;
+        }));
+        if (currentCoin && currentCoin.start_price) {
+          volatility_result = currentCoin.volatility;
         }
+        await ShortGameDataService.updateUserGameData({
+          coin_list_id,
+          place,
+          game_ended: true,
+          volatility_result,
+          is_shown: false,
+          in_progress: false,
+        });
       }
     }
+
+    await ShortGameCoinsService.deleteAllCoins();
+    const coinsForShorGame = await CoinListService.getCoinsForShortGame(coins_limit);
+
+    for (let el of coinsForShorGame) {
+      const { id, current_price } = el.toJSON();
+      await CoinListService.updateHCFlag(id, true);
+      await ShortGameCoinsService.createNewListForShortGame({
+        coin_list_id: id,
+        start_price: current_price,
+        volatility: 0,
+      });
+    }
+  } catch (error) {
+    console.error('Ошибка запроса:', {
+      msg: error.message,
+      stack: error.stack,
+    });
+    if (error.response) {
+      console.error('Статус:', error.response.status);
+      console.error('Данные ответа:', error.response.data);
+    }
+  }
+}
+
+export const progressShortGame = async () => {
+  try {
+    await getCoinsInfo();
+    await updateInfoGameCoins(true);
+    const activeGames = await ShortGameDataService.findActiveGames();
+
+    if (activeGames && activeGames.length > 0) {
+      for (let activeGame of activeGames) {
+        const { coin_list_id } = activeGame.toJSON();
+        await ShortGameDataService.updateUserGameData({
+          coin_list_id,
+          place: 1,
+          volatility_result: 0,
+          is_shown: false,
+          in_progress: true,
+        });
+      }
+    }
+
+  } catch (error) {
+    console.error('Ошибка запроса:', {
+      msg: error.message,
+      stack: error.stack,
+    });
+    if (error.response) {
+      console.error('Статус:', error.response.status);
+      console.error('Данные ответа:', error.response.data);
+    }
+  }
+}
+
+export const checkProgressShortGame = async () => {
+  try {
+    await getCoinsInfo();
+    await updateInfoGameCoins(false);
+    const progressGames = await ShortGameDataService.findProgressGames();
+    const gameCoins = await ShortGameCoinsService.findSortCoins();
+
+    const canUpdateGameData = progressGames && gameCoins && progressGames.length > 0 && gameCoins.length > 0;
+    if (canUpdateGameData) {
+      for (let progressGame of progressGames) {
+        const { coin_list_id } = progressGame.toJSON();
+        let place = 0;
+        let volatility_result = 0;
+        const currentCoin = gameCoins.find(((gameCoin, index) => {
+          const found = gameCoin.coin_list_id === coin_list_id;
+          if (found) {
+            place = index + 1;
+          }
+          return found;
+        }));
+        if (currentCoin && currentCoin.start_price) {
+          volatility_result = currentCoin.volatility;
+        }
+        await ShortGameDataService.updateUserGameData({
+          coin_list_id,
+          place,
+          volatility_result,
+          is_shown: false,
+        });
+      }
+    }
+
   } catch (error) {
     console.error('Ошибка запроса:', {
       msg: error.message,
