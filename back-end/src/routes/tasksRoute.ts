@@ -15,9 +15,7 @@ const tasksRoute = express.Router();
  * /api/tasks/set_task:
  *   post:
  *     summary: Set task fo user
- *     description: Endpoint for changing own referral code by specifying task_name and task_state.
- *                  If user presses "start" button - send task_state = 1
- *                  If user presses "claim" button - send task_state = 2
+ *     description: Endpoint for changing own referral code by specifying task_name
  *     tags: [Tasks]
  *     security:
  *       - BearerAuth: []
@@ -35,10 +33,6 @@ const tasksRoute = express.Router();
  *                     type: string
  *                     description: The name of the task.
  *                     example: "subscribe_to_channel"
- *                   task_state:
- *                     type: integer
- *                     description: The state of the task. Use 1 for "start" and 2 for "claim".
- *                     example: 1
  *                 required:
  *                   - task_name
  *                   - task_state
@@ -79,6 +73,6 @@ tasksRoute.post('/set_task', authMiddleware, setTask);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-tasksRoute.get('/', authMiddleware, getUserTasksState);
+tasksRoute.post('/', authMiddleware, getUserTasksState);
 
 export default tasksRoute;
