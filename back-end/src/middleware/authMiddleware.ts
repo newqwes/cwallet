@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { validate, parse } from '@tma.js/init-data-node';
 import ApiError from '../exceptions/apiError';
 import { TelegramInitDataModel } from '../models';
-import { NextFunction } from "express";
+import { NextFunction } from 'express';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ dotenv.config();
  */
 const setInitData = (res: any, initData: any) => {
   res.locals.initData = initData;
-}
+};
 
 /**
  * Extracts init data from the Response object.
@@ -27,7 +27,7 @@ export const getInitData = (res: any): TelegramInitDataModel => {
   if (!initData?.user?.id) {
     throw ApiError.BadRequest('Not valid user data');
   }
-  return initData
+  return initData;
 };
 
 /**
@@ -36,7 +36,7 @@ export const getInitData = (res: any): TelegramInitDataModel => {
  * @param res - Response object.
  * @param next - function to call the next middleware.
  */
-const authMiddleware = (req: any, res: any, next: NextFunction) => {
+export const authMiddleware = (req: any, res: any, next: NextFunction) => {
   // We expect passing init data in the Authorization header in the following format:
   // <auth-type> <auth-data>
   // <auth-type> must be "tma", and <auth-data> is Telegram Mini Apps init data.
@@ -48,18 +48,16 @@ const authMiddleware = (req: any, res: any, next: NextFunction) => {
         validate(authData, process.env.BOT_TOKEN || '', {
           // We consider init data sign valid for 1 hour from their creation moment.
           // TODO: need to add if necessary
-          expiresIn: 0,
+          expiresIn: 0
         });
 
         // Parse init data. We will surely need it in the future.
         setInitData(res, parse(authData));
         return next();
       } catch (e: any) {
-        return next(ApiError.UnauthorizedError(e.message))
+        return next(ApiError.UnauthorizedError(e.message));
       }
     default:
       return next(ApiError.UnauthorizedError());
   }
 };
-
-export default authMiddleware;

@@ -1,5 +1,3 @@
-import { getInitData } from '../middleware/authMiddleware';
-import UserService from '../services/userService';
 import CoinListService from '../services/coinListService';
 import ShortGameCoinsService from '../services/shortGameCoinsService';
 import ShortGameDataService from '../services/shortGameDataServices';
@@ -7,18 +5,11 @@ import ApiError from '../exceptions/apiError';
 import { getActiveGameTimePeriod, getGameTimePeriod } from "../utils/getProgressTimePeriod";
 import sequelize from "../database";
 import { getRewardsForShortGame } from "../utils/rewardsForShortGame";
+import { CustomRequest, CustomResponse, CustomNextFunction } from "../models";
 
-export const getDataByShortGame = async (
-  req: any,
-  res: any,
-  next: any
-) => {
+export const getDataByShortGame = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   try {
-    const initData = getInitData(res);
-    const user = await UserService.findByTelegramUserId(initData.user.id);
-    if (!user) {
-      return next(ApiError.NotFound('User not found by telegramId'));
-    }
+    const user = req.user;
     const game_coins = [];
     const result = await ShortGameCoinsService.findSortCoins();
 
@@ -45,25 +36,19 @@ export const getDataByShortGame = async (
     const is_active = getActiveGameTimePeriod(); // Time when users can chose coin
     const game_period = getGameTimePeriod();
 
-    return res.status('200').json({ is_active, selected_coin_data, game_coins, game_period, is_shown, history });
+    return res.status(200).json({ is_active, selected_coin_data, game_coins, game_period, is_shown, history });
   } catch (e) {
     next(e);
   }
 };
 
-export const setShortGameData = async (req: any, res: any, next: any) => {
+export const setShortGameData = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   try {
     const canCreateOrUpdate = getActiveGameTimePeriod();
     if (!canCreateOrUpdate) {
       return next(ApiError.BadRequest('Now is not the time to pick a coin!'));
     }
-
-    const initData = getInitData(res);
-    const user = await UserService.findByTelegramUserId(initData.user.id);
-    if (!user) {
-      return next(ApiError.NotFound('User not found by telegramId'));
-    }
-
+    const user = req.user;
     const coin_id = req.body.coin_id;
     const coin_list_value = await CoinListService.findOneByCoinId(coin_id);
     const { id } = coin_list_value.toJSON();
@@ -85,22 +70,17 @@ export const setShortGameData = async (req: any, res: any, next: any) => {
       })
     }
 
-    return res.status('201').json({ success: true });
+    return res.status(201).json({ success: true });
   } catch (e) {
     next(e);
   }
 };
 
-export const getRewardsByShortGame = async (req: any, res: any, next: any) => {
+export const getRewardsByShortGame = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   const transaction = await sequelize.transaction();
 
   try {
-    const initData = getInitData(res);
-    const user = await UserService.findByTelegramUserId(initData.user.id, transaction);
-    if (!user) {
-      return next(ApiError.NotFound('User not found by telegramId'));
-    }
-
+    const user = req.user;
     const unpaidGames = await ShortGameDataService.getUnpaidUserGames(user.id, transaction);
 
     if (unpaidGames.length === 0) {

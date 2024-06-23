@@ -1,5 +1,5 @@
 import express from 'express';
-import authMiddleware from '../middleware/authMiddleware';
+import { authMiddleware, userExist } from '../middleware';
 import { updateOwnReferralCode, getReferrals, updateParentReferralCode } from '../controllers/referralController';
 
 const referralRoute = express.Router();
@@ -43,7 +43,7 @@ const referralRoute = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-referralRoute.post('/', authMiddleware, updateOwnReferralCode);
+referralRoute.post('/', authMiddleware, userExist, updateOwnReferralCode);
 
 /**
  * @swagger
@@ -81,7 +81,7 @@ referralRoute.post('/', authMiddleware, updateOwnReferralCode);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-referralRoute.post('/', authMiddleware, updateParentReferralCode);
+referralRoute.post('/', authMiddleware, userExist, updateParentReferralCode);
 
 /**
  * @swagger
@@ -107,6 +107,6 @@ referralRoute.post('/', authMiddleware, updateParentReferralCode);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-referralRoute.get('/', authMiddleware, getReferrals);
+referralRoute.get('/', authMiddleware, userExist, getReferrals);
 
 export default referralRoute;

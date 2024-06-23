@@ -1,18 +1,12 @@
-import { getInitData } from '../middleware/authMiddleware';
-import UserService from '../services/userService';
 import CoinListService from '../services/coinListService';
 import LongGameService from '../services/longGameService';
 import ApiError from '../exceptions/apiError';
 import formatDate from '../utils/longGameFormatDate';
+import { CustomNextFunction, CustomRequest, CustomResponse } from '../models';
 
-export const sendUserCryptoBag = async (req: any, res: any, next: any) => {
+export const sendUserCryptoBag = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   try {
-    const initData = getInitData(res);
-    const user = await UserService.findByTelegramUserId(initData.user.id);
-    if (!user) {
-      return next(ApiError.NotFound('User not found by telegramId'));
-    }
-
+    const user = req.user;
     const start_date = new Date();
     const finish_date = new Date(start_date);
     finish_date.setDate(finish_date.getDate() + 3);
@@ -59,12 +53,12 @@ export const sendUserCryptoBag = async (req: any, res: any, next: any) => {
           coin_count,
           start_date: formated_start_date,
           finish_date: formated_finish_date,
-          start_price: coin_el.current_price,
+          start_price: coin_el.current_price
         });
       }
     }
 
-    return res.status('201').json({ success: true });
+    return res.status(201).json({ success: true });
   } catch (e) {
     next(e);
   }

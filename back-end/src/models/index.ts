@@ -12,3 +12,4 @@ export {
   ShortGameDataInitDataModel,
   ShortGameUpdatePlaceDataModel,
 } from './shortGameData.model';
+export { CustomRequest, CustomResponse, CustomNextFunction } from './router.model';

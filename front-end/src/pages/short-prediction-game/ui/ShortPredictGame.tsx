@@ -55,7 +55,7 @@ export const ShortPredictGame: FC = () => {
   };
   return isActive ?
     <Container onClick={() => handleOutsideClick()}>
-      <TimerComponent nextDate={gamePeriod.end}/>
+      <TimerComponent nextDate={gamePeriod.progress}/>
       <Question>Which coin will show the best result in 24 hours?</Question>
       <CardWrapper>
         {shortGameData.map((coin, index) => (

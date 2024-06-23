@@ -1,5 +1,5 @@
 import express from 'express';
-import authMiddleware from '../middleware/authMiddleware';
+import { authMiddleware, userExist } from '../middleware';
 import { sendUserCryptoBag } from '../controllers/longGameController';
 
 const longGameRoute = express.Router();
@@ -43,6 +43,6 @@ const longGameRoute = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-longGameRoute.post('/', authMiddleware, sendUserCryptoBag);
+longGameRoute.post('/', authMiddleware, userExist, sendUserCryptoBag);
 
 export default longGameRoute;

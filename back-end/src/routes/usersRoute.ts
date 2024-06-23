@@ -1,5 +1,5 @@
 import express from 'express';
-import authMiddleware from '../middleware/authMiddleware';
+import { authMiddleware, userExist } from '../middleware';
 import { getUsersData } from '../controllers/usersController';
 
 const usersRoute = express.Router();
@@ -52,6 +52,6 @@ const usersRoute = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-usersRoute.get('/', authMiddleware, getUsersData);
+usersRoute.get('/', authMiddleware, userExist, getUsersData);
 
 export default usersRoute;

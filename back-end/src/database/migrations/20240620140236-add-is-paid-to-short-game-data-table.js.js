@@ -9,6 +9,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.removeColumn('short_game_data', 'in_paid');
+    await queryInterface.removeColumn('short_game_data', 'is_paid');
   }
 };

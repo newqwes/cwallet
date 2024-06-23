@@ -1,5 +1,5 @@
 import express from 'express';
-import authMiddleware from '../middleware/authMiddleware';
+import { authMiddleware, userExist } from '../middleware';
 import { claim } from '../controllers/claimController';
 
 const claimRoute = express.Router();
@@ -46,6 +46,6 @@ const claimRoute = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-claimRoute.post('/', authMiddleware, claim);
+claimRoute.post('/', authMiddleware, userExist, claim);
 
 export default claimRoute;

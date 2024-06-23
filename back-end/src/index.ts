@@ -7,25 +7,16 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { swaggerDocs } from './swagger';
 import { app, connectNotificationToDatabase, server } from './config';
-import { getCoinsInfo, getHistoricalChart } from './get_coin_info';
+import { getHistoricalChart } from './get_coin_info';
 import {
   startEndShortGame,
   progressShortGame,
   checkProgressShortGame,
 } from './short_game';
 import sequelize from './database';
-import cors from './middleware/cors';
-import limiter from './middleware/limiter';
-import errorMiddleware from './middleware/errorMiddleware';
+import { errorMiddleware, limiter, cors } from './middleware';
 import runTelegramBotService from './services/telegramBotService';
-import claimRoute from './routes/claimRoute';
-import userRoute from './routes/userRoute';
-import usersRoute from './routes/usersRoute';
-import referralRoute from './routes/referralRoute';
-import longGameRoute from './routes/longGameRoute';
-import shortGameRoute from './routes/shortGameRoute';
-import coinListRoute from './routes/coinListRoute';
-import tasksRoute from './routes/tasksRoute';
+import apiRoutes from './routes';
 import {
   PROGRESS_SHORT_GAME_PERIOD,
   START_SHORT_GAME_PERIOD,
@@ -43,17 +34,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(limiter);
 
-app.use('/api/claim', claimRoute);
-app.use('/api/user', userRoute);
-app.use('/api/users', usersRoute);
-app.use('/api/referral', referralRoute);
-app.use('/api/long_game', longGameRoute);
-app.use('/api/short_game', shortGameRoute);
-app.use('/api/tasks', tasksRoute);
-
-// coinListRoute - получаем инфу по монете. Забивая в url, ее id.
-// Может пригодиться позже, пока не удаляйте
-app.use('/api/coin_list', coinListRoute);
+app.use('/api', apiRoutes);
 
 app.use(errorMiddleware);
 

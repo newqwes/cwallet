@@ -1,5 +1,5 @@
 import express from 'express';
-import authMiddleware from '../middleware/authMiddleware';
+import { authMiddleware, userExist } from '../middleware';
 import { getCoinInfo } from '../controllers/coinListController';
 
 const coinListRoute = express.Router();
@@ -35,6 +35,6 @@ const coinListRoute = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-coinListRoute.get('/', authMiddleware, getCoinInfo);
+coinListRoute.get('/', authMiddleware, userExist, getCoinInfo);
 
 export default coinListRoute;

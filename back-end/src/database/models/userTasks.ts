@@ -38,7 +38,7 @@ UserTasks.init(
     is_claimed: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: false,
     },
   },
   {

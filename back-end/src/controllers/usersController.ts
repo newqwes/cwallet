@@ -1,9 +1,9 @@
 import ApiError from '../exceptions/apiError';
 import userService from '../services/userService';
 import UserDto from '../dto/userDto';
-import { NextFunction } from "express";
+import { CustomNextFunction, CustomRequest, CustomResponse } from '../models';
 
-export const getUsersData = async (req: any, res: any, next: NextFunction) => {
+export const getUsersData = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   try {
     const users = await userService.findAll();
     if (!users) {
