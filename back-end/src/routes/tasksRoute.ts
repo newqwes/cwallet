@@ -15,7 +15,7 @@ const tasksRoute = express.Router();
  * /api/tasks/set_task:
  *   post:
  *     summary: Set task fo user
- *     description: Endpoint for changing own referral code by specifying task_name
+ *     description: Endpoint for set task to user and save tasks states
  *     tags: [Tasks]
  *     security:
  *       - BearerAuth: []
@@ -26,20 +26,12 @@ const tasksRoute = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               task_info:
- *                 type: object
- *                 properties:
- *                   task_name:
- *                     type: string
- *                     description: The name of the task.
- *                     example: "subscribe_to_channel"
- *                 required:
- *                   - task_name
- *                   - task_state
+ *                 task_name:
+ *                   type: string
+ *                   description: The name of the task.
+ *                   example: "subscribe_to_channel"
  *             example:
- *               task_info:
  *                 task_name: "subscribe_to_channel"
- *                 task_state: 1
  *     responses:
  *       401:
  *         description: Not authorized
@@ -61,7 +53,7 @@ tasksRoute.post('/set_task', authMiddleware, setTask);
  * /api/tasks/:
  *   get:
  *     summary: Get task info
- *     description: If response return null - it's and status 200. User dont has state. Use the start state for this user.
+ *     description: If response task_statuses null - it's and status 200. User dont has states. Use the start state for this user.
  *     tags: [Tasks]
  *     security:
  *       - BearerAuth: []
@@ -73,6 +65,6 @@ tasksRoute.post('/set_task', authMiddleware, setTask);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-tasksRoute.post('/', authMiddleware, getUserTasksState);
+tasksRoute.get('/', authMiddleware, getUserTasksState);
 
 export default tasksRoute;

@@ -30,9 +30,9 @@ module.exports = {
         allowNull: false,
       },
       is_claimed: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: false,
       },
     });
   },

@@ -6,7 +6,7 @@ class UserTasks extends Model {
   id: number;
   user_id: string;
   tasks_list_id: number;
-  is_claimed: number;
+  is_claimed: boolean;
 }
 
 UserTasks.init(
@@ -36,7 +36,7 @@ UserTasks.init(
       onDelete: 'CASCADE',
     },
     is_claimed: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 0,
     },

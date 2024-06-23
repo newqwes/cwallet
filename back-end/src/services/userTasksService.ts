@@ -21,7 +21,9 @@ class UserTasksService {
     }
   }
 
-  async findOrCreate(createData: Record<string, any>): Promise<UserTasks> {
+  async findOrCreate(
+    createData: Record<string, any>
+  ): Promise<{ userTask: UserTasks; created: boolean }> {
     try {
       const [userTask, created] = await UserTasks.findOrCreate({
         where: {
@@ -30,7 +32,7 @@ class UserTasksService {
         },
         defaults: createData,
       });
-      return userTask;
+      return { userTask, created };
     } catch (error) {
       console.log('error', error);
       throw createResponse(404, 'Server Error findOrCreate', error);
