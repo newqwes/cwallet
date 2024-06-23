@@ -8,7 +8,11 @@ import bodyParser from 'body-parser';
 import { swaggerDocs } from './swagger';
 import { app, connectNotificationToDatabase, server } from './config';
 import { getCoinsInfo, getHistoricalChart } from './get_coin_info';
-import { startEndShortGame, progressShortGame, checkProgressShortGame } from './short_game';
+import {
+  startEndShortGame,
+  progressShortGame,
+  checkProgressShortGame,
+} from './short_game';
 import sequelize from './database';
 import cors from './middleware/cors';
 import limiter from './middleware/limiter';
@@ -21,7 +25,11 @@ import referralRoute from './routes/referralRoute';
 import longGameRoute from './routes/longGameRoute';
 import shortGameRoute from './routes/shortGameRoute';
 import coinListRoute from './routes/coinListRoute';
-import { PROGRESS_SHORT_GAME_PERIOD, START_SHORT_GAME_PERIOD } from "./constants/periodTime";
+import tasksRoute from './routes/tasksRoute';
+import {
+  PROGRESS_SHORT_GAME_PERIOD,
+  START_SHORT_GAME_PERIOD,
+} from './constants/periodTime';
 
 dotenv.config();
 
@@ -41,6 +49,7 @@ app.use('/api/users', usersRoute);
 app.use('/api/referral', referralRoute);
 app.use('/api/long_game', longGameRoute);
 app.use('/api/short_game', shortGameRoute);
+app.use('/api/tasks', tasksRoute);
 
 // coinListRoute - получаем инфу по монете. Забивая в url, ее id.
 // Может пригодиться позже, пока не удаляйте
