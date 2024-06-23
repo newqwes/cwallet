@@ -10,4 +10,4 @@
     ``` 
    BotFather -> /setmenubutton -> YOUR_BOT -> http://192.168.0.203:3010/
    ```
-ds
+[Как создать/открыть тестовый телеграм аккаунт](https://docs.telegram-mini-apps.com/platform/test-environment)
