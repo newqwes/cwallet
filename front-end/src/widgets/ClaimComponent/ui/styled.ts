@@ -22,9 +22,16 @@ export const CoinWrapper = styled.div`
 
   h1 {
     color: rgb(200, 200, 200);
-    font-size: 5vw;
+    font-size: 5.3vw;
+    font-weight: 600;
     padding: 0;
-    margin: 0.4vh 0;
+    margin: 0.4vh 0 0;
+  }
+
+  span {
+    padding: 0;
+    margin: 0 0 0.5vh;
+    font-size: 2vw;
   }
 `;
 

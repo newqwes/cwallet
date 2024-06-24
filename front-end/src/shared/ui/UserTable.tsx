@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { IUser } from "../types";
-import { secretLevelToSmile } from "../libs";
+import { IUser } from '../types';
+import { secretLevelToSmile } from '../libs';
+import { getReadableCount } from '../libs/toNormalNumber.ts';
 
 const truncateName = (name: string) => {
-  return name.length > 14 ? `${ name.substring(0, 11) }...` : name;
+  return name.length > 14 ? `${name.substring(0, 11)}...` : name;
 };
 
 export const UserTable = styled.div`
@@ -33,6 +34,7 @@ const UserChild = styled.div`
 `;
 
 const UserName = styled.div``;
+
 const UserCoins = styled.div`
   font-size: 3.4vw;
 
@@ -46,13 +48,14 @@ const UserCoins = styled.div`
 
 export const UserTableComponent = ({ users }: { users: IUser[] }) => {
   return (
-    <UserTable className='scroll_on'>
-      { users?.map((user) => (
-        <UserChild key={ user.id }>
-          <UserName>{ secretLevelToSmile(user.secretLevel) } { truncateName(user.firstName) }</UserName>
-          <UserCoins>{ user.referralCode } <span>{ user.coins }✨</span></UserCoins>
+    <UserTable className="scroll_on">
+      {users?.map((user) => (
+        <UserChild key={user.id}>
+          <UserName>{secretLevelToSmile(user.secretLevel)} {truncateName(user.firstName)}</UserName>
+          <UserCoins>{user.referralCode} <span>lvl:{Math.min(user.luckLevel, user.timeLevel, user.miningLevel)}</span>
+            <span>{getReadableCount(user.coins)}✨</span></UserCoins>
         </UserChild>
-      )) }
+      ))}
     </UserTable>
   );
 };

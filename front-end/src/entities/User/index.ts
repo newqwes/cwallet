@@ -15,7 +15,8 @@ export {
   selectUserNextClaimDate,
   selectLoading,
   selectError,
-  selectUpgradesDate
+  selectUpgradesDate,
+  selectUserGeneralLevel
 } from './model/selectors';
 export { claim } from './api/claimSaga';
 export { user } from './api/userSaga';

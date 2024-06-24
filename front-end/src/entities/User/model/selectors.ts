@@ -41,3 +41,8 @@ export const selectError = createSelector(
   [selectUser],
   (user) => user.error
 );
+
+export const selectUserGeneralLevel = createSelector(
+  [selectUser],
+  (user) => Math.min(user.data.luckLevel, user.data.miningLevel, user.data.timeLevel)
+);

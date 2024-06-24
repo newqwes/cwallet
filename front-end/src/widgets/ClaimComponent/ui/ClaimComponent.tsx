@@ -4,7 +4,7 @@ import { differenceInMilliseconds } from 'date-fns';
 import { postEvent } from '@tma.js/sdk';
 import {
   claimCoins,
-  selectUserCoinCount,
+  selectUserCoinCount, selectUserGeneralLevel,
   selectUserNextClaimDate
 } from '../../../entities/User';
 import {
@@ -29,6 +29,7 @@ export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const coins = useSelector(selectUserCoinCount);
+  const generalLevel = useSelector(selectUserGeneralLevel);
   const claimedCoins = useSelector(selectUserClaimedCoins);
   const nextClaimDate = useSelector(selectUserNextClaimDate);
 
@@ -60,7 +61,8 @@ export const ClaimComponent: FC = () => {
   return (
     <Wrapper>
       <CoinWrapper>
-        <h1>Level 1</h1>
+        <h1>Level: {generalLevel}</h1>
+        <span>The value of the lowest of your levels</span>
         <Coins>{animatedCoins}✨</Coins>
       </CoinWrapper>
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}

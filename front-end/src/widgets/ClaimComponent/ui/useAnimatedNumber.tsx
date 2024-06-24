@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useAnimatedNumber = (value: number, duration: number): number => {
+export const useAnimatedNumber = (value: number, duration: number): string => {
   const [displayValue, setDisplayValue] = useState(value > 150 ? value - 140 : value);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(0);
@@ -28,5 +28,5 @@ export const useAnimatedNumber = (value: number, duration: number): number => {
     return () => clearInterval(interval);
   }, [start, end, startTime, duration]);
 
-  return displayValue;
+  return displayValue.toLocaleString('ru-RU');
 };
