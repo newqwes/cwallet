@@ -1,6 +1,4 @@
-// @ts-nocheck
-
-import { FC } from "react";
+import { FC, useEffect } from 'react';
 import {
   CardWrapper, UpgradeContainer, CurrentCardTitle,
   RowWrapper,
@@ -11,53 +9,39 @@ import {
   CardButton,
   TitleWrapper
 } from './styled';
-import { Button } from "../../../shared/ui";
-import { Coins } from "../../../widgets/ClaimComponent/ui/styled.ts";
-import { useAnimatedNumber } from "../../../widgets/ClaimComponent/ui/useAnimatedNumber.tsx";
-import { useSelector } from "react-redux";
-import { selectUserCoinCount } from "../../../entities/User";
-import { vibrateNow } from "../../../shared/libs/vibration.ts";
+import { Button } from '../../../shared/ui';
+import { Coins } from '../../../widgets/ClaimComponent/ui/styled.ts';
+import { useAnimatedNumber } from '../../../widgets/ClaimComponent/ui/useAnimatedNumber.tsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUpgrades, selectUpgradesDate, selectUserCoinCount, upgradeLevel } from '../../../entities/User';
+import { vibrateNow } from '../../../shared/libs/vibration.ts';
+import { getReadableCount } from '../../../shared/libs/toNormalNumber.ts';
 
 const smiles = {
   'Earn': '✨',
   'Time': '⏳',
   'Luck': '🍀',
-  'Secret': '',
+  'Secret': ''
 };
-
-const levels = [
-  {
-    id: 1,
-    level: 1,
-    price: 8000,
-    upgrade: ['40', '50', '120', '140'],
-    name: 'Earn'
-  },
-  {
-    id: 2,
-    level: 1,
-    price: 8000,
-    upgrade: ['30s', '1m', '1m30s', '2m'],
-    name: 'Time'
-  },
-  {
-    id: 3,
-    level: 1,
-    price: 6000,
-    upgrade: ['0%', '1.5%'],
-    name: 'Luck'
-  },
-  {
-    id: 4,
-    level: 1,
-    price: 14000,
-    upgrade: ['🐱', '🐭'],
-    name: 'Secret'
-  }
-];
 
 export const Upgrade: FC = () => {
   const coins = useSelector(selectUserCoinCount);
+  const levels = useSelector(selectUpgradesDate);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUpgrades());
+  }, []);
+
+  const handleClickClaimBtn = (levelName: string, price: number) => {
+    if (price > coins) {
+      vibrateNow('error');
+      return;
+    }
+    dispatch(upgradeLevel(levelName));
+    vibrateNow('success');
+  };
+
   const animatedCoins = useAnimatedNumber(coins, 1000);
 
   return (
@@ -66,19 +50,19 @@ export const Upgrade: FC = () => {
         <div>Upgrade</div>
         <Coins>{animatedCoins}✨</Coins>
       </TitleWrapper>
-      {levels.map((level) => (
+      {levels?.map((level) => (
           <CardWrapper key={level.id}>
             <RowWrapper>
               <CurrentCardTitle>{level.name} lvl. {level.level}</CurrentCardTitle>
               <CurrentCardRate>{level.upgrade[0]}{level.upgrade[2] ? (' - ' + level.upgrade[2]) : ''} {smiles[level.name]}</CurrentCardRate>
-              <CardPrice>{level.price}✨</CardPrice>
+              <CardPrice>{getReadableCount(level.price)}✨</CardPrice>
             </RowWrapper>
             <RowWrapper>
               <NewCardTitle>{level.name} lvl. {level.level + 1}</NewCardTitle>
               <NewCardRate>{level.upgrade[1]}{level.upgrade[3] ? (' - ' + level.upgrade[3]) : ''} {smiles[level.name]}</NewCardRate>
               <CardButton>
-                <Button btnStyle={'primary'} onClick={() => {
-                  vibrateNow('error');
+                <Button isDisabled={level.price > coins} type={'button'} btnStyle={'primary'} onClick={() => {
+                  handleClickClaimBtn(level.id, level.price);
                 }}>
                   Up
                 </Button>

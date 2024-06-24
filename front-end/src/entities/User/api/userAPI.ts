@@ -1,4 +1,4 @@
-import { axiosInstance } from "../../../shared/api";
+import { axiosInstance } from '../../../shared/api';
 
 /**
  * @returns {user}
@@ -14,4 +14,14 @@ export const userAPI = {
     const { data } = await axiosInstance.post('claim');
     return data;
   },
+
+  levels: async (): Promise<any> => {
+    const { data } = await axiosInstance.get('user/levels');
+    return data;
+  },
+
+  upgradeLevel: async ({ level_name }: { level_name: string }): Promise<any> => {
+    const { data } = await axiosInstance.put('user/upgrade', { level_name });
+    return data;
+  }
 };

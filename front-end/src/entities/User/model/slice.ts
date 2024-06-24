@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../../shared/types';
-
+import { ILevelData, IUser } from '../../../shared/types';
 
 interface IUserState {
   /**
@@ -10,6 +9,7 @@ interface IUserState {
   error: string | null;
   loading: boolean;
   claimedCoins: number | null;
+  upgrades: ILevelData[];
 }
 
 const initialState: IUserState = {
@@ -35,6 +35,7 @@ const initialState: IUserState = {
   claimedCoins: null,
   error: null,
   loading: false,
+  upgrades: []
 };
 
 export const userSlice = createSlice({
@@ -46,7 +47,10 @@ export const userSlice = createSlice({
     },
     fetchUserSuccess: (state, action: PayloadAction<any>) => {
       state.loading = false;
-      state.data = {...action.payload.user, nextClaimDate: new Date(action.payload?.user?.nextClaimDate).toISOString()};
+      state.data = {
+        ...action.payload.user,
+        nextClaimDate: new Date(action.payload?.user?.nextClaimDate).toISOString()
+      };
       state.claimedCoins = null;
       state.error = null;
     },
@@ -71,7 +75,30 @@ export const userSlice = createSlice({
     emptyOutClaimCoins: (state) => {
       state.claimedCoins = null;
     },
-  },
+    fetchUpgrades: (state) => {
+      state.loading = true;
+    },
+    fetchUpgradesSuccess: (state, action: PayloadAction<ILevelData[]>) => {
+      state.loading = false;
+      state.upgrades = action.payload;
+    },
+    fetchUpgradesError: (state, action: PayloadAction<any>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    // @ts-ignore
+    upgradeLevel: (state, { payload }: PayloadAction<string>) => {
+      state.loading = true;
+    },
+    // @ts-ignore
+    upgradeLevelSuccess: (state, { payload }: PayloadAction<{ success: boolean }>) => {
+      state.loading = false;
+    },
+    upgradeLevelError: (state, action: PayloadAction<any>) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+  }
 });
 
 export const {
@@ -81,5 +108,11 @@ export const {
   claimCoins,
   claimCoinsSuccess,
   claimCoinsError,
-  emptyOutClaimCoins
+  emptyOutClaimCoins,
+  fetchUpgradesSuccess,
+  fetchUpgrades,
+  fetchUpgradesError,
+  upgradeLevel,
+  upgradeLevelSuccess,
+  upgradeLevelError
 } = userSlice.actions;

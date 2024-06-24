@@ -86,3 +86,13 @@ const toNormalNumberLength = (value: number): string => {
 };
 
 export const toNormalNumber = (value: number) => Number(toNormalNumberLength(value));
+
+export const getReadableCount = (coins: number): string => {
+  if (coins < 1000) {
+    return coins.toString();
+  } else if (coins < 1000000) {
+    return (coins / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  } else {
+    return (coins / 1000000).toFixed(1).replace(/\.0$/, '') + 'm';
+  }
+};

@@ -27,6 +27,11 @@ export const selectUserNextClaimDate = createSelector(
   (user) => new Date(user.data.nextClaimDate)
 );
 
+export const selectUpgradesDate = createSelector(
+  [selectUser],
+  (user) => user.upgrades
+);
+
 export const selectLoading = createSelector(
   [selectUser],
   (user) => user.loading

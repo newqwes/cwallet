@@ -1,6 +1,6 @@
 import express from 'express';
-import { authMiddleware } from '../middleware';
-import { getUserData } from '../controllers/userController';
+import { authMiddleware, userExist } from '../middleware';
+import { getUserData, upgradeUserLevel, getUserLevels } from '../controllers/userController';
 
 const userRoute = express.Router();
 
@@ -64,5 +64,9 @@ const userRoute = express.Router();
  *               $ref: '#/components/schemas/Error'
  */
 userRoute.get('/', authMiddleware, getUserData);
+
+userRoute.put('/upgrade', authMiddleware, userExist, upgradeUserLevel);
+
+userRoute.get('/levels', authMiddleware, userExist, getUserLevels);
 
 export default userRoute;

@@ -1,7 +1,7 @@
 import ApiError from '../exceptions/apiError';
 import UserService from '../services/userService';
 import moment from 'moment';
-import { getClaimCoins, getExtraTimeInMinutes } from '../utils/claimCoins';
+import { getClaimCoins, getExtraTimeInMinutes, getInfluenceLuck } from '../utils/claimCoins';
 import { FIRST_LEVEL_REF_BACK, SECOND_LEVEL_REF_BACK } from '../constants/referrals';
 import { CustomNextFunction, CustomRequest, CustomResponse } from '../models';
 
@@ -14,10 +14,9 @@ export const claim = async (req: CustomRequest, res: CustomResponse, next: Custo
       return next(ApiError.AlreadyExists('Its not time yet'));
     }
 
-    // TODO: добавь переменную с везением
     const claimedCoins = getClaimCoins({
-      claimBias: user.claimBias,
-      claimInfluence: user.claimInfluence,
+      claimBias: getInfluenceLuck(user.claimBias, user.luckLevel),
+      claimInfluence: getInfluenceLuck(user.claimInfluence, user.luckLevel),
       miningLevel: user.miningLevel,
       timeLevel: user.timeLevel
     });
@@ -25,22 +24,22 @@ export const claim = async (req: CustomRequest, res: CustomResponse, next: Custo
     const extraTimeInSeconds = getExtraTimeInMinutes(
       {
         timeLevel: user.timeLevel,
-        timeBias: user.timeBias,
-        timeInfluence: user.timeInfluence
+        timeBias: getInfluenceLuck(user.timeBias, user.luckLevel),
+        timeInfluence: getInfluenceLuck(user.timeInfluence, user.luckLevel)
       }
     );
 
     const now = moment();
-    now.add(extraTimeInSeconds, 'seconds');
+    now.add(extraTimeInSeconds.result, 'seconds');
     const nextClaimDate = now.toDate();
-    user.coins += claimedCoins;
+    user.coins += claimedCoins.result;
     user.nextClaimDate = nextClaimDate;
     await user.save();
 
     if (user.refParent) {
       const parent = await UserService.findByTelegramUserId(user.refParent);
 
-      const referralRewards = claimedCoins * FIRST_LEVEL_REF_BACK;
+      const referralRewards = claimedCoins.result * FIRST_LEVEL_REF_BACK;
       if (parent) {
         parent.referralRewards += referralRewards > 1 ? referralRewards : 1;
         await parent.save();
@@ -50,7 +49,7 @@ export const claim = async (req: CustomRequest, res: CustomResponse, next: Custo
     if (user.refGrandParent) {
       const grandParent = await UserService.findByTelegramUserId(user.refGrandParent);
 
-      const referralRewards = claimedCoins * SECOND_LEVEL_REF_BACK;
+      const referralRewards = claimedCoins.result * SECOND_LEVEL_REF_BACK;
       if (grandParent) {
         grandParent.referralRewards += referralRewards > 1 ? referralRewards : 1;
         await grandParent.save();

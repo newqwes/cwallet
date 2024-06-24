@@ -5,7 +5,7 @@ import { postEvent } from '@tma.js/sdk';
 import {
   claimCoins,
   selectUserCoinCount,
-  selectUserNextClaimDate,
+  selectUserNextClaimDate
 } from '../../../entities/User';
 import {
   Coins,
@@ -19,11 +19,11 @@ import {
   UpgradeButtonWrapper
 } from './styled';
 import { useAnimatedNumber } from './useAnimatedNumber';
-import { selectUserClaimedCoins } from "../../../entities/User/model/selectors.ts";
-import { Button } from "../../../shared/ui";
-import { vibrateNow } from "../../../shared/libs/vibration.ts";
-import { useNavigate } from "react-router-dom";
-import { TimerComponent } from "../../../shared/libs/Timer/Timer.tsx";
+import { selectUserClaimedCoins } from '../../../entities/User/model/selectors.ts';
+import { Button } from '../../../shared/ui';
+import { vibrateNow } from '../../../shared/libs/vibration.ts';
+import { useNavigate } from 'react-router-dom';
+import { TimerComponent } from '../../../shared/libs/Timer/Timer.tsx';
 
 export const ClaimComponent: FC = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export const ClaimComponent: FC = () => {
 
   const handleClickClaimBtn = () => {
     dispatch(claimCoins());
-  }
+  };
 
   const handleClickNotYet = () => {
     if (isTimerActive) {
@@ -49,13 +49,13 @@ export const ClaimComponent: FC = () => {
         notification_type: 'error'
       });
     }
-  }
+  };
 
   const animatedCoins = useAnimatedNumber(coins, 1000);
   const handleUpgradeClick = () => {
     vibrateNow('success', 'impact', 'light');
     navigate('/upgrade');
-  }
+  };
 
   return (
     <Wrapper>
@@ -65,7 +65,7 @@ export const ClaimComponent: FC = () => {
       </CoinWrapper>
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
       <VersionBox>
-        <h6>App Version: 0.1.23</h6>
+        <h6>App Version: 0.1.24</h6>
       </VersionBox>
       <MainWrapper onClick={handleClickNotYet}>
         <MainImg isActive={!isTimerActive}/>
