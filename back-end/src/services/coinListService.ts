@@ -3,13 +3,14 @@ import CoinList from '../database/models/coinList';
 import createResponse from '../utils/createResponse';
 import { CoinListInitDataModel } from '../models';
 import sequelize from '../database';
-import ManualCoin from "../database/models/manualCoin";
+import ManualCoin from '../database/models/manualCoin';
+import { logger } from '../logger';
 
 class CoinListService {
   async findOneById(id: string): Promise<CoinList> {
     try {
       return await CoinList.findOne({
-        where: { id },
+        where: { id }
       });
     } catch (error) {
       createResponse(404, 'Server Error findOneByCoinId', error);
@@ -19,7 +20,7 @@ class CoinListService {
   async findOneByCoinId(coin_id: string): Promise<CoinList> {
     try {
       return await CoinList.findOne({
-        where: { coin_id },
+        where: { coin_id }
       });
     } catch (error) {
       createResponse(404, 'Server Error findOneByCoinId', error);
@@ -36,7 +37,7 @@ class CoinListService {
         current_price,
         last_updated,
         market_cap_rank,
-        market_cap,
+        market_cap
       } = defaults;
 
       return await CoinList.create({
@@ -47,10 +48,10 @@ class CoinListService {
         current_price,
         last_updated,
         market_cap_rank,
-        market_cap,
+        market_cap
       });
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error create', error);
     }
   }
@@ -65,7 +66,7 @@ class CoinListService {
         current_price,
         last_updated,
         market_cap_rank,
-        market_cap,
+        market_cap
       } = defaults;
 
       return await CoinList.update(
@@ -77,10 +78,10 @@ class CoinListService {
           current_price,
           last_updated,
           market_cap_rank,
-          market_cap,
+          market_cap
         },
         {
-          where: { coin_id },
+          where: { coin_id }
         }
       );
     } catch (error) {
@@ -92,10 +93,10 @@ class CoinListService {
     try {
       return await CoinList.update(
         {
-          historical_chart_prices: hc_data,
+          historical_chart_prices: hc_data
         },
         {
-          where: { coin_id },
+          where: { coin_id }
         }
       );
     } catch (error) {
@@ -106,7 +107,7 @@ class CoinListService {
   async findAllHCActiveCoins() {
     try {
       return await CoinList.findAll({
-        where: { historical_chart_active: true },
+        where: { historical_chart_active: true }
       });
     } catch (error) {
       createResponse(404, 'Server Error findAllHCActiveCoins', error);
@@ -117,7 +118,7 @@ class CoinListService {
     try {
       return await CoinList.findAll({
         order: sequelize.random(),
-        limit: limit_value,
+        limit: limit_value
       });
     } catch (error) {
       createResponse(404, 'Server Error getRandomCoins', error);
@@ -135,7 +136,7 @@ class CoinListService {
             [Op.in]: coinIds
           }
         },
-        limit: limit_value,
+        limit: limit_value
       });
     } catch (error) {
       createResponse(404, 'Server Error getCoinsForShortGame', error);
@@ -146,7 +147,7 @@ class CoinListService {
     try {
       return await CoinList.update(
         {
-          historical_chart_active: flag,
+          historical_chart_active: flag
         },
         { where: { id } }
       );
@@ -159,10 +160,10 @@ class CoinListService {
     try {
       return await CoinList.update(
         {
-          historical_chart_active: false,
+          historical_chart_active: false
         },
         {
-          where: {}, // Empty where clause to target all rows
+          where: {} // Empty where clause to target all rows
         }
       );
     } catch (error) {

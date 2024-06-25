@@ -2,17 +2,18 @@ import ShortGameCoins from '../database/models/shortGameCoins';
 import createResponse from '../utils/createResponse';
 import {
   ShortGameCoinsInitDataModel,
-  ShortGameCoinsUpdateVolatility,
+  ShortGameCoinsUpdateVolatility
 } from '../models';
+import { logger } from '../logger';
 
 class ShortGameCoinsService {
   async findCoinByCoinListId(coin_list_id: string) {
     try {
       return await ShortGameCoins.findOne({
-        where: { coin_list_id },
+        where: { coin_list_id }
       });
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error findAll', error);
     }
   }
@@ -21,7 +22,7 @@ class ShortGameCoinsService {
     try {
       return await ShortGameCoins.findAll();
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error findAll', error);
     }
   }
@@ -29,10 +30,10 @@ class ShortGameCoinsService {
   async findSortCoins() {
     try {
       return await ShortGameCoins.findAll({
-        order: [['volatility', 'DESC']],
+        order: [['volatility', 'DESC']]
       });
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error findAll', error);
     }
   }
@@ -40,10 +41,10 @@ class ShortGameCoinsService {
   async createNewListForShortGame(defaults: ShortGameCoinsInitDataModel) {
     try {
       return await ShortGameCoins.create({
-        ...defaults,
+        ...defaults
       });
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error create', error);
     }
   }
@@ -55,14 +56,14 @@ class ShortGameCoinsService {
     try {
       return await ShortGameCoins.update(
         {
-          ...defaults,
+          ...defaults
         },
         {
-          where: { id },
+          where: { id }
         }
       );
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error update coin list short game', error);
     }
   }
@@ -72,14 +73,14 @@ class ShortGameCoinsService {
     try {
       return await ShortGameCoins.update(
         {
-          volatility,
+          volatility
         },
         {
-          where: { id },
+          where: { id }
         }
       );
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error update coin info short game', error);
     }
   }
@@ -88,7 +89,7 @@ class ShortGameCoinsService {
     try {
       return await ShortGameCoins.destroy({ where: {} });
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error update coin info short game', error);
     }
   }

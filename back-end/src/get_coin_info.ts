@@ -3,6 +3,7 @@ import axios from 'axios';
 import createOptionsRequest from './utils/createCGOptionsRequest';
 import CoinListService from './services/coinListService';
 import dotenv from 'dotenv';
+import { logger } from './logger';
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ const CG_HC_interval = 'daily'; //data interval, leave empty for auto granularit
 
 export async function getCoinsInfo() {
   try {
-    console.log('Стартовал процесс получения данных');
+    logger.info('Стартовал процесс получения данных');
     const options = createOptionsRequest(
       'GET',
       `https://${CG_domain}/api/v3/coins/markets?vs_currency=usd`
@@ -28,7 +29,7 @@ export async function getCoinsInfo() {
         current_price: coin_el.current_price,
         last_updated: coin_el.last_updated,
         market_cap_rank: coin_el.market_cap_rank,
-        market_cap: coin_el.market_cap,
+        market_cap: coin_el.market_cap
       };
 
       const getCoin = await CoinListService.findOneByCoinId(
@@ -40,22 +41,18 @@ export async function getCoinsInfo() {
         await CoinListService.create(request_data);
       }
     }
-    console.log('The data retrieval process is complete!');
+    logger.info('The data retrieval process is complete!');
   } catch (error) {
-    console.error('Request error:', error.message);
-    if (error.response) {
-      console.error('Status:', error.response.status);
-      console.error('Response Data:', error.response.data);
-    }
+    logger.error('Request error: ' + JSON.stringify(error));
   }
 }
 
 export async function getHistoricalChart() {
   try {
-    console.log('The process of obtaining Historical Chart data has started');
+    logger.info('The process of obtaining Historical Chart data has started');
     const active_coins = await CoinListService.findAllHCActiveCoins();
     if (!active_coins.length) {
-      console.log('There are no active coins!');
+      logger.warn('There are no active coins!');
       return;
     }
 
@@ -72,12 +69,8 @@ export async function getHistoricalChart() {
         coin_el_json.coin_id
       );
     }
-    console.log('The Historical Chart data retrieval process is complete');
+    logger.info('The Historical Chart data retrieval process is complete');
   } catch (error) {
-    console.error('Request error:', error.message);
-    if (error.response) {
-      console.error('Status:', error.response.status);
-      console.error('Response Data:', error.response.data);
-    }
+    logger.error('Request error: ' + JSON.stringify(error));
   }
 }

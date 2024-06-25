@@ -3,6 +3,7 @@ import { Server } from 'http';
 import { Server as SocketServer } from 'socket.io';
 import { Client } from 'pg';
 import Bank from './database/models/bank';
+import { logger } from './logger';
 
 export const app = express();
 export const server = new Server(app);
@@ -13,7 +14,7 @@ const client = new Client({
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
-  port: Number(process.env.PGPORT),
+  port: Number(process.env.PGPORT)
 });
 
 export const connectNotificationToDatabase = async () => {
@@ -27,9 +28,9 @@ export const connectNotificationToDatabase = async () => {
         io.emit('bank', updatedValue);
       }
     });
-    console.log('Connected to database');
+    logger.info('Connected to database');
   } catch (error) {
-    console.error('Connected is failed! Error: ', error);
+    logger.error('Connected is failed! Error: ' + JSON.stringify(error));
   }
 };
 
@@ -42,11 +43,11 @@ const handleClientConnection = async (socket: any) => {
       socket.emit('bank', value);
     }
   } catch (error) {
-    console.error('Error bank data:', error);
+    logger.error('Error bank data: ' + JSON.stringify(error));
   }
 
   socket.on('disconnect', () => {
-    console.log('WebSocket disconnected:', socket.id);
+    logger.info('WebSocket disconnected: ' + JSON.stringify(socket.id));
   });
 };
 

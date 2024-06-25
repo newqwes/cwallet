@@ -1,5 +1,6 @@
 import UserTasks from '../database/models/userTasks';
 import createResponse from '../utils/createResponse';
+import { logger } from '../logger';
 
 class UserTasksService {
   async findAllByUserId(user_id: string): Promise<UserTasks[]> {
@@ -8,6 +9,7 @@ class UserTasksService {
         where: { user_id }
       });
     } catch (error) {
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error findAllByUserId', error);
     }
   }
@@ -18,6 +20,7 @@ class UserTasksService {
         where: { user_id, tasks_list_id }
       });
     } catch (error) {
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error findAllByUserId', error);
     }
   }
@@ -35,7 +38,7 @@ class UserTasksService {
       });
       return { userTask, created };
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       throw createResponse(404, 'Server Error findOrCreate', error);
     }
   }
@@ -50,6 +53,7 @@ class UserTasksService {
       });
       return affectedCount;
     } catch (error) {
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error update', error);
     }
   }

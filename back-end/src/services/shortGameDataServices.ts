@@ -2,17 +2,18 @@ import ShortGameData from '../database/models/shortGameData';
 import createResponse from '../utils/createResponse';
 import {
   ShortGameDataInitDataModel,
-  ShortGameUpdatePlaceDataModel,
+  ShortGameUpdatePlaceDataModel
 } from '../models';
+import { logger } from '../logger';
 
 class ShortGameDataService {
   async createUserData(defaults: ShortGameDataInitDataModel) {
     try {
       return await ShortGameData.create({
-        ...defaults,
+        ...defaults
       });
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error create', error);
     }
   }
@@ -20,7 +21,7 @@ class ShortGameDataService {
   async findActiveGameByUserId(user_id: string) {
     try {
       return await ShortGameData.findOne({
-        where: { user_id, game_ended: false },
+        where: { user_id, game_ended: false }
       });
     } catch (error) {
       createResponse(404, 'Server Error findActiveGameByUserId', error);
@@ -30,20 +31,20 @@ class ShortGameDataService {
   async historyByUserId(user_id: string) {
     try {
       const results = await ShortGameData.findAll({
-        where: { user_id, game_ended: true },
+        where: { user_id, game_ended: true }
       });
-      return results; // Это вернет результат или пустой массив, если записи не найдены
+      return results;
     } catch (error) {
-      console.error('Error fetching game history:', error); // Лучше использовать console.error для ошибок
+      logger.error('Error fetching game history: ' + JSON.stringify(error));
       createResponse(404, 'Server Error historyByUserId', error);
-      return null; // Явно возвращаем null, чтобы указать на ошибку
+      return null;
     }
   }
 
   async findActiveGames() {
     try {
       return await ShortGameData.findAll({
-        where: { game_ended: false },
+        where: { game_ended: false }
       });
     } catch (error) {
       createResponse(404, 'Server Error findActiveGames', error);
@@ -53,7 +54,7 @@ class ShortGameDataService {
   async findProgressGames() {
     try {
       return await ShortGameData.findAll({
-        where: { game_ended: false, in_progress: true },
+        where: { game_ended: false, in_progress: true }
       });
     } catch (error) {
       createResponse(404, 'Server Error findProgressGames', error);
@@ -66,11 +67,11 @@ class ShortGameDataService {
       return await ShortGameData.update(
         values,
         {
-          where: { coin_list_id, game_ended: false },
+          where: { coin_list_id, game_ended: false }
         }
       );
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error update', error);
     }
   }
@@ -81,11 +82,11 @@ class ShortGameDataService {
       return await ShortGameData.update(
         values,
         {
-          where: { user_id, game_ended: false, in_progress: false },
+          where: { user_id, game_ended: false, in_progress: false }
         }
       );
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error update', error);
     }
   }
@@ -99,7 +100,7 @@ class ShortGameDataService {
         }
       );
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error update', error);
     }
   }
@@ -108,12 +109,12 @@ class ShortGameDataService {
     try {
       const [updatedCount] = await ShortGameData.update(
         { is_paid: true },
-        { where: { user_id, game_ended: true, is_paid: false }, transaction },
+        { where: { user_id, game_ended: true, is_paid: false }, transaction }
       );
-      console.log(`Updated ${updatedCount} games to paid.`);
+      logger.info(`Updated ${updatedCount} games to paid.`);
       return updatedCount;
     } catch (error) {
-      console.log('error', error);
+      logger.error(JSON.stringify(error));
       createResponse(404, 'Server Error update', error);
       return 0;
     }

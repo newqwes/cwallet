@@ -3,6 +3,7 @@ import { getMessageOptions, RUN_APP } from '../constants/telegram';
 import UserService from './userService';
 import { isValidReferralCode } from '../utils/referral';
 import TelegramSetting from '../database/models/telegramSetting';
+import { logger } from '../logger';
 
 const MyBot = new TelegramAPI(process.env.BOT_CHAT_TOKEN || '', { polling: true });
 const reply_markup = getMessageOptions().reply_markup;
@@ -84,7 +85,7 @@ const runTelegramNotificationBotService = async (data: TelegramSetting, currentI
         caption: data.text
       });
     } catch (error) {
-      console.log('User cannot send message to user: ', user.telegramId);
+      logger.error('User cannot send message to user: ' + user.telegramId);
     }
   }
 };

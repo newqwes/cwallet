@@ -11,5 +11,10 @@ module.exports = {
     host: process.env.PGHOST,
     port: process.env.PGPORT,
     omitNull: true,
+    logging: (msg) => {
+      if (msg.includes('Error')) {
+        console.log(msg);
+      }
+    }
   },
 };

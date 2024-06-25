@@ -4,22 +4,23 @@ import CoinListService from './services/coinListService';
 import ShortGameCoinsService from './services/shortGameCoinsService';
 import ShortGameDataService from './services/shortGameDataServices';
 import dotenv from 'dotenv';
+import { logger } from './logger';
 
 dotenv.config();
 
 const coins_limit = Number(process.env.SHORT_GAME_COINS_LIMIT || 6);
 
 const calcVolatility = (startPrice: number, currentPrice: number): number => {
-  return ((currentPrice - startPrice) / startPrice) * 100
-}
+  return ((currentPrice - startPrice) / startPrice) * 100;
+};
 
 const updateInfoGameCoins = async (updateStartPrice: boolean) => {
   const gameCoins = await ShortGameCoinsService.findCoins();
   if (!gameCoins.length) {
-    console.log('There are no coins for the game, there is nothing to update');
+    logger.warn('There are no coins for the game, there is nothing to update');
     return;
   } else {
-    console.log('Updating information on the coins');
+    logger.info('Updating information on the coins');
     for (let gameCoin of gameCoins) {
       const { id, coin_list_id, start_price } = gameCoin.toJSON();
       const currentCoinInfo = await CoinListService.findOneById(coin_list_id);
@@ -32,7 +33,7 @@ const updateInfoGameCoins = async (updateStartPrice: boolean) => {
       });
     }
   }
-}
+};
 
 export const startEndShortGame = async () => {
   try {
@@ -64,7 +65,7 @@ export const startEndShortGame = async () => {
           game_ended: true,
           volatility_result,
           is_shown: false,
-          in_progress: false,
+          in_progress: false
         });
       }
     }
@@ -78,20 +79,13 @@ export const startEndShortGame = async () => {
       await ShortGameCoinsService.createNewListForShortGame({
         coin_list_id: id,
         start_price: current_price,
-        volatility: 0,
+        volatility: 0
       });
     }
   } catch (error) {
-    console.error('Ошибка запроса:', {
-      msg: error.message,
-      stack: error.stack,
-    });
-    if (error.response) {
-      console.error('Статус:', error.response.status);
-      console.error('Данные ответа:', error.response.data);
-    }
+    logger.error(JSON.stringify(error));
   }
-}
+};
 
 export const progressShortGame = async () => {
   try {
@@ -107,22 +101,15 @@ export const progressShortGame = async () => {
           place: 1,
           volatility_result: 0,
           is_shown: false,
-          in_progress: true,
+          in_progress: true
         });
       }
     }
 
   } catch (error) {
-    console.error('Ошибка запроса:', {
-      msg: error.message,
-      stack: error.stack,
-    });
-    if (error.response) {
-      console.error('Статус:', error.response.status);
-      console.error('Данные ответа:', error.response.data);
-    }
+    logger.error(JSON.stringify(error));
   }
-}
+};
 
 export const checkProgressShortGame = async () => {
   try {
@@ -151,19 +138,12 @@ export const checkProgressShortGame = async () => {
           coin_list_id,
           place,
           volatility_result,
-          is_shown: false,
+          is_shown: false
         });
       }
     }
 
   } catch (error) {
-    console.error('Ошибка запроса:', {
-      msg: error.message,
-      stack: error.stack,
-    });
-    if (error.response) {
-      console.error('Статус:', error.response.status);
-      console.error('Данные ответа:', error.response.data);
-    }
+    logger.error(JSON.stringify(error));
   }
-}
+};

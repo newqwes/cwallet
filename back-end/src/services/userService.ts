@@ -4,6 +4,7 @@ import { UserTelegramInitDataModel } from '../models';
 import ApiError from '../exceptions/apiError';
 import { generateReferralCode } from '../utils/referral';
 import { REFERRAL_CODE_LENGTH } from '../constants';
+import { logger } from '../logger';
 
 class UserService {
   async findOrCreateById(defaults: UserTelegramInitDataModel): Promise<{ user: User, created: boolean }> {
@@ -15,7 +16,7 @@ class UserService {
         where: { telegramId },
         defaults: {
           firstName, lastName, languageCode, referralCode: generateReferralCode(REFERRAL_CODE_LENGTH)
-        },
+        }
       });
       return { user, created };
     } catch (error) {
@@ -61,7 +62,7 @@ class UserService {
 
       return User.findAll(whereCondition as any);
     } catch (error) {
-      console.error('Ошибка при поиске пользователей:', error);
+      logger.error('User cannot send message to user: ' + JSON.stringify(error));
       return null;
     }
   }

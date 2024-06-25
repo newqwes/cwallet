@@ -5,6 +5,7 @@ import { getClaimCoins, getExtraTimeInMinutes, getInfluenceLuck } from '../utils
 import { FIRST_LEVEL_REF_BACK, SECOND_LEVEL_REF_BACK } from '../constants/referrals';
 import { CustomNextFunction, CustomRequest, CustomResponse } from '../models';
 import { round } from 'lodash';
+import { logger } from '../logger';
 
 export const claim = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   try {
@@ -59,6 +60,7 @@ export const claim = async (req: CustomRequest, res: CustomResponse, next: Custo
 
     return res.status(201).json({ coins: user.coins, nextClaimDate });
   } catch (e) {
+    logger.error('CLAIM_CONTROLLER (Claim): ' + JSON.stringify(e));
     next(e);
   }
 };

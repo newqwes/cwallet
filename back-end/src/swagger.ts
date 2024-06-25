@@ -1,6 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { RUN_APP } from './constants/telegram';
+import { logger } from './logger';
 
 const User = {
   type: 'object',
@@ -139,7 +140,6 @@ export const swaggerDocs = (app: any, port: any) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
   });
-
-  console.log(`Swagger docs available at http://localhost:${port}/api-docs`);
+  logger.info(`Swagger docs available at http://localhost:${port}/api-docs`);
 };
 

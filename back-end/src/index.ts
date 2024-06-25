@@ -21,13 +21,29 @@ import {
   PROGRESS_SHORT_GAME_PERIOD,
   START_SHORT_GAME_PERIOD
 } from './constants/periodTime';
+import { logger } from './logger';
 
 dotenv.config();
 
 app.set('trust proxy', 1);
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
-app.use(morgan('dev'));
+morgan.token('message', function (req, res) {
+  // @ts-ignore
+  return res.locals.errorMessage || '';
+});
+
+const morganFormat = '[:date[iso]] ":method :url" :status - :response-time ms - :message';
+
+app.use(morgan(morganFormat, {
+  stream: {
+    write: (message) => {
+      const [_, url, status, responseTime] = message.match(/\[.*\] "(.*)" (\d{3}) - (\d+.\d+) ms -/);
+      const logMessage = `${url} ${status} ${responseTime}ms`;
+      logger.debug(logMessage);
+    }
+  }
+}));
 app.use(helmet());
 app.use(cors);
 app.use(express.json());
@@ -42,13 +58,13 @@ swaggerDocs(app, process.env.SERVER_PORT);
 const start = async () => {
   try {
     server.listen(process.env.SERVER_PORT, async () => {
-      console.log(`HOST_NAME ${process.env.HOST_NAME}`);
-      console.log(`CLIENT_URL ${process.env.CLIENT_URL}`);
-      console.log(`CLIENT_URL_VISUAL ${process.env.CLIENT_URL_VISUAL}`);
-      console.log(`Server is listening on port ${process.env.SERVER_PORT}...`);
+      logger.info(`HOST_NAME ${process.env.HOST_NAME}`);
+      logger.info(`CLIENT_URL ${process.env.CLIENT_URL}`);
+      logger.info(`CLIENT_URL_VISUAL ${process.env.CLIENT_URL_VISUAL}`);
+      logger.info(`Server is listening on port ${process.env.SERVER_PORT}...`);
       await sequelize.authenticate();
       await connectNotificationToDatabase();
-      console.log('Database Connected!');
+      logger.info('Database Connected!');
 
       cron.schedule(`0 ${START_SHORT_GAME_PERIOD} * * *`, startEndShortGame);
       cron.schedule(`0 ${PROGRESS_SHORT_GAME_PERIOD} * * *`, progressShortGame);
@@ -62,7 +78,7 @@ const start = async () => {
 
     await runTelegramBotService();
   } catch (e) {
-    console.log(e);
+    logger.error(JSON.stringify(e));
   }
 };
 
