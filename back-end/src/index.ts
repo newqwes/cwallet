@@ -11,15 +11,15 @@ import { getHistoricalChart } from './get_coin_info';
 import {
   startEndShortGame,
   progressShortGame,
-  checkProgressShortGame,
+  checkProgressShortGame
 } from './short_game';
 import sequelize from './database';
 import { errorMiddleware, limiter, cors } from './middleware';
-import runTelegramBotService from './services/telegramBotService';
+import { runTelegramBotService } from './services/telegramBotService';
 import apiRoutes from './routes';
 import {
   PROGRESS_SHORT_GAME_PERIOD,
-  START_SHORT_GAME_PERIOD,
+  START_SHORT_GAME_PERIOD
 } from './constants/periodTime';
 
 dotenv.config();

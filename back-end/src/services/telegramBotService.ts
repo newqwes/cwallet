@@ -1,20 +1,31 @@
 import TelegramAPI from 'node-telegram-bot-api';
 import { getMessageOptions, RUN_APP } from '../constants/telegram';
-import UserService from "./userService";
-import { isValidReferralCode } from "../utils/referral";
+import UserService from './userService';
+import { isValidReferralCode } from '../utils/referral';
+import TelegramSetting from '../database/models/telegramSetting';
 
-const MyBot = new TelegramAPI(process.env.BOT_CHAT_TOKEN || '', {polling: true});
+const MyBot = new TelegramAPI(process.env.BOT_CHAT_TOKEN || '', { polling: true });
+const reply_markup = getMessageOptions().reply_markup;
 
-const runTelegramBotService = async () => {
+export const runTelegramBotService = async () => {
   MyBot.on('message', async (msg) => {
-    const {from, text, chat: {id, first_name: firstName, last_name: lastName}} = msg;
+    const { from, text, chat: { id, first_name: firstName, last_name: lastName } } = msg;
     try {
+      const data = await TelegramSetting.findOne({ where: { id: 1 } });
+      if (!data.is_started) {
+        await runTelegramNotificationBotService(data, id);
+        data.is_started = true;
+        await data.save();
+      }
+      const photo = data.img;
+      let caption = `${firstName}, ${data.text}`;
+
       if (from.is_bot) {
         return;
       }
 
       if (text === RUN_APP) {
-        return MyBot.sendMessage(id, `Cwallet app 👛`, getMessageOptions() as any);
+        return MyBot.sendPhoto(id, photo, { reply_markup, caption });
       }
 
       if (text && text.startsWith('/start')) {
@@ -23,17 +34,20 @@ const runTelegramBotService = async () => {
           const referralCode = startParam.split('_')[1];
 
           if (!isValidReferralCode(referralCode)) {
-            return MyBot.sendMessage(id, `Not valid ref code, but welcome to Cwallet app 🪿`, getMessageOptions() as any);
+            caption = `Not valid ref code, but ` + caption;
+            return MyBot.sendPhoto(id, photo, { reply_markup, caption });
           }
 
-          const parent = await UserService.findOne({referralCode});
+          const parent = await UserService.findOne({ referralCode });
           if (!parent) {
-            return MyBot.sendMessage(id, `${firstName}, welcome to Cwallet app 👛`, getMessageOptions() as any);
+            return MyBot.sendPhoto(id, photo, { reply_markup, caption });
           }
 
           const alreadyExistUser = await UserService.findByTelegramUserId(id);
           if (alreadyExistUser) {
-            return MyBot.sendMessage(id, `It's good to see ${firstName} again! Cwallet app 🪿`, getMessageOptions() as any);
+
+            caption = caption + `It's good to see ${firstName} again!`;
+            return MyBot.sendPhoto(id, photo, { reply_markup, caption });
           }
 
           await UserService.create({
@@ -44,9 +58,11 @@ const runTelegramBotService = async () => {
             refGrandParent: parent.refParent,
             languageCode: from.language_code
           });
-          return MyBot.sendMessage(id, `${firstName}, welcome to Cwallet app 👛. You were invited by referral code: ${referralCode}`, getMessageOptions(referralCode) as any);
+          caption = caption + ` You were invited by referral code: ${referralCode}`;
+          return MyBot.sendPhoto(id, photo, { reply_markup, caption });
         } else {
-          return MyBot.sendMessage(id, `${firstName}, welcome to Cwallet app 👛`, getMessageOptions() as any);
+
+          return MyBot.sendPhoto(id, photo, { reply_markup, caption });
         }
       }
     } catch (error) {
@@ -55,4 +71,21 @@ const runTelegramBotService = async () => {
   });
 };
 
-export default runTelegramBotService;
+const runTelegramNotificationBotService = async (data: TelegramSetting, currentId: number) => {
+  const users = await UserService.findAll();
+
+  for (const user of users) {
+    try {
+      if (user.telegramId === currentId) {
+        continue;
+      }
+      await MyBot.sendPhoto(user.telegramId, data.img, {
+        reply_markup,
+        caption: data.text
+      });
+    } catch (error) {
+      console.log('User cannot send message to user: ', user.telegramId);
+    }
+  }
+};
+

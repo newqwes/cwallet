@@ -3,7 +3,7 @@ import { Container, PlayButton, LinkContainer, Link } from './styled';
 export const LandingPage = () => {
   return (
     <Container>
-      <h1>Welcome to Cwallet</h1>
+      <h1>Welcome to CWAllet.one</h1>
       <p>Engage and earn with our crypto games!</p>
       <PlayButton href="https://t.me/cwallet_one_bot" target="_blank">
         Play Now
@@ -23,4 +23,4 @@ export const LandingPage = () => {
       {/*</RoadmapSection>*/}
     </Container>
   );
-}
+};

@@ -1,6 +1,6 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { RUN_APP } from "./constants/telegram";
+import { RUN_APP } from './constants/telegram';
 
 const User = {
   type: 'object',
@@ -76,7 +76,7 @@ const User = {
     timeLevel: {
       type: 'number',
       description: 'Уровень времени, чем больше тем больше нужно жадать нажатия кнопки, и монет соответсвенно добавить больше. Повышает как время ожидания так и количество добычи монет'
-    },
+    }
   }
 };
 
@@ -84,9 +84,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Cwallet Telegram Mini App',
+      title: 'CWAllet.one Telegram Mini App',
       version: 'Beta 0.1.0',
-      description: RUN_APP,
+      description: RUN_APP
     },
     components: {
       schemas: {
@@ -112,17 +112,17 @@ const options = {
       securitySchemes: {
         BearerAuth: {
           type: 'http',
-          scheme: 'bearer',
+          scheme: 'bearer'
         }
       },
       security: [
         {
-          BearerAuth: [],
-        },
-      ],
-    },
+          BearerAuth: []
+        }
+      ]
+    }
   },
-  apis: ['./src/routes/*.ts'],
+  apis: ['./src/routes/*.ts']
 };
 
 
@@ -132,7 +132,7 @@ export const swaggerDocs = (app: any, port: any) => {
   // Swagger UI setup
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
     customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: "API Cwallet"
+    customSiteTitle: 'API CWAllet.one'
   }));
 
   app.get('/api-docs.json', (req: any, res: any) => {
@@ -141,5 +141,5 @@ export const swaggerDocs = (app: any, port: any) => {
   });
 
   console.log(`Swagger docs available at http://localhost:${port}/api-docs`);
-}
+};
 

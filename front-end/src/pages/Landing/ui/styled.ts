@@ -35,7 +35,7 @@ export const PlayButton = styled.a`
   cursor: pointer;
   margin: 20px;
   text-decoration: none;
-  color: #1b1639;
+  color: #f4f4f4;
   transition: 0.2s ease;
 
   &:hover {
