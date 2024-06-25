@@ -4,6 +4,7 @@ import moment from 'moment';
 import { getClaimCoins, getExtraTimeInMinutes, getInfluenceLuck } from '../utils/claimCoins';
 import { FIRST_LEVEL_REF_BACK, SECOND_LEVEL_REF_BACK } from '../constants/referrals';
 import { CustomNextFunction, CustomRequest, CustomResponse } from '../models';
+import { round } from 'lodash';
 
 export const claim = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   try {
@@ -39,7 +40,7 @@ export const claim = async (req: CustomRequest, res: CustomResponse, next: Custo
     if (user.refParent) {
       const parent = await UserService.findByTelegramUserId(user.refParent);
 
-      const referralRewards = claimedCoins.result * FIRST_LEVEL_REF_BACK;
+      const referralRewards = round(claimedCoins.result * FIRST_LEVEL_REF_BACK);
       if (parent) {
         parent.referralRewards += referralRewards > 1 ? referralRewards : 1;
         await parent.save();
@@ -49,7 +50,7 @@ export const claim = async (req: CustomRequest, res: CustomResponse, next: Custo
     if (user.refGrandParent) {
       const grandParent = await UserService.findByTelegramUserId(user.refGrandParent);
 
-      const referralRewards = claimedCoins.result * SECOND_LEVEL_REF_BACK;
+      const referralRewards = round(claimedCoins.result * SECOND_LEVEL_REF_BACK);
       if (grandParent) {
         grandParent.referralRewards += referralRewards > 1 ? referralRewards : 1;
         await grandParent.save();
