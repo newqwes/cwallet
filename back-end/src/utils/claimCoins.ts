@@ -9,8 +9,8 @@ import {
 import { round } from 'lodash';
 
 const claimLevelFormula = (x: number, y: number, z: number): number => {
-  const result = x + (x + y * y) / 10 * y;
-  return Math.round(result * z * 3);
+  const result = x + (5 * x + y * y * y) / 10 * y;
+  return Math.round(result * z * z * 2.5);
 };
 
 export const getClaimCoins = ({ claimBias, claimInfluence, miningLevel, timeLevel }) => {

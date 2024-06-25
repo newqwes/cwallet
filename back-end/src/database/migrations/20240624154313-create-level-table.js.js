@@ -26,10 +26,10 @@ module.exports = {
     await queryInterface.bulkInsert(
       'level',
       [
-        { name: 'luckLevel', price: 1200, multiplier: 1.5 },
-        { name: 'timeLevel', price: 1800, multiplier: 1.4 },
-        { name: 'miningLevel', price: 1600, multiplier: 1.5 },
-        { name: 'secretLevel', price: 5000, multiplier: 2 }
+        { name: 'luckLevel', price: 1200, multiplier: 1.3 },
+        { name: 'timeLevel', price: 1800, multiplier: 1.2 },
+        { name: 'miningLevel', price: 1600, multiplier: 1.3 },
+        { name: 'secretLevel', price: 5000, multiplier: 1.7 }
       ],
       {}
     );
