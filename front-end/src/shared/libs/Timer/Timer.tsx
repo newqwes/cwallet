@@ -14,9 +14,10 @@ const formatTime = (time: number) => {
 
 interface Props {
   nextDate: Date | string;
+  isTimeOver: () => void;
 }
 
-export const TimerComponent = ({ nextDate }: Props) => {
+export const TimerComponent = ({ nextDate, isTimeOver }: Props) => {
   const currentDateMs = new Date();
   const nextClaimDateMs = new Date(nextDate);
   const initialTimeLeft = differenceInMilliseconds(nextClaimDateMs, currentDateMs);
@@ -31,6 +32,7 @@ export const TimerComponent = ({ nextDate }: Props) => {
 
   useEffect(() => {
     if (timeLeft <= 0) {
+      isTimeOver();
       return;
     }
 

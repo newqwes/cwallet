@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { differenceInMilliseconds } from 'date-fns';
 import { postEvent } from '@tma.js/sdk';
@@ -32,10 +32,14 @@ export const ClaimComponent: FC = () => {
   const generalLevel = useSelector(selectUserGeneralLevel);
   const claimedCoins = useSelector(selectUserClaimedCoins);
   const nextClaimDate = useSelector(selectUserNextClaimDate);
-
   const currentDateMs = new Date();
   const nextClaimDateMs = new Date(nextClaimDate);
-  const isTimerActive = differenceInMilliseconds(nextClaimDateMs, currentDateMs) >= 0;
+
+  const [isTimerActive, setTimerActive] = useState(true);
+
+  useEffect(() => {
+    setTimerActive(differenceInMilliseconds(nextClaimDateMs, currentDateMs) >= 0);
+  }, [nextClaimDate]);
 
   const handleClickClaimBtn = () => {
     dispatch(claimCoins());
@@ -58,6 +62,10 @@ export const ClaimComponent: FC = () => {
     navigate('/upgrade');
   };
 
+  const isTimeOver = () => {
+    setTimerActive(false);
+  };
+
   return (
     <Wrapper>
       <CoinWrapper>
@@ -67,12 +75,12 @@ export const ClaimComponent: FC = () => {
       </CoinWrapper>
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
       <VersionBox>
-        <h6>App Version: 0.1.24</h6>
+        <h6>App Version: 0.1.25</h6>
       </VersionBox>
       <MainWrapper onClick={handleClickNotYet}>
         <MainImg isActive={!isTimerActive}/>
         <InvisibleButton onClick={handleClickClaimBtn} isActive={!isTimerActive}/>
-        <TimerComponent nextDate={nextClaimDate}/>
+        <TimerComponent nextDate={nextClaimDate} isTimeOver={isTimeOver}/>
       </MainWrapper>
       <UpgradeButtonWrapper>
         <Button btnStyle={'primary'} onClick={handleUpgradeClick}>

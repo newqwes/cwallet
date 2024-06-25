@@ -151,8 +151,4 @@ export const UpgradeButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 10px;
-
-  ${Button} {
-    animation: ${buzz} 0.6s infinite alternate;
-  }
 `;
