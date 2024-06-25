@@ -114,11 +114,11 @@ const fadeInCoins = keyframes`
 export const CoinChangeText = styled.div<IStyledProp>`
   ${coinFont};
   position: absolute;
-  top: 8vh;
+  top: 8.5vh;
   z-index: 10;
   opacity: 0;
   font-size: 5vw;
-  animation: ${fadeInCoins} 1.5s ease;
+  animation: ${fadeInCoins} 2.5s ease;
 `;
 
 export const VersionBox = styled.div`

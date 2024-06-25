@@ -33,7 +33,7 @@ const getButtonShadowColor = ({ isDisabled, btnStyle }: {
     return '0 0.35em 0 0 hsl(39, 100%, 50%, 0.5)';
   }
 
-  return '0 0.35em 0 0 hsl(217, 90%, 54%, 0.5)';
+  return '0 0.35em 0 0 hsl(217, 90%, 40%, 0.5)';
 };
 
 export const Button = styled.button<IButtonProp>`

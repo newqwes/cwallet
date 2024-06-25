@@ -83,7 +83,7 @@ export const ClaimComponent: FC = () => {
         <TimerComponent nextDate={nextClaimDate} isTimeOver={isTimeOver}/>
       </MainWrapper>
       <UpgradeButtonWrapper>
-        <Button btnStyle={'primary'} onClick={handleUpgradeClick}>
+        <Button btnStyle={'secondary'} onClick={handleUpgradeClick}>
           Upgrade
         </Button>
       </UpgradeButtonWrapper>
