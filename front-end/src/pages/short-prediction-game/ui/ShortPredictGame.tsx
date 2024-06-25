@@ -12,7 +12,7 @@ import {
   CoinImage,
   CoinInfo,
   CoinName,
-  CoinPrice
+  CoinPrice, TitleWrapper
 } from './styled';
 import {
   fetchShortGameData,
@@ -23,12 +23,16 @@ import {
 } from '../../../entities/ShortGame';
 import { InGameComponent } from './InGameComponent/InGame.tsx';
 import { TimerComponent } from '../../../shared/libs/Timer/Timer.tsx';
+import { selectUserGeneralLevel } from '../../../entities/User';
+import { RewardsTable } from './RewardsTable/RewardsTable.tsx';
 
 export const ShortPredictGame: FC = () => {
   const [flippedCardIndex, setFlippedCardIndex] = useState<number | null>(null);
 
   const shortGameData = useSelector(selectShortGameData);
   const alreadyInGame = useSelector(selectAlreadyInGame);
+  const userGeneralLevel = useSelector(selectUserGeneralLevel);
+
   const isActive = useSelector(selectIsActiveGame);
   const gamePeriod = useSelector(selectGamePeriod);
 
@@ -54,12 +58,15 @@ export const ShortPredictGame: FC = () => {
     dispatch(selectShortGameCoin(coinId));
   };
   const isTimeOver = () => {
-    console.log('Time is Over');
+    dispatch(fetchShortGameData());
   };
   return isActive ?
     <Container onClick={() => handleOutsideClick()}>
-      <TimerComponent nextDate={gamePeriod.progress} isTimeOver={isTimeOver}/>
-      <Question>Which coin will show the best result in 24 hours?</Question>
+      <TitleWrapper>
+        <TimerComponent nextDate={gamePeriod.progress} isTimeOver={isTimeOver}/>
+        <Question>Which coin will show the best result in 24 hours?</Question>
+      </TitleWrapper>
+      <RewardsTable level={userGeneralLevel}/>
       <CardWrapper>
         {shortGameData.map((coin, index) => (
           <AnswerCard
@@ -97,6 +104,6 @@ export const ShortPredictGame: FC = () => {
       gamePeriod={gamePeriod.end}
       selectedCoinId={alreadyInGame.coin_list_id}
       coins={shortGameData}
-    />
-    ;
+      userGeneralLevel={userGeneralLevel}
+    />;
 };

@@ -25,10 +25,20 @@ ChartJS.register(
 type DataSet = number[][];
 
 const GraphContainer = styled.div`
-  height: 70px;
-  width: 100px;
-  scale: 1.2;
+  height: 60px;
+  width: 120px;
   transform: translateX(-5%) translateY(10%);
+
+  &:before {
+    content: 'Week';
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    letter-spacing: 5px;
+    font-size: 20px;
+    color: rgba(71, 186, 53, 0.1);
+  }
 `;
 
 interface LineGraphProps {
@@ -49,13 +59,19 @@ const options = {
   },
   scales: {
     x: {
-      display: false, // Скрыть ось X
+      display: true, // Скрыть ось X
+      ticks: {
+        display: false // Скрыть показатели на оси X
+      },
       grid: {
         display: false // Скрыть сетку по оси X
       }
     },
     y: {
-      display: false, // Скрыть ось Y
+      display: true, // Скрыть ось Y
+      ticks: {
+        display: false // Скрыть показатели на оси X
+      },
       grid: {
         display: false // Скрыть сетку по оси Y
       }
@@ -63,7 +79,7 @@ const options = {
   },
   elements: {
     point: {
-      radius: 0 // Скрыть точки на линии
+      radius: 1 // Скрыть точки на линии
     }
   }
 };
@@ -77,7 +93,7 @@ export const LineGraph: React.FC<LineGraphProps> = ({ data }) => {
     datasets: [
       {
         data: dataValues,
-        borderColor: '#18cf26',
+        borderColor: '#47ba35',
         borderWidth: 2,
         tension: 0.4
       }

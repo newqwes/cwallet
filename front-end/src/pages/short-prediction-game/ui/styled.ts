@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { coinFont } from '../../../shared/ui';
+import { Container as RewardsTableContainer } from './RewardsTable/styled.ts';
 
 const glowing = keyframes`
   0% {
@@ -16,25 +17,37 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
+
+  ${RewardsTableContainer} {
+    width: 100%;
+
+  }
+`;
+
+export const TitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Question = styled.h1`
-  font-size: 24px;
+  font-size: 22px;
   color: rgb(200, 200, 200);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 export const CardWrapper = styled.div`
   position: fixed;
-  bottom: 18vh;
+  bottom: 16vh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
+  gap: 1.5vh 10vw;
   justify-items: center;
 `;
 
 export const AnswerCard = styled.div<{ isFlipped: boolean, isSelected: boolean }>`
-  border-radius: 20px;
+  border-radius: 15px;
   font-size: 16px;
   ${coinFont};
   color: #2c1818;
@@ -45,10 +58,10 @@ export const AnswerCard = styled.div<{ isFlipped: boolean, isSelected: boolean }
   transform: ${({ isFlipped }) => (isFlipped ? 'translate(0, 0) rotateY(180deg) scale(1)' : 'rotateY(0)')};
   z-index: ${({ isFlipped }) => (isFlipped ? 100 : 1)};
   position: ${({ isFlipped }) => (isFlipped ? 'fixed' : 'relative')};
-  top: ${({ isFlipped }) => (isFlipped ? '15%' : 'initial')};
-  left: ${({ isFlipped }) => (isFlipped ? '2%' : 'initial')};
-  width: ${({ isFlipped }) => (isFlipped ? '96%' : '160px')};
-  height: ${({ isFlipped }) => (isFlipped ? '70%' : '90px')};
+  top: ${({ isFlipped }) => (isFlipped ? '20%' : 'initial')};
+  left: ${({ isFlipped }) => (isFlipped ? '10%' : 'initial')};
+  width: ${({ isFlipped }) => (isFlipped ? '80%' : '160px')};
+  height: ${({ isFlipped }) => (isFlipped ? '60%' : '72px')};
   background-color: ${({ isFlipped }) => (isFlipped ? 'rgba(0,0,0,0.98)' : 'rgba(0,0,0,0.41)')};
   border: 1px solid ${({ isSelected }) => (isSelected ? '#f5b53d' : '#fff')};
 `;

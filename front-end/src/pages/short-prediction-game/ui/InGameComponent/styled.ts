@@ -1,16 +1,13 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding: 2vh 5vh;
-  max-height: 85vh;
-  overflow: scroll;
+  max-height: 60vh;
+  overflow-y: scroll;
+  padding: 0 3vh;
 `;
 
-export const Place = styled.div`
-  font-size: 6vw;
-  font-weight: 500;
-  color: #FCD97E;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавление тени к тексту */
+export const Container = styled.div`
+  padding: 2vh;
 `;
 
 export const CoinCard = styled.div<{ isSelected: boolean }>`
@@ -18,16 +15,38 @@ export const CoinCard = styled.div<{ isSelected: boolean }>`
   flex-direction: row;
   justify-content: space-between;
   margin: 15px 0;
-  padding: 0 10px;
+  padding: 0 0 0 10px;
   align-items: center;
   background-color: #fff;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.75);
   border-radius: 15px;
-  border: 3px solid ${(({ isSelected }) => isSelected ? 'hsl(39, 100%, 50%)' : '')};
+  border: 3px solid ${(({ isSelected }) => isSelected ? 'hsl(27,100%,55%)' : '')};
+  position: relative;
 
   * {
     color: #1b1639;
   }
+
+  ${(({ isSelected }) => isSelected ?
+    css`
+      &:before, &:after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        width: 20px;
+        height: 40px;
+        border-radius: 40%;
+        background-color: hsl(27, 100%, 55%);
+      }
+
+      &:before {
+        left: -10px;
+      }
+
+      &:after {
+        right: -10px;
+      }
+    `
+    : '')}
 `;
 
 export const CoinCardImg = styled.img`
@@ -37,6 +56,7 @@ export const CoinCardImg = styled.img`
 `;
 
 export const CoinCardNameWrapper = styled.div`
+  width: 74px;
   margin-right: 10px;
 `;
 export const CoinCardName = styled.div`
@@ -50,6 +70,7 @@ export const CoinCardShortName = styled.div`
 `;
 export const CoinCardPriceWrapper = styled.div`
   margin-right: 10px;
+  width: 50px;
 `;
 export const CoinCardPercent = styled.div<{ positive: boolean }>`
   font-weight: 600;
@@ -59,9 +80,6 @@ export const CoinCardPercent = styled.div<{ positive: boolean }>`
 export const CoinCardPrice = styled.div`
   font-weight: 400;
   font-size: 0.75rem;
-  margin-left: 10px;
-
 `;
 export const CoinCardChart = styled.div`
 `;
-
