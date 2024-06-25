@@ -14,7 +14,7 @@ const formatTime = (time: number) => {
 
 interface Props {
   nextDate: Date | string;
-  isTimeOver: () => void;
+  isTimeOver: any;
 }
 
 export const TimerComponent = ({ nextDate, isTimeOver }: Props) => {

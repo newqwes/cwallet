@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
   Question,
@@ -12,7 +12,7 @@ import {
   CoinImage,
   CoinInfo,
   CoinName,
-  CoinPrice,
+  CoinPrice
 } from './styled';
 import {
   fetchShortGameData,
@@ -20,9 +20,9 @@ import {
   selectShortGameData,
   selectAlreadyInGame,
   selectIsActiveGame, selectGamePeriod
-} from "../../../entities/ShortGame";
-import { InGameComponent } from "./InGameComponent/InGame.tsx";
-import { TimerComponent } from "../../../shared/libs/Timer/Timer.tsx";
+} from '../../../entities/ShortGame';
+import { InGameComponent } from './InGameComponent/InGame.tsx';
+import { TimerComponent } from '../../../shared/libs/Timer/Timer.tsx';
 
 export const ShortPredictGame: FC = () => {
   const [flippedCardIndex, setFlippedCardIndex] = useState<number | null>(null);
@@ -53,9 +53,12 @@ export const ShortPredictGame: FC = () => {
 
     dispatch(selectShortGameCoin(coinId));
   };
+  const isTimeOver = () => {
+    console.log('Time is Over');
+  };
   return isActive ?
     <Container onClick={() => handleOutsideClick()}>
-      <TimerComponent nextDate={gamePeriod.progress}/>
+      <TimerComponent nextDate={gamePeriod.progress} isTimeOver={isTimeOver}/>
       <Question>Which coin will show the best result in 24 hours?</Question>
       <CardWrapper>
         {shortGameData.map((coin, index) => (

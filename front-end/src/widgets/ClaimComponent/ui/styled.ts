@@ -1,17 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 import mainImg from '../../../shared/assets/main.png';
-import { Button, coinFont } from '../../../shared/ui';
+import { coinFont } from '../../../shared/ui';
 import { Timer } from '../../../shared/libs/Timer/styled';
 
 interface IStyledProp {
   isActive: boolean;
 }
-
-const buzz = keyframes`
-  70% {
-    opacity: 0.8;
-  }
-`;
 
 export const CoinWrapper = styled.div`
   display: flex;

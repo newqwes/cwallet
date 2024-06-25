@@ -10,9 +10,9 @@ import {
   CoinCardPrice,
   CoinCardChart
 } from './styled.ts';
-import { TimerComponent } from "../../../../shared/libs/Timer/Timer.tsx";
-import { LineGraph } from "../../../../shared/libs/LineGraph/LineGraph.tsx";
-import { IGameCoin } from "../../../../shared/types";
+import { TimerComponent } from '../../../../shared/libs/Timer/Timer.tsx';
+import { LineGraph } from '../../../../shared/libs/LineGraph/LineGraph.tsx';
+import { IGameCoin } from '../../../../shared/types';
 
 interface Props {
   gamePeriod: Date | string;
@@ -21,9 +21,12 @@ interface Props {
 }
 
 export const InGameComponent = ({ gamePeriod, selectedCoinId, coins }: Props) => {
+  const isTimeOver = () => {
+    console.log('Time is Over');
+  };
   return (
     <Wrapper>
-      <TimerComponent nextDate={gamePeriod}/>
+      <TimerComponent nextDate={gamePeriod} isTimeOver={isTimeOver}/>
       {
         coins.map((coin) => (
           <CoinCard isSelected={coin.coin_list_id === selectedCoinId}>
