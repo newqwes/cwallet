@@ -8,9 +8,9 @@ import {
 } from '../constants/levels';
 import { round } from 'lodash';
 
-const claimLevelFormula = (x: number, y: number, z: number): number => {
-  const result = x + (5 * x + y * y * y) / 10 * y;
-  return Math.round(result * z * z * 2.5);
+const claimLevelFormula = (x: number, y: number, z: number) => {
+  const result = 2 * x + (2 * x + y * y) / 20 * y;
+  return Math.round(result * z * z);
 };
 
 export const getClaimCoins = ({ claimBias, claimInfluence, miningLevel, timeLevel }) => {
@@ -47,8 +47,8 @@ export const getInfluenceLuck = (minInfluence: number, luckLevel: number): numbe
   return minInfluence + luckLevel * 0.02;
 };
 
-export const levelUpPrice = ({ price, multiplier, level }): number => {
-  return price + price * (level - 2) + (price / 2) * multiplier * (level * level - 4);
+export const levelUpPrice = ({ price, multiplier, level }) => {
+  return price + price * (level - 2) + price * multiplier * multiplier * multiplier * (level * level - 4);
 };
 
 const formatSeconds = (seconds: number) => {
