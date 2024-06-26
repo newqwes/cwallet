@@ -11,7 +11,7 @@ import { getHistoricalChart } from './get_coin_info';
 import {
   startEndShortGame,
   progressShortGame,
-  checkProgressShortGame
+  checkProgressShortGame,
 } from './short_game';
 import sequelize from './database';
 import { errorMiddleware, limiter, cors } from './middleware';
@@ -19,7 +19,7 @@ import { runTelegramBotService } from './services/telegramBotService';
 import apiRoutes from './routes';
 import {
   PROGRESS_SHORT_GAME_PERIOD,
-  START_SHORT_GAME_PERIOD
+  START_SHORT_GAME_PERIOD,
 } from './constants/periodTime';
 import { logger } from './logger';
 
@@ -33,17 +33,22 @@ morgan.token('message', function (req, res) {
   return res.locals.errorMessage || '';
 });
 
-const morganFormat = '[:date[iso]] ":method :url" :status - :response-time ms - :message';
+const morganFormat =
+  '[:date[iso]] ":method :url" :status - :response-time ms - :message';
 
-app.use(morgan(morganFormat, {
-  stream: {
-    write: (message) => {
-      const [_, url, status, responseTime] = message.match(/\[.*\] "(.*)" (\d{3}) - (\d+.\d+) ms -/);
-      const logMessage = `${url} ${status} ${responseTime}ms`;
-      logger.debug(logMessage);
-    }
-  }
-}));
+app.use(
+  morgan(morganFormat, {
+    stream: {
+      write: (message) => {
+        const [_, url, status, responseTime] = message.match(
+          /\[.*\] "(.*)" (\d{3}) - (\d+.\d+) ms -/
+        );
+        const logMessage = `${url} ${status} ${responseTime}ms`;
+        logger.debug(logMessage);
+      },
+    },
+  })
+);
 app.use(helmet());
 app.use(cors);
 app.use(express.json());
