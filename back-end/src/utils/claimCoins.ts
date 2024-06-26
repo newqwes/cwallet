@@ -48,7 +48,7 @@ export const getInfluenceLuck = (minInfluence: number, luckLevel: number): numbe
 };
 
 export const levelUpPrice = ({ price, multiplier, level }) => {
-  return price + price * (level - 2) + price * multiplier * multiplier * multiplier * (level * level - 4);
+  return round(price + price * (level - 2) + price * multiplier * multiplier * multiplier * (level * level - 4));
 };
 
 const formatSeconds = (seconds: number) => {

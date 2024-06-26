@@ -5,7 +5,7 @@ import { getClaimCoins, getExtraTimeInMinutes, getInfluenceLuck } from '../utils
 import { FIRST_LEVEL_REF_BACK, SECOND_LEVEL_REF_BACK } from '../constants/referrals';
 import { CustomNextFunction, CustomRequest, CustomResponse } from '../models';
 import { round } from 'lodash';
-import { logger } from '../logger';
+import { logger, TELEGRAM_LOGGER_KEY } from '../logger';
 
 export const claim = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   logger.info('CLAIM_CONTROLLER (Claim): Request received');
@@ -46,8 +46,7 @@ export const claim = async (req: CustomRequest, res: CustomResponse, next: Custo
     user.coins += claimedCoins.result;
     user.nextClaimDate = nextClaimDate;
     await user.save();
-    logger.info(`CLAIM_CONTROLLER (Claim): Updated user ${user.telegramId} with new coin total and next claim date`);
-
+    logger.info(`CLAIM_CONTROLLER (Claim): Updated user id ${user.telegramId} name ${user.firstName} with new coin total and next claim date ${TELEGRAM_LOGGER_KEY}`);
     if (user.refParent) {
       const parent = await UserService.findByTelegramUserId(user.refParent);
       const referralRewards = round(claimedCoins.result * FIRST_LEVEL_REF_BACK);

@@ -6,7 +6,7 @@ import { getActiveGameTimePeriod, getGameTimePeriod } from '../utils/getProgress
 import sequelize from '../database';
 import { getRewardsForShortGame } from '../utils/rewardsForShortGame';
 import { CustomRequest, CustomResponse, CustomNextFunction } from '../models';
-import { logger } from '../logger';
+import { logger, TELEGRAM_LOGGER_KEY } from '../logger';
 
 export const getDataByShortGame = async (req: CustomRequest, res: CustomResponse, next: CustomNextFunction) => {
   logger.info(`SHORT_GAME_CONTROLLER: User ${req.user.telegramId} retrieving data for short game`);
@@ -79,7 +79,7 @@ export const setShortGameData = async (req: CustomRequest, res: CustomResponse, 
       });
     }
 
-    logger.info(`SHORT_GAME_CONTROLLER: Game data set for user ${req.user.telegramId}`);
+    logger.info(`SHORT_GAME_CONTROLLER: Game data set for user ${user.telegramId} ${user.firstName} ${TELEGRAM_LOGGER_KEY}`);
     return res.status(201).json({ success: true });
   } catch (e) {
     logger.error(`SHORT_GAME_CONTROLLER: Error setting game data for user ${req.user.telegramId} - ${e}`);

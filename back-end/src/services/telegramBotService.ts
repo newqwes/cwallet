@@ -1,14 +1,17 @@
-import TelegramAPI from 'node-telegram-bot-api';
 import { getMessageOptions, RUN_APP } from '../constants/telegram';
 import UserService from './userService';
 import { isValidReferralCode } from '../utils/referral';
 import TelegramSetting from '../database/models/telegramSetting';
 import { logger } from '../logger';
+import { MyBot } from '../telegram_conf';
 
-const MyBot = new TelegramAPI(process.env.BOT_CHAT_TOKEN || '', { polling: true });
 const reply_markup = getMessageOptions().reply_markup;
 
 export const runTelegramBotService = async () => {
+  MyBot.onText(/\/chatid/, (msg) => {
+    const chatId = msg.chat.id;
+    MyBot.sendMessage(chatId, `ID этого чата: ${chatId}`);
+  });
   MyBot.on('message', async (msg) => {
     const { from, text, chat: { id, first_name: firstName, last_name: lastName } } = msg;
     try {

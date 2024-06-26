@@ -9,7 +9,7 @@ import {
   levelUpPrice
 } from '../utils/claimCoins';
 import { CustomNextFunction, CustomRequest, CustomResponse } from '../models';
-import { logger } from '../logger';
+import { logger, TELEGRAM_LOGGER_KEY } from '../logger';
 
 export const getUserData = async (req: any, res: CustomResponse, next: CustomNextFunction) => {
   logger.info(`GET_USER_DATA: Retrieving or creating user data`);
@@ -56,7 +56,7 @@ export const upgradeUserLevel = async (req: CustomRequest, res: CustomResponse, 
     user[level_name] += 1;
     await user.save();
 
-    logger.info(`UPGRADE_USER_LEVEL: Level upgraded for user ${req.user.telegramId}, new level ${user[level_name]}`);
+    logger.info(`${TELEGRAM_LOGGER_KEY} UPGRADE_USER_LEVEL: Level upgraded for user ${req.user.telegramId} ${user.firstName}, new level ${user[level_name]}`);
     return res.status(201).json({ success: true });
   } catch (e) {
     logger.error(`UPGRADE_USER_LEVEL: Error upgrading level for user ${req.user.telegramId} - ${e}`);
