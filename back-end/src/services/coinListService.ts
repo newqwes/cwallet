@@ -10,7 +10,7 @@ class CoinListService {
   async findOneById(id: string): Promise<CoinList> {
     try {
       return await CoinList.findOne({
-        where: { id }
+        where: { id },
       });
     } catch (error) {
       createResponse(404, 'Server Error findOneByCoinId', error);
@@ -20,7 +20,7 @@ class CoinListService {
   async findOneByCoinId(coin_id: string): Promise<CoinList> {
     try {
       return await CoinList.findOne({
-        where: { coin_id }
+        where: { coin_id },
       });
     } catch (error) {
       createResponse(404, 'Server Error findOneByCoinId', error);
@@ -37,7 +37,7 @@ class CoinListService {
         current_price,
         last_updated,
         market_cap_rank,
-        market_cap
+        market_cap,
       } = defaults;
 
       return await CoinList.create({
@@ -48,7 +48,7 @@ class CoinListService {
         current_price,
         last_updated,
         market_cap_rank,
-        market_cap
+        market_cap,
       });
     } catch (error) {
       logger.error(JSON.stringify(error));
@@ -66,7 +66,7 @@ class CoinListService {
         current_price,
         last_updated,
         market_cap_rank,
-        market_cap
+        market_cap,
       } = defaults;
 
       return await CoinList.update(
@@ -78,10 +78,10 @@ class CoinListService {
           current_price,
           last_updated,
           market_cap_rank,
-          market_cap
+          market_cap,
         },
         {
-          where: { coin_id }
+          where: { coin_id },
         }
       );
     } catch (error) {
@@ -93,10 +93,10 @@ class CoinListService {
     try {
       return await CoinList.update(
         {
-          historical_chart_prices: hc_data
+          historical_chart_prices: hc_data,
         },
         {
-          where: { coin_id }
+          where: { coin_id },
         }
       );
     } catch (error) {
@@ -107,7 +107,7 @@ class CoinListService {
   async findAllHCActiveCoins() {
     try {
       return await CoinList.findAll({
-        where: { historical_chart_active: true }
+        where: { historical_chart_active: true },
       });
     } catch (error) {
       createResponse(404, 'Server Error findAllHCActiveCoins', error);
@@ -118,7 +118,7 @@ class CoinListService {
     try {
       return await CoinList.findAll({
         order: sequelize.random(),
-        limit: limit_value
+        limit: limit_value,
       });
     } catch (error) {
       createResponse(404, 'Server Error getRandomCoins', error);
@@ -128,15 +128,15 @@ class CoinListService {
   async getCoinsForShortGame(limit_value: number) {
     try {
       const manualCoins = await ManualCoin.findAll();
-      const coinIds = manualCoins.map(coin => coin.coin_id);
+      const coinIds = manualCoins.map((coin) => coin.coin_id);
 
       return await CoinList.findAll({
         where: {
           coin_id: {
-            [Op.in]: coinIds
-          }
+            [Op.in]: coinIds,
+          },
         },
-        limit: limit_value
+        limit: limit_value,
       });
     } catch (error) {
       createResponse(404, 'Server Error getCoinsForShortGame', error);
@@ -147,7 +147,7 @@ class CoinListService {
     try {
       return await CoinList.update(
         {
-          historical_chart_active: flag
+          historical_chart_active: flag,
         },
         { where: { id } }
       );
@@ -160,14 +160,26 @@ class CoinListService {
     try {
       return await CoinList.update(
         {
-          historical_chart_active: false
+          historical_chart_active: false,
         },
         {
-          where: {} // Empty where clause to target all rows
+          where: {}, // Empty where clause to target all rows
         }
       );
     } catch (error) {
       createResponse(404, 'Server Error updateAllHCFlags', error);
+    }
+  }
+
+  async getActiveCoins(limit: number) {
+    try {
+      return await CoinList.findAll({
+        where: { is_active: true },
+        order: sequelize.random(),
+        limit,
+      });
+    } catch (error) {
+      createResponse(404, 'Server Error getActiveCoins', error);
     }
   }
 }

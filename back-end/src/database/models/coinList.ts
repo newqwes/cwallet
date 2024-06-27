@@ -15,6 +15,7 @@ class CoinList extends Model {
   last_updated: string;
   historical_chart_active: boolean;
   historical_chart_prices: any[];
+  is_active: boolean;
 }
 
 CoinList.init(
@@ -41,6 +42,11 @@ CoinList.init(
     historical_chart_prices: {
       type: DataTypes.JSONB,
       allowNull: true,
+    },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   },
   {
