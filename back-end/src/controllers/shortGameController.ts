@@ -79,7 +79,8 @@ export const setShortGameData = async (req: CustomRequest, res: CustomResponse, 
       });
     }
 
-    logger.info(`SHORT_GAME_CONTROLLER: Game data set for user ${user.telegramId} ${user.firstName} ${TELEGRAM_LOGGER_KEY}`);
+    logger.info(`SHORT_GAME_CONTROLLER: Game data set for user ${user.telegramId} ${user.firstName}`);
+    logger.info(`🩳Short. \nUserid: ${user.telegramId}, name: ${user.firstName}\ncoin_id: ${coin_id} ${TELEGRAM_LOGGER_KEY}`);
     return res.status(201).json({ success: true });
   } catch (e) {
     logger.error(`SHORT_GAME_CONTROLLER: Error setting game data for user ${req.user.telegramId} - ${e}`);

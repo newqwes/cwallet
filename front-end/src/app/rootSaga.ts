@@ -3,6 +3,7 @@ import { claim, user } from '../entities/User';
 import { users } from '../entities/Users';
 import { referrals } from '../entities/Referrals';
 import { shortGame } from '../entities/ShortGame';
+import { tasksSaga } from '../entities/Tasks';
 
 function* rootSaga() {
   yield all([
@@ -10,7 +11,8 @@ function* rootSaga() {
     user(),
     users(),
     referrals(),
-    shortGame()
+    shortGame(),
+    tasksSaga()
   ]);
 }
 

@@ -25,8 +25,8 @@ module.exports = {
         { task_name: 'subscribe_to_channel', reward: 20 },
         { task_name: 'subscribe_to_chat', reward: 30 },
         { task_name: 'subscribe_to_x', reward: 40 },
-        { task_name: 'invite_frend', reward: 50 },
-        { task_name: 'invate_three_friends', reward: 200 },
+        { task_name: 'invite_friend', reward: 50 },
+        { task_name: 'invite_three_friends', reward: 200 },
         { task_name: 'accumulate_30000_coins', reward: 500 },
       ],
       {}

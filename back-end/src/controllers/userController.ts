@@ -56,7 +56,8 @@ export const upgradeUserLevel = async (req: CustomRequest, res: CustomResponse, 
     user[level_name] += 1;
     await user.save();
 
-    logger.info(`${TELEGRAM_LOGGER_KEY} UPGRADE_USER_LEVEL: Level upgraded for user ${req.user.telegramId} ${user.firstName}, new level ${user[level_name]}`);
+    logger.info(`UPGRADE_USER_LEVEL: Level upgraded for user ${req.user.telegramId} ${user.firstName}, new level ${user[level_name]}`);
+    logger.info(`🆙LevelUp. \nUserid: ${user.telegramId}, name: ${user.firstName}\n${level_name}: ${user[level_name]}, price: ${priceForLevelUp} ${TELEGRAM_LOGGER_KEY}`);
     return res.status(201).json({ success: true });
   } catch (e) {
     logger.error(`UPGRADE_USER_LEVEL: Error upgrading level for user ${req.user.telegramId} - ${e}`);

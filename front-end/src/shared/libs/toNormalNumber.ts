@@ -87,7 +87,10 @@ const toNormalNumberLength = (value: number): string => {
 
 export const toNormalNumber = (value: number) => Number(toNormalNumberLength(value));
 
-export const getReadableCount = (coins: number): string => {
+export const getReadableCount = (coins: number | string): string => {
+  if (typeof coins === 'string') {
+    return coins;
+  }
   if (coins < 1000) {
     return coins.toString();
   } else if (coins < 1000000) {

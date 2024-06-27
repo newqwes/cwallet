@@ -41,13 +41,13 @@ app.use(
     stream: {
       write: (message) => {
         const [_, url, status, responseTime] = message.match(
-          /\[.*\] "(.*)" (\d{3}) - (\d+.\d+) ms -/
+          /\[.*\] "(.*)" (\d{3}) - (\d+.\d+) ms -/,
         );
         const logMessage = `${url} ${status} ${responseTime}ms`;
         logger.debug(logMessage);
       },
     },
-  })
+  }),
 );
 app.use(helmet());
 app.use(cors);
@@ -74,8 +74,8 @@ const start = async () => {
       cron.schedule(`0 ${START_SHORT_GAME_PERIOD} * * *`, startEndShortGame);
       cron.schedule(`0 ${PROGRESS_SHORT_GAME_PERIOD} * * *`, progressShortGame);
 
-      // check progress Short game, every hour
-      cron.schedule('35 * * * *', checkProgressShortGame);
+      // check progress Short game, every 14 min
+      cron.schedule('*/14 * * * *', checkProgressShortGame);
 
       //Обновляем информацию по графикам, раз в день
       cron.schedule('25 0 * * *', getHistoricalChart);

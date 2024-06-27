@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from "../../../shared/ui";
+import { Button } from '../../../shared/ui';
 
 
 export const UpgradeContainer = styled.div`
@@ -40,7 +40,7 @@ export const CardWrapper = styled.div`
 
 export const RowWrapper = styled.div`
   display: grid;
-  grid-template-columns: 3fr 3fr 2fr;
+  grid-template-columns: 2fr 3fr 2fr;
   align-items: center;
   margin-bottom: 1.5vh;
   text-align: left;
@@ -51,6 +51,7 @@ export const CurrentCardTitle = styled.div`
 `;
 
 export const CurrentCardRate = styled.div`
+  font-size: 1rem;
   text-align: center;
 `;
 
@@ -63,6 +64,7 @@ export const NewCardTitle = styled.div`
 
 export const NewCardRate = styled.div`
   text-align: center;
+  font-size: 1rem;
 `;
 
 export const CardButton = styled.div`

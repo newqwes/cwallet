@@ -7,11 +7,9 @@ import {
   NewCardRate,
   CardPrice,
   CardButton,
-  TitleWrapper
+  TitleWrapper,
 } from './styled';
-import { Button } from '../../../shared/ui';
-import { Coins } from '../../../widgets/ClaimComponent/ui/styled.ts';
-import { useAnimatedNumber } from '../../../widgets/ClaimComponent/ui/useAnimatedNumber.tsx';
+import { Button, useAnimatedNumber, Coins } from '../../../shared/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUpgrades, selectUpgradesDate, selectUserCoinCount, upgradeLevel } from '../../../entities/User';
 import { vibrateNow } from '../../../shared/libs/vibration.ts';
@@ -21,7 +19,7 @@ const smiles = {
   'Earn': '✨',
   'Time': '⏳',
   'Luck': '🍀',
-  'Secret': ''
+  'Secret': '',
 };
 
 export const Upgrade: FC = () => {
@@ -53,13 +51,13 @@ export const Upgrade: FC = () => {
       {levels?.map((level) => (
           <CardWrapper key={level.id}>
             <RowWrapper>
-              <CurrentCardTitle>{level.name} lvl. {level.level}</CurrentCardTitle>
-              <CurrentCardRate>{level.upgrade[0]}{level.upgrade[2] ? (' - ' + level.upgrade[2]) : ''} {smiles[level.name]}</CurrentCardRate>
+              <CurrentCardTitle>{level.name} {level.level}</CurrentCardTitle>
+              <CurrentCardRate>{getReadableCount(level.upgrade[0])}{level.upgrade[2] ? (' - ' + getReadableCount(level.upgrade[2])) : ''} {smiles[level.name]}</CurrentCardRate>
               <CardPrice>{getReadableCount(level.price)}✨</CardPrice>
             </RowWrapper>
             <RowWrapper>
-              <NewCardTitle>{level.name} lvl. {level.level + 1}</NewCardTitle>
-              <NewCardRate>{level.upgrade[1]}{level.upgrade[3] ? (' - ' + level.upgrade[3]) : ''} {smiles[level.name]}</NewCardRate>
+              <NewCardTitle>{level.name} {level.level + 1}</NewCardTitle>
+              <NewCardRate>{getReadableCount(level.upgrade[1])}{level.upgrade[3] ? (' - ' + getReadableCount(level.upgrade[3])) : ''} {smiles[level.name]}</NewCardRate>
               <CardButton>
                 <Button isDisabled={level.price > coins} type={'button'} btnStyle={'primary'} onClick={() => {
                   handleClickClaimBtn(level.id, level.price);
@@ -69,7 +67,7 @@ export const Upgrade: FC = () => {
               </CardButton>
             </RowWrapper>
           </CardWrapper>
-        )
+        ),
       )}
     </UpgradeContainer>
   );

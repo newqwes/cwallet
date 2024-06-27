@@ -46,7 +46,8 @@ export const claim = async (req: CustomRequest, res: CustomResponse, next: Custo
     user.coins += claimedCoins.result;
     user.nextClaimDate = nextClaimDate;
     await user.save();
-    logger.info(`CLAIM_CONTROLLER (Claim): Updated user id ${user.telegramId} name ${user.firstName} with new coin total and next claim date ${TELEGRAM_LOGGER_KEY}`);
+    logger.info(`CLAIM_CONTROLLER (Claim): Updated user id ${user.telegramId} name ${user.firstName} with new coin total and next claim date`);
+    logger.info(`💎 Claim. \nUserid: ${user.telegramId}, name: ${user.firstName}\nclaimedCoins: ${claimedCoins.result} ${TELEGRAM_LOGGER_KEY}`);
     if (user.refParent) {
       const parent = await UserService.findByTelegramUserId(user.refParent);
       const referralRewards = round(claimedCoins.result * FIRST_LEVEL_REF_BACK);

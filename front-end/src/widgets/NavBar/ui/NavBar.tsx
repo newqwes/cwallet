@@ -1,17 +1,17 @@
-import { FC } from "react";
-import { useLocation } from "react-router-dom";
-import { ROUTING_PATHS } from "../../../shared/consts";
+import { FC } from 'react';
+import { useLocation } from 'react-router-dom';
+import { ROUTING_PATHS } from '../../../shared/consts';
 import {
   NavBarWrapper,
   StyledTapIcon,
   StyledBarChartOutlined as BarChartOutlined,
-  StyledFormatPainterOutlined as FormatPainterOutlined,
   StyledUsersOutlined as UsersOutlined,
   StyledUsergroupAddOutlined as UsergroupAddOutlined, StyledLink as Link,
+  StyledOrderedListOutlined
 } from './styled';
 
-import { NavButton } from "./NavButton";
-import { vibrateNow } from "../../../shared/libs/vibration.ts";
+import { NavButton } from './NavButton';
+import { vibrateNow } from '../../../shared/libs/vibration.ts';
 
 export const NavBar: FC = () => {
   const location = useLocation();
@@ -25,16 +25,23 @@ export const NavBar: FC = () => {
         icon={<UsergroupAddOutlined/>}
         isActive={location.pathname === ROUTING_PATHS.REFERRALS}
       />
+      {/*<NavButton*/}
+      {/*  key={ROUTING_PATHS.GAME_BOARD}*/}
+      {/*  path={ROUTING_PATHS.GAME_BOARD}*/}
+      {/*  title="Game"*/}
+      {/*  icon={<FormatPainterOutlined/>}*/}
+      {/*  isActive={location.pathname === ROUTING_PATHS.GAME_BOARD}*/}
+      {/*/>*/}
       <NavButton
-        key={ROUTING_PATHS.TG_STYLES}
-        path={ROUTING_PATHS.TG_STYLES}
-        title="Game"
-        icon={<FormatPainterOutlined/>}
-        isActive={location.pathname === ROUTING_PATHS.TG_STYLES}
+        key={ROUTING_PATHS.TASKS}
+        path={ROUTING_PATHS.TASKS}
+        title="Tasks"
+        icon={<StyledOrderedListOutlined/>}
+        isActive={location.pathname === ROUTING_PATHS.TASKS}
       />
       <Link to={ROUTING_PATHS.HOME}>
         <StyledTapIcon isActive={location.pathname === ROUTING_PATHS.HOME} onClick={() => {
-          vibrateNow('success', 'impact', 'light')
+          vibrateNow('success', 'impact', 'light');
         }}/>
       </Link>
       <NavButton

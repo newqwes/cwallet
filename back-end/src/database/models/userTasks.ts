@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
-
 import sequelize from '..';
+import TasksList from './tasksList';
 
 class UserTasks extends Model {
   id: number;
@@ -45,7 +45,12 @@ UserTasks.init(
     sequelize,
     tableName: 'user_tasks',
     timestamps: false,
-  }
+  },
 );
+
+UserTasks.belongsTo(TasksList, {
+  foreignKey: 'tasks_list_id',
+  as: 'TasksList',
+});
 
 export default UserTasks;

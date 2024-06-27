@@ -47,7 +47,14 @@ export const logger = winston.createLogger({
       maxsize: 5242880, // 5MB
       maxFiles: 5
     }),
-    new winston.transports.Console(),
+    new winston.transports.Console({
+      handleExceptions: true,
+      level: 'debug',
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      )
+    }),
     new TelegramTransport()
   ]
 });
