@@ -1,7 +1,7 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import mainImg from '../../../shared/assets/main.png';
-import { UserTable } from "../../../shared/ui/UserTable.tsx";
-import { Button } from "../../../shared/ui";
+import { UserTable } from '../../../shared/ui/UserTable.tsx';
+import { Button } from '../../../shared/ui';
 
 const buzz = keyframes`
   70% {
@@ -64,14 +64,14 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const Description = styled.div`
-  width: 40ch;
+  width: 30ch;
   font-size: 4.4vw;
   font-weight: 500;
   border-right: 0.4em solid;
   overflow: hidden;
   white-space: nowrap;
-  animation: ${typing} 2.5s steps(6, end) 3,
-  ${caret} 0.5s step-end infinite;
+  animation: ${typing} 2s steps(6, end) 3,
+  ${caret} 0.5s step-start infinite;
 `;
 
 export const MainImg = styled.div`

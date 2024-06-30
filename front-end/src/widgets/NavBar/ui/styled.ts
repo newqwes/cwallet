@@ -4,10 +4,10 @@ import {
   BarChartOutlined,
   OrderedListOutlined,
   TrophyOutlined,
-  UsergroupAddOutlined
+  UsergroupAddOutlined,
 } from '@ant-design/icons';
 
-import logoImg from '../../../shared/assets/logo.png';
+import logoImg from '../../../shared/assets/coin_reward.svg';
 import { IButtonLink } from './types';
 
 export const NavBarWrapper = styled.div`
@@ -50,9 +50,9 @@ const IconBase = css`
 
 export const StyledTapIcon = styled.div<IButtonLink>`
   content: '';
-  height: 17vw;
-  width: 17vw;
-  margin: 0 15px;
+  height: 14vw;
+  width: 14vw;
+  margin: 0 5px;
   background-image: url(${logoImg});
 
   transition: filter 0.5s ease;

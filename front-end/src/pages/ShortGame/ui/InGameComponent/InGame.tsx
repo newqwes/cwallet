@@ -1,3 +1,4 @@
+import { round } from 'lodash';
 import {
   Wrapper,
   Container,
@@ -9,7 +10,7 @@ import {
   CoinCardPriceWrapper,
   CoinCardPercent,
   CoinCardPrice,
-  CoinCardChart
+  CoinCardChart,
 } from './styled.ts';
 import { TimerComponent } from '../../../../shared/libs/Timer/Timer.tsx';
 import { LineGraph } from '../../../../shared/libs/LineGraph/LineGraph.tsx';
@@ -41,7 +42,7 @@ export const InGameComponent = ({ gamePeriod, selectedCoinId, coins, userGeneral
               </CoinCardNameWrapper>
               <CoinCardPriceWrapper>
                 <CoinCardPercent
-                  positive={coin.volatility >= 0}>{coin.volatility > 0 ? '+' : ''}{coin.volatility}%</CoinCardPercent>
+                  positive={coin.volatility >= 0}>{coin.volatility > 0 ? '+' : ''}{round(coin.volatility, 2)}%</CoinCardPercent>
                 <CoinCardPrice>{coin.coin_info.current_price}$</CoinCardPrice>
               </CoinCardPriceWrapper>
               <CoinCardChart>

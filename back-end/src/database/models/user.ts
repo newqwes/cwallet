@@ -34,6 +34,10 @@ class User extends Model {
   refParent: number;
   refGrandParent: number;
   refParentChangedTimes: number;
+
+  shortVolatility?: number;
+  shortPlace?: number;
+  shortGames?: number;
 }
 
 User.init(
@@ -48,7 +52,7 @@ User.init(
     telegramId: {
       type: DataTypes.DOUBLE,
       allowNull: false,
-      unique: true
+      unique: true,
     },
     firstName: {
       type: DataTypes.STRING(50),

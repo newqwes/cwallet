@@ -41,10 +41,10 @@ export const MainImg = styled.div<IStyledProp>`
   &:before {
     content: '';
     position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url(${mainImg});
     background-size: cover;
     background-position: center;
@@ -107,7 +107,7 @@ export const MainWrapper = styled.div`
   flex-direction: column;
 
   ${Timer} {
-    margin-top: -6vh;
+    margin-top: -4vh;
   }
 `;
 

@@ -20,6 +20,10 @@ class ShortGameData extends Model {
   is_paid: boolean;
   created_at: Date;
   updated_at: Date;
+
+  average_volatility_result?: number;
+  games_count?: number;
+  average_place?: number;
 }
 
 ShortGameData.init(
@@ -96,7 +100,7 @@ ShortGameData.init(
     tableName: 'short_game_data',
     timestamps: true,
     underscored: true,
-  }
+  },
 );
 
 export default ShortGameData;

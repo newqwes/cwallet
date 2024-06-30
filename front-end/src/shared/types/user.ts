@@ -16,4 +16,8 @@ export interface IUser {
   miningLevel: number;
   secretLevel: number;
   refGrandParent: number;
+
+  shortVolatility: number;
+  shortPlace: number;
+  shortGames: number;
 }

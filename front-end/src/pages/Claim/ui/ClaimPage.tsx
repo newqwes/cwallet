@@ -64,7 +64,7 @@ export const ClaimPage: FC = () => {
       <HeaderCoins/>
       {claimedCoins !== null && <CoinChangeText isActive={!isTimerActive}>+{claimedCoins}</CoinChangeText>}
       <VersionBox>
-        <h6>App Version: 0.1.28</h6>
+        <h6>App Version: 0.1.30</h6>
       </VersionBox>
       <MainWrapper onClick={handleClickNotYet}>
         <MainImg isActive={!isTimerActive}/>

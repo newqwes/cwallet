@@ -13,4 +13,8 @@ export interface ShortGameUpdatePlaceDataModel {
   is_shown?: boolean;
   in_progress?: boolean;
   user_id?: string;
+
+  average_place?: number;
+  average_volatility_result?: number;
+  games_count?: number;
 }

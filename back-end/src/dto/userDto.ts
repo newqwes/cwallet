@@ -20,6 +20,10 @@ class UserDto {
   secretLevel: number;
   refGrandParent: number;
 
+  shortVolatility?: number;
+  shortPlace?: number;
+  shortGames?: number;
+
   constructor(model: User) {
     this.id = model.id;
     this.telegramId = Number(model.telegramId);
@@ -39,6 +43,9 @@ class UserDto {
     this.miningLevel = Number(model.miningLevel);
     this.secretLevel = Number(model.secretLevel);
     this.refGrandParent = Number(model.refGrandParent);
+    this.shortVolatility = Number(model.shortVolatility);
+    this.shortPlace = Number(model.shortPlace);
+    this.shortGames = Number(model.shortGames);
   }
 }
 
