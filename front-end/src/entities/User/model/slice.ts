@@ -30,12 +30,15 @@ const initialState: IUserState = {
     timeLevel: 1,
     miningLevel: 1,
     secretLevel: 1,
-    refGrandParent: 0
+    refGrandParent: 0,
+    shortVolatility: 0,
+    shortPlace: 0,
+    shortGames: 0,
   },
   claimedCoins: null,
   error: null,
   loading: false,
-  upgrades: []
+  upgrades: [],
 };
 
 export const userSlice = createSlice({
@@ -49,7 +52,7 @@ export const userSlice = createSlice({
       state.loading = false;
       state.data = {
         ...action.payload.user,
-        nextClaimDate: new Date(action.payload?.user?.nextClaimDate).toISOString()
+        nextClaimDate: new Date(action.payload?.user?.nextClaimDate).toISOString(),
       };
       state.claimedCoins = null;
       state.error = null;
@@ -97,8 +100,8 @@ export const userSlice = createSlice({
     upgradeLevelError: (state, action: PayloadAction<any>) => {
       state.loading = false;
       state.error = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const {
@@ -114,5 +117,5 @@ export const {
   fetchUpgradesError,
   upgradeLevel,
   upgradeLevelSuccess,
-  upgradeLevelError
+  upgradeLevelError,
 } = userSlice.actions;
