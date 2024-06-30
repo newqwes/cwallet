@@ -1,78 +1,122 @@
 import styled from 'styled-components';
-import { Button } from '../../../shared/ui';
-
 
 export const UpgradeContainer = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-
-  overflow: scroll;
-  height: 85vh;
-
+  position: relative;
 `;
+
+export const Cards = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 15px;
+  justify-content: space-between;
+  margin-top: 10vh;
+  align-items: center;
+  padding: 0 15px;
+`;
+
 
 export const TitleWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 25px;
+  flex-direction: column;
+  padding: 25px;
 
   div {
     font-weight: 600;
     font-size: 28px;
+    margin-bottom: 10px;
   }
 `;
 
 export const CardWrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: 15px auto;
-  width: 95%;
-  border-radius: 15px;
-  border: 1px #ccc solid;
-  padding: 12px 20px 2px;
-  font-size: 17px;
-  background-color: rgba(0, 0, 0, 0.21);
+  display: grid;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.32);
+  padding: 5px;
 `;
 
-export const RowWrapper = styled.div`
+export const CardTop = styled.div`
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr;
+  grid-template-columns: 1fr 3fr;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+`;
+
+export const CardBottom = styled.div`
+  display: grid;
+  grid-template-columns: 1.5fr 3fr;
   align-items: center;
-  margin-bottom: 1.5vh;
+  padding: 4px 0;
+`;
+
+export const ImgWrapper = styled.div`
+  img {
+    margin: 8px 5px;
+    border-radius: 50%;
+    width: 60px;
+  }
+`;
+
+export const TopText = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
   text-align: left;
 `;
 
-
-export const CurrentCardTitle = styled.div`
+export const TopTitle = styled.span`
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  font-weight: 400;
 `;
 
-export const CurrentCardRate = styled.div`
-  font-size: 1rem;
-  text-align: center;
+export const TopDesc = styled.span`
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 300;
 `;
 
-export const CardPrice = styled.div`
-  text-align: right;
+export const TopProfit = styled.span`
+`;
+export const BottomLevel = styled.span`
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+`;
+export const BottomPrice = styled.span`
+  text-align: left;
+  margin-left: 10px;
 `;
 
-export const NewCardTitle = styled.div`
-`;
+export const LevelModal = styled.div<{ hide: boolean }>`
+  display: ${({ hide }) => hide ? 'none' : 'block'};
+  position: fixed;
+  width: 100%;
+  box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.5); // This adds a white glowing shadow
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  background-color: #20232b;
+  bottom: 0;
+  z-index: 1000;
+  padding: 30px 10px;
 
-export const NewCardRate = styled.div`
-  text-align: center;
-  font-size: 1rem;
-`;
+  h1 {
+    padding: 0;
+    margin: 0;
+  }
 
-export const CardButton = styled.div`
-  text-align: right;
+  img {
+    margin: 0;
+    width: 80px;
+  }
 
-  ${Button} {
-    padding: 2px 16px;
-    margin-bottom: 4px;
-    margin-right: 5px;
+  .anticon {
+    position: absolute;
+    font-size: 28px;
+    right: 20px;
+    top: 20px;
+
+    svg {
+      color: rgba(255, 255, 255, 0.24);
+    }
   }
 `;
