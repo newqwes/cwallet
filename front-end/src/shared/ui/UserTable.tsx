@@ -59,7 +59,7 @@ const Coins = styled.span`
   font-size: 4vw;
 `;
 
-export const UserTableComponent = ({ users, isShortGame }: { users: IUser[], isShortGame: boolean }) => {
+export const UserTableComponent = ({ users, isShortGame }: { users: IUser[], isShortGame?: boolean }) => {
   return (
     <UserTable className="scroll_on">
       {users?.map((user) => (
