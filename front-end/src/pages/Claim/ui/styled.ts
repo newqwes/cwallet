@@ -33,7 +33,7 @@ const pressButton = keyframes`
 `;
 
 export const MainImg = styled.div<IStyledProp>`
-  height: 58vh;
+  height: 52vh;
   width: 70vw;
   position: relative;
   transition: 1s ease;
@@ -41,10 +41,10 @@ export const MainImg = styled.div<IStyledProp>`
   &:before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 50px;
+    left: 20px;
+    right: 20px;
+    bottom: 30px;
     background-image: url(${mainImg});
     background-size: cover;
     background-position: center;
